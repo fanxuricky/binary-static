@@ -1,0 +1,74 @@
+<div id="content" class="virtualws-content">
+        <div id="page_info" style="display:none;">
+            <title>Neues Konto einrichten | Binary.com</title>
+            <div id="content_class">virtualws-content</div>
+        </div>
+        
+        <div class="container">
+
+
+  <div class='gr-12 static_full'>
+    <h1>Neues Konto einrichten</h1>
+    <p class='notice-message'>Vielen Dank, dass Sie sich angemeldet haben! Bitte überprüfen Sie Ihre E-Mail, um den Verfikationstoken abzurufen.</p>
+    <div class="rbox form gr-padding-10">
+        <div class="rbox-wrap">
+            <form id="virtual-form">
+                <fieldset>
+                    <legend id="details">Angaben</legend>
+
+                    <div class="gr-padding-10 gr-row clear">
+                        <div class="gr-4 form_label">
+                            <label for="verification_code">Verifikationstoken</label>
+                        </div>
+                        <div class="gr-8">
+                            <input type="text" name="verification_code" id="verification_code" maxlength="8" autocomplete="off"/>
+                            <div class="hint">Bitte überprüfen Sie für den Wert dieses Token Ihren E-Mail Eingang</div>
+                        </div>
+                    </div>
+
+                    <div class="gr-padding-10 gr-row clear">
+                        <div class="gr-4 form_label">
+                            <label for="client_password">Wählen Sie ein Passwort aus</label>
+                        </div>
+                        <div class="gr-8">
+                            <input type="password" id="client_password" name="client_password" maxlength="25"/>
+                            <div class="hint">Mindestens sechs Klein- und Großbuchstaben mit Zahlen</div>
+                        </div>
+                    </div>
+
+                    <div class="gr-padding-10 gr-row clear">
+                        <div class="gr-4 form_label">
+                            <label for="repeat_password">Passwort erneut eingeben</label>
+                        </div>
+                        <div class="gr-8">
+                            <input type="password" id="repeat_password" name="repeat_password" maxlength="25"/>
+                        </div>
+                    </div>
+
+                    <div class="gr-padding-10 gr-row clear">
+                        <div class="gr-4 form_label">
+                            <label for="residence">Wohnsitzland</label>
+                        </div>
+                        <div class="gr-8">
+                            <select name="residence" id="residence" class="invisible"></select>
+                        </div>
+                    </div>
+
+                    <div class="gr-padding-10 gr-row clear invisible">
+                        <div class="gr-4 form_label" id="email_consent_label">
+                            <label for="email_consent">Erhalten Sie Nachrichten und spezielle Angebote</label>
+                        </div>
+                        <div class="gr-8">
+                            <input type="checkbox" id="email_consent" checked="checked"/>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="center-text" id="formlayout">
+                    <button class="button" type="submit">Neues Konto einrichten</button>
+                    <p class="errorfield invisible" id="error-account-opening"></p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

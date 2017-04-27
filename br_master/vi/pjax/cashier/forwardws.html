@@ -1,0 +1,88 @@
+<div id="content" class="forwardws-content">
+        <div id="page_info" style="display:none;">
+            <title>Thu ngân | Binary.com</title>
+            <div id="content_class">forwardws-content</div>
+        </div>
+        
+        <div class="container">
+
+
+  <div id="deposit_withdraw">
+    <h1 id="heading"></h1>
+
+    <div id="messages" class="invisible">
+        <p id="cashier_locked_message">Quỹ đã bị khóa theo yêu cầu của bạn - để mở khóa, vui lòng nhấn <a href="/binary-static/br_master/vi/user/security/cashier_passwordws.html">vào đây </a>.</p>
+        <p id="check_email_message">Để tăng cường độ bảo mật. vui lòng kiểm tra hòm thư của bạn để nhận cuỗi xác nhận.</p>
+        <p id="choose_currency_message">Xin vui lòng chọn đồng tiền mà bạn muốn giao dịch.</p>
+        <p id="personal_details_message">
+            Xảy ra lỗi phê chuẩn thông tin cá nhân chi tiết của bạn. Vui lòng cập nhật [_1] của bạn <a href="/binary-static/br_master/vi/user/settings/detailsws.html"> tại đây</a>.
+            <br /> Nếu bạn cần trợ giúp, vui lòng liên hệ với đội ngũ hỗ trợ khách hàng <a href="/binary-static/br_master/vi/contact.html"></a>của chúng tôi.
+        </p>
+        <p id="not_authenticated_message">Tài khoản của bạn chưa hoàn toàn được xác thực.</p>
+    </div>
+
+    <div id="errors" class="invisible">
+        <p class="center-text notice-msg">
+            <span id="financial_risk_error">Phê duyệt rủi ro tài chính là cần thiết. Xin vui lòng liên hệ với <a href="/binary-static/br_master/vi/contact.html"> hỗ trợ khách hàng</a> cho biết thêm thông tin.</span>
+            <span id="knowledge_test_error">Bạn phải hoàn tất bài kiểm tra kiến thức để kích hoạt tài khoản này. Xin vui lòng liên hệ với <a href="/binary-static/br_master/vi/contact.html"> hỗ trợ khách hàng</a> để biết thêm thông tin.</span>
+            <span id="activation_error">Tài khoản chưa kích hoạt, xin vui lòng liên hệ với <a href="/binary-static/br_master/vi/contact.html"> hỗ trợ khách hàng</a> để biết thêm thông tin.</span>
+            <span id="age_error">Tài khoản cần xác minh tuổi, xin vui lòng liên hệ với <a href="/binary-static/br_master/vi/contact.html"> hỗ trợ khách hàng</a> để biết thêm thông tin.</span>
+            <span id="tnc_error">Xin <a href="/binary-static/br_master/vi/user/tnc_approvalws.html"> vui lòng chấp nhận các điều khoản và điều kiện Cập Nhật</a>.</span>
+            <span id="limits_error">Please set your 30-day turnover limit in our <a href="/binary-static/br_master/vi/user/security/self_exclusionws.html#max_30day_turnover">self-exclusion facilities</a> to access the cashier.</span>
+            <span id="custom_error">Rất tiếc, đã xảy ra lỗi khi đang xử lý yêu cầu của bạn.</span>
+        </p>
+    </div>
+
+    <div class="invisible">
+        <iframe src="" frameborder="0" width="100%" scrolling="auto"></iframe>
+    </div>
+
+    <form id="frm_ukgc" class="gr-row gr-parent invisible">
+        <div class="gr-2 gr-6-m gr-centered-m">
+            <p><img class="responsive" src="/binary-static/br_master/images/pages/cashier/protection-icon.svg" /></p>
+        </div>
+
+        <div class="gr-10 gr-12-m">
+            <p>Chúng tôi bắt buộc phải thông báo cho bạn về những điều xảy ra vơi số tiền chúng tôi giữ trong tài khoản của bạn, và mức độ tiền được bảo toàn trong trường hợp bị phá sản <a href='http://www.gamblingcommission.gov.uk/Consumers/Protection-of-customer-funds.aspx' target='_blank'>http://www.gamblingcommission.gov.uk/Consumers/Protection-of-customer-funds.aspx</a>.</p>
+            <p>Công ty giữ tiền khách hàng trong tài khoản ngân hàng tách biệt với tài khoản ngân hàng vận hành, trong trường hợp phá sản, nó sẽ không thuộc tài sản của Công ty. Điều này đáp ứng các yêu cầu của Ủy ban Cờ bạc để cách ly các tiền của khách hàng ở cấp độ: <strong>bảo vệ trung bình</strong>.</p>
+            <div class='gr-3 gr-6-m gr-centered'>
+                <button class="button" type="submit">Xử lý</button>
+            </div>
+        </div>
+    </form>
+
+    <form id="frm_currency" class="invisible">
+        <fieldset>
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="select_currency">Giao dịch trong</label>
+                </div>
+                <div class="gr-8">
+                    <select id="select_currency"></select>
+                </div>
+            </div>
+            <div class="gr-padding-10 row clear center-text">
+                <div class="gr-8">
+                    <button class="button" type="submit">Tiếp tục</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <form id="frm_withdraw" class="invisible">
+        <fieldset>
+            <div class="gr-row gr-parent gr-padding-10">
+                <div class="form_label gr-4">
+                    <label for="verification_code">Mã Token Xác minh</label>
+                </div>
+                <div class="gr-8">
+                    <input id="verification_code" name="verification_code" type="text" maxlength="8" autocomplete="off" />
+                    <div class="hint">Vui lòng kiểm tra email của bạn để biết giá trị của token này</div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="gr-12 gr-parent gr-centered center-text">
+            <button class="button" type="submit">Gửi</button>
+        </div>
+    </form>
+</div>

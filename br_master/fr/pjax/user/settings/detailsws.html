@@ -1,0 +1,473 @@
+<div id="content" class="detailsws-content">
+        <div id="page_info" style="display:none;">
+            <title>Informations personnelles | Binary.com</title>
+            <div id="content_class">detailsws-content</div>
+        </div>
+        
+        <div class="container">
+
+
+  <div>
+    <h1>Informations personnelles</h1>
+
+    <p class="notice-msg center-text invisible" id="tax_information_notice">
+        Veuillez fournir les informations fiscales requises avant de continuer.
+    </p>
+
+    <form class="form gr-padding-10 hidden" id="frmPersonalDetails">
+        <fieldset>
+            <legend>Informations</legend>
+
+            <div class="gr-padding-10 gr-row rowName clear hidden RealAcc JpAcc">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Nom</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_name"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear JpAcc invisible">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Sexe</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_gender"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear rowBirthDate hidden RealAcc JpAcc">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Date de naissance</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_date_of_birth"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="hidden RealAcc">
+                <div class="gr-padding-10 gr-row clear">
+                    <div class="gr-4 form_label">
+                        <label for="place_of_birth">Lieu de naissance</label>
+                    </div>
+                    <div class="gr-8">
+                        <select name="place_of_birth" id="place_of_birth" class="form_input"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Pays de résidence</label>
+                </div>
+                <div class="gr-8">
+                    <label><strong id="lbl_country"></strong></label>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Adresse e-mail</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_email"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear JpAcc invisible">
+                <div class="gr-4 form_label">
+                    <label for="occupation">Profession</label>
+                </div>
+                <div class="gr-8">
+                    <select id="occupation" class="jp_value">
+                        <option value="Office worker">Office worker</option>
+                        <option value="Director">Directeur</option>
+                        <option value="Public worker">Public worker</option>
+                        <option value="Self-employed">Non-salarié</option>
+                        <option value="Housewife / Househusband">Au foyer</option>
+                        <option value="Contract / Temporary / Part Time">Contrat / temporaire / temps partiel</option>
+                        <option value="Student">Student</option>
+                        <option value="Unemployed">Unemployed</option>
+                        <option value="Others">Autres</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="hidden RealAcc ja-hide">
+            <legend>Informations fiscales</legend>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="tax_residence">Résidence fiscale</label>
+                </div>
+                <div class="gr-8">
+                    <select name="tax_residence" id="tax_residence" class="invisible" multiple="multiple"></select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="tax_identification_number">Numéro d'identification fiscale</label>
+                </div>
+                <div class="gr-8">
+                    <input type="text" class="text" id="tax_identification_number" name="tax_identification_number" maxlength="20"/>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="hidden RealAcc ja-hide">
+            <legend>Adresse</legend>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="address_line_1">Première ligne de l'adresse résidentielle</label>
+                </div>
+                <div class="gr-8">
+                    <input name='address_line_1' type="text" id="address_line_1" maxlength="70" />
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="address_line_2">Deuxième ligne de l'adresse résidentielle</label>
+                </div>
+                <div class="gr-8">
+                    <input name='address_line_2' type="text" id="address_line_2" maxlength="70" />
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="address_city">Ville</label>
+                </div>
+                <div class="gr-8">
+                    <input name='address_city' type="text" id="address_city" maxlength="35" />
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="address_state">Etat/Province</label>
+                </div>
+                <div class="gr-8">
+                    <select name='address_state' id="address_state"></select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="address_postcode">Code postal</label>
+                </div>
+                <div class="gr-8">
+                    <input name='address_postcode' type="text" id="address_postcode" maxlength="20" />
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="phone">Téléphone</label>
+                </div>
+                <div class="gr-8">
+                    <input name='phone' type="text" id="phone" maxlength="35" />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="JpAcc invisible">
+            <legend>Adresse</legend>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Code postal</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_address_postcode" class="jp_value"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Etat/Province</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_address_state" class="jp_value"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Ville</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_address_city" class="jp_value"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Première ligne de l'adresse résidentielle</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_address_line_1" class="jp_value"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Deuxième ligne de l'adresse résidentielle</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_address_line_2" class="jp_value"></strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label><em class="required_asterisk">**</em> Téléphone</label>
+                </div>
+                <div class="gr-8">
+                    <span id="inputheading">
+                        <strong id="lbl_phone" class="jp_value"></strong>
+                    </span>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="JpAcc invisible">
+            <legend>Statut</legend>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="annual_income">Revenu annuel</label>
+                </div>
+                <div class="gr-8">
+                    <select id="annual_income" class="jp_value">
+                        <option value="Less than 1 million JPY">Less than 1 million JPY</option>
+                        <option value="1-3 million JPY">1-3 million(s) JPY</option>
+                        <option value="3-5 million JPY">3-5 millions JPY</option>
+                        <option value="5-10 million JPY">5-10 millions JPY</option>
+                        <option value="10-30 million JPY">10-30 millions JPY</option>
+                        <option value="30-50 million JPY">30-50 millions JPY</option>
+                        <option value="50-100 million JPY">50-100 millions JPY</option>
+                        <option value="Over 100 million JPY">Over 100 million JPY</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="financial_asset">Actif financier</label>
+                </div>
+                <div class="gr-8">
+                    <select id="financial_asset" class="jp_value">
+                        <option value="Less than 1 million JPY">Less than 1 million JPY</option>
+                        <option value="1-3 million JPY">1-3 million(s) JPY</option>
+                        <option value="3-5 million JPY">3-5 millions JPY</option>
+                        <option value="5-10 million JPY">5-10 millions JPY</option>
+                        <option value="10-30 million JPY">10-30 millions JPY</option>
+                        <option value="30-50 million JPY">30-50 millions JPY</option>
+                        <option value="50-100 million JPY">50-100 millions JPY</option>
+                        <option value="Over 100 million JPY">Over 100 million JPY</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="JpAcc invisible">
+            <legend>Expérience du trading</legend>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="trading_experience_equities">Actions</label>
+                </div>
+                <div class="gr-8">
+                    <select id="trading_experience_equities" class="jp_value">
+                        <option value="No experience">No experience</option>
+                        <option value="Less than 6 months">Moins de 6 mois</option>
+                        <option value="6 months to 1 year">6 mois à 1 an</option>
+                        <option value="1-3 years">1-3 ans</option>
+                        <option value="3-5 years">3-5 ans</option>
+                        <option value="Over 5 years">Plus de 5 ans</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="trading_experience_commodities">Matières premières</label>
+                </div>
+                <div class="gr-8">
+                    <select id="trading_experience_commodities" class="jp_value">
+                        <option value="No experience">No experience</option>
+                        <option value="Less than 6 months">Moins de 6 mois</option>
+                        <option value="6 months to 1 year">6 mois à 1 an</option>
+                        <option value="1-3 years">1-3 ans</option>
+                        <option value="3-5 years">3-5 ans</option>
+                        <option value="Over 5 years">Plus de 5 ans</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="trading_experience_foreign_currency_deposit">Dépôt en devise étrangère</label>
+                </div>
+                <div class="gr-8">
+                    <select id="trading_experience_foreign_currency_deposit" class="jp_value">
+                        <option value="No experience">No experience</option>
+                        <option value="Less than 6 months">Moins de 6 mois</option>
+                        <option value="6 months to 1 year">6 mois à 1 an</option>
+                        <option value="1-3 years">1-3 ans</option>
+                        <option value="3-5 years">3-5 ans</option>
+                        <option value="Over 5 years">Plus de 5 ans</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="trading_experience_margin_fx">Margin FX</label>
+                </div>
+                <div class="gr-8">
+                    <select id="trading_experience_margin_fx" class="jp_value">
+                        <option value="No experience">No experience</option>
+                        <option value="Less than 6 months">Moins de 6 mois</option>
+                        <option value="6 months to 1 year">6 mois à 1 an</option>
+                        <option value="1-3 years">1-3 ans</option>
+                        <option value="3-5 years">3-5 ans</option>
+                        <option value="Over 5 years">Plus de 5 ans</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="trading_experience_investment_trust">Investment trust</label>
+                </div>
+                <div class="gr-8">
+                    <select id="trading_experience_investment_trust" class="jp_value">
+                        <option value="No experience">No experience</option>
+                        <option value="Less than 6 months">Moins de 6 mois</option>
+                        <option value="6 months to 1 year">6 mois à 1 an</option>
+                        <option value="1-3 years">1-3 ans</option>
+                        <option value="3-5 years">3-5 ans</option>
+                        <option value="Over 5 years">Plus de 5 ans</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="trading_experience_public_bond">Public and corporation bond</label>
+                </div>
+                <div class="gr-8">
+                    <select id="trading_experience_public_bond" class="jp_value">
+                        <option value="No experience">No experience</option>
+                        <option value="Less than 6 months">Moins de 6 mois</option>
+                        <option value="6 months to 1 year">6 mois à 1 an</option>
+                        <option value="1-3 years">1-3 ans</option>
+                        <option value="3-5 years">3-5 ans</option>
+                        <option value="Over 5 years">Plus de 5 ans</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="trading_experience_option_trading">Négociation de produits dérivés de gré à gré (options « OTC »)</label>
+                </div>
+                <div class="gr-8">
+                    <select id="trading_experience_option_trading" class="jp_value">
+                        <option value="No experience">No experience</option>
+                        <option value="Less than 6 months">Moins de 6 mois</option>
+                        <option value="6 months to 1 year">6 mois à 1 an</option>
+                        <option value="1-3 years">1-3 ans</option>
+                        <option value="3-5 years">3-5 ans</option>
+                        <option value="Over 5 years">Plus de 5 ans</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label">
+                    <label for="trading_purpose">Objectif du trading</label>
+                </div>
+                <div class="gr-8">
+                    <select id="trading_purpose" class="jp_value">
+                        <option value="Targeting short-term profits">Targeting short-term profits</option>
+                        <option value="Targeting medium-term / long-term profits">Targeting medium-term / long-term profits</option>
+                        <option value="Both the above">Les deux options ci-dessus</option>
+                        <option value="Hedging">Opérations de couverture</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear hedge invisible">
+                <div class="gr-4 form_label">
+                    <label for="hedge_asset">Classification of assets requiring hedge</label>
+                </div>
+                <div class="gr-8">
+                    <select id="hedge_asset">
+                        <option value="Foreign currency deposit">Dépôt en devise étrangère</option>
+                        <option value="Margin FX">Margin FX</option>
+                        <option value="Other">Autre</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gr-padding-10 gr-row clear hedge invisible">
+                <div class="gr-4 form_label">
+                    <label for="hedge_asset_amount">Montant des actifs ci-dessus</label>
+                </div>
+                <div class="gr-8">
+                    <input class="text" name="hedge_asset_amount" id="hedge_asset_amount" maxlength="20" type="text"/>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset id="fieldset_email_consent" class="invisible">
+            <legend>Préférences</legend>
+
+            <div class="gr-padding-10 gr-row clear">
+                <div class="gr-4 form_label" id="email_consent_label">
+                    <label for="email_consent">Recevez des bulletins d'information et des offres spéciales</label>
+                </div>
+                <div class="gr-8">
+                    <input type="checkbox" id="email_consent" />
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="gr-row gr-padding-10 invisible" id="btn_update">
+            <div class="gr-4"></div>
+            <div class="gr-8">
+                <div class="gr-padding-10">
+                    <div id="formMessage"></div>
+                </div>
+                <button class="button" type="submit">Mise à jour</button>
+            </div>
+        </div>
+    </form>
+
+    <p class="required hidden RealAcc JpAcc rowCustomerSupport"><em class="required_asterisk">**</em> Pour modifier vos nom, date de naissance, pays de résidence ou adresse e-mail, veuillez contacter le <a href="/binary-static/br_master/fr/contact.html">Service Clientèle</a>.</p>
+
+</div>

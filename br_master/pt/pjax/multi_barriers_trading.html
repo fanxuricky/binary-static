@@ -1,0 +1,254 @@
+<div id="content" class="multi_barriers_trading-content">
+        <div id="page_info" style="display:none;">
+            <title>Trusted by traders since 2000 | Binary.com</title>
+            <div id="content_class">multi_barriers_trading-content</div>
+        </div>
+        
+        <div class="container">
+
+
+  <div class="center-text">
+    <div class="barspinner dark">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+</div>
+</div>
+<div class="mb-trading-wrapper invisible">
+    <div id="mb_trading">
+        <div id="notifications_wrapper"></div>
+        <section class="japan-form gr-row">
+            <div class="gr-6 gr-12-m gr-12-p gr-no-gutter-right">
+                <div class="gr-row">
+                    <div class="gr-6 gr-12-m gr-no-gutter-left padding-right-five">
+                        <div class="select-box">
+                            <div class="padding-10">
+                                <div class="select-heading">Taxa FX</div>
+                                <select class="select" id="underlying"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gr-6 gr-12-m gr-no-gutter-left padding-right-five">
+                        <div class="select-box">
+                            <div class="padding-10">
+                                <div class="select-heading">Tipo de opção</div>
+                                <select class="select" id="category"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gr-6 gr-12-m gr-12-p gr-no-gutter-left gr-gutter-left-p gr-gutter-left-m gr-no-gutter-right-p gr-no-gutter-right-m">
+                <div class="gr-row">
+                    <div class="gr-6 gr-12-m gr-no-gutter-left padding-right-five">
+                        <div class="select-box">
+                            <div class="padding-10">
+                                <div class="select-heading">Tempo de vencimento<span class="all-hide ja-show"> (Duration)</span></div>
+                                <select class="select" id="period"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gr-6 gr-12-m gr-no-gutter-left no-padding-right">
+                        <div class="select-box">
+                            <div class="padding-10">
+                                <div class="select-heading">Valor do prêmio</div>
+                                <div class="payout-input">
+                                    <div class="float-left">
+                                        <select class="select" id="currency"></select>
+                                        <input type="text" class="payout-select select" id="payout" maxlength="10">
+                                        <label class="payout-mult all-hide ja-show" for="payout">,000</label>
+                                    </div>
+                                    <div class="float-left hint all-hide ja-show">mín: 1.000<br>máx: 100.000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gr-12">
+                <div class="gr-row space-between">
+                    <div class="gr-grow gr-12-m">
+                        <div class="gr-row spot">
+                            <div class="gr-adapt spot-value">
+                                <span>Preço atual:</span>
+                                <span id="spot"></span>
+                                <span id="spot-dyn"></span>
+                            </div>
+                            <div class="gr-adapt">
+                                <span id="trading_worm_chart"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gr-adapt gr-12-m">
+                        <div class="countdown-timer align-end">
+                            <span id="remaining-time-label"></span>
+                            <span id="remaining-time">...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="japan-table gr-row">
+            <div id="disable-overlay" class="invisible"></div>
+            <div class="prices-wrapper gr-6 gr-12-m gr-12-p padding-right-five">
+                <div class="descr-wrapper">
+                    <div class="fill-bg-color row flex-box cols">
+                        <h1 class="contract-type"></h1>
+                        <div class="descr"></div>
+                    </div>
+                </div>
+                <div class="gr-12">
+                    <div class="gr-row heading">
+                        <div class="gr-4 barrier">Barreira</div>
+                        <div class="gr-4 buy-price">Preço de compra</div>
+                        <div class="gr-4 sell-price">Preço de venda</div>
+                    </div>
+                    <div class="price-rows"></div>
+                </div>
+            </div>
+            <div class="prices-wrapper gr-6 gr-12-m gr-12-p gr-no-gutter-left padding-right-ten gr-gutter-left-p gr-gutter-left-m">
+                <div class="descr-wrapper">
+                    <div class="fill-bg-color row flex-box cols">
+                        <h1 class="contract-type negative-color"></h1>
+                        <div class="descr"></div>
+                    </div>
+                </div>
+                <div class="gr-12">
+                    <div class="gr-row heading">
+                        <div class="gr-4 barrier">Barreira</div>
+                        <div class="gr-4 buy-price">Preço de compra</div>
+                        <div class="gr-4 sell-price">Preço de venda</div>
+                    </div>
+                    <div class="price-rows"></div>
+                </div>
+            </div>
+            <div id="loading-overlay" class="invisible"></div>
+        </div>
+    </div>
+    <div id="trading_bottom_content">
+  <div class="content-tab-container page-section">
+    <div class="tab-menu">
+      <div class="tab-menu-wrap">
+        <ul id="betsBottomPage" class="tm-ul follow-default">
+          <li id="tab_portfolio" class="tm-li invisible first">
+            <a href="#tab_portfolio" class="tm-a first"></a>
+          </li>
+          <li id="tab_graph" class="tm-li first">
+            <a href="#tab_graph" class="tm-a first"></a>
+          </li>
+          <li id="tab_explanation" class="tm-li active">
+            <a href="" class="tm-a"></a>
+          </li>
+          <li id="tab_last_digit" class="invisible tm-li">
+            <a href="javascript:;" class="tm-a"></a>
+          </li>
+          <li id="tab_japan_info" class="invisible tm-li last">
+            <a href="javascript:;" class="tm-a"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab-content">
+      <div class="tab-content-wrapper" id="bet_bottom_content">
+        <div id="tab_portfolio-content" class="toggle-content invisible "></div>
+        <div id="tab_graph-content" class="toggle-content invisible">
+          <p class="error-msg" id="chart-error"></p>
+          <div id="trade_live_chart">
+            <table width="600px" align="center">
+              <tr align="center">
+                <td colspan="4">
+                  <iframe src="" width="100%" height="630" id="chart_frame" style="overflow-y : hidden;" scrolling="no"></iframe>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div id="tab_explanation-content" class="toggle-content selectedTab"></div>
+        <div id="tab_last_digit-content" class="toggle-content invisible ">
+            <div class="gr-parent">
+                <div id="last_digit_histo_form" class="gr-8 gr-12-m gr-centered">
+                    <div class="smallfont gr-row">
+                        <div class="gr-6 gr-12-m">
+                            <label for="digit_underlying">Select market:</label>
+                            <select class="smallfont" id="digit_underlying"></select>
+                        </div>
+                        <div class="gr-6 gr-12-m">
+                            <label for="tick_count">Number of ticks:</label>
+                            <select class="smallfont" id="tick_count">
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option selected="selected" value="100">100</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="last_digit_histo" class="gr-8 gr-12-m gr-centered"></div>
+                <div id="last_digit_title" class="gr-hide"><span id="digit_domain"></span> - Estatísticas dos últimos dígitos dos últimos <span id="digit_info_count">100</span> tique-taques de <span id="digit_info_underlying"></span></div>
+            </div>
+        </div>
+        <div id="tab_japan_info-content" class="toggle-content invisible "></div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div id="open_positions_container"><div id="portfolio">
+
+    <h1 class="portfolio-header-margin">Portfólio</h1>
+
+    <p class="notice-msg center-text invisible" id="error-msg"></p>
+
+    <div id="portfolio-loading"></div>
+
+    <div id="portfolio-content" class="invisible">
+        <div class="gr-parent gr-padding-10">
+            Saldo de conta: 
+            <span class="loading" id="portfolio-balance"></span>
+
+            <!-- If the account balance is zero we show the following button, otherwise we remove it -->
+            <span id="if-balance-zero" class="invisible">
+                <a href="/binary-static/br_master/pt/cashier/forwardws.html#deposit" class="button nowrap ja-hide">
+                    <span>Faça um Depósito</span>
+                </a>
+                <a href="/binary-static/br_master/pt/cashier/deposit-jp.html" class="button nowrap all-hide ja-show">
+                    <span>Faça um Depósito</span>
+                </a>
+            </span>
+        </div>
+
+        <div id="portfolio-no-contract">
+            <p>Nenhuma posição em aberto.</p>
+        </div>
+
+        <div class="table-container">
+        <table id="portfolio-table">
+            <thead>
+                <tr>
+                    <th class="ref">Ref.</th>
+                    <th class="payout nowrap">Possível Prêmio</th>
+                    <th class="details">Detalhes do Contrato</th>
+                    <th class="purchase">Comprar</th>
+                    <th class="indicative nowrap">Indicativo</th>
+                    <th class="button"></th>
+                </tr>
+            </thead>
+
+            <tbody id="portfolio-body"></tbody>
+
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th class="ref" colspan="2"></th>
+                    <th class="cost" id="cost-of-open-positions"></th>
+                    <th class="value" id="value-of-open-positions" colspan="2"></th>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+    </div>
+</div></div>
+</div>

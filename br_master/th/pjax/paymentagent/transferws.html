@@ -1,0 +1,126 @@
+<div id="content" class="transferws-content">
+        <div id="page_info" style="display:none;">
+            <title>ตัวแทนรับชำระเงินสำหรับการโอนเงิน | Binary.com</title>
+            <div id="content_class">transferws-content</div>
+        </div>
+        
+        <div class="container">
+
+
+  <h1>ตัวแทนรับชำระเงินสำหรับการโอนเงิน</h1>
+
+<div id="pa_transfer_loading" class="center-text"><div class="barspinner dark">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+</div></div>
+
+<form id="frm_confirm_transfer" class="invisible">
+    <p>โปรดยืนยันรายละเอียดของธุรกรรมเพื่อทำให้การโอนสมบูรณ์:</p>
+
+    <fieldset>
+        <legend>รายละเอียด</legend>
+
+        <div class="gr-row gr-padding-10">
+            <div class="gr-4 form_label">
+                <label for="user_name">โอนไป</label>
+            </div>
+            <div class="gr-8">
+                <strong><label id="user_name"></label></strong>
+            </div>
+        </div>
+
+        <div class="gr-row gr-padding-10">
+            <div class="gr-4 form_label">
+                <label for="user_name">รหัสผู้ใช้งาน</label>
+            </div>
+            <div class="gr-8">
+                <strong><label id="loginid"></label></strong>
+            </div>
+        </div>
+
+        <div class="gr-row gr-padding-10">
+            <div class="gr-4 form_label">
+                <label for="amount">จำนวน</label>
+            </div>
+            <div class="gr-8">
+                <strong><label id="confirm_amount"></label></strong>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="gr-row gr-padding-10">
+        <div class="gr-4"></div>
+        <div class="gr-8">
+            <p class="errorfield invisible gr-padding-10"></p>
+            <a class="button" href="javascript:;" id="back_transfer">
+                <span class="button">กลับ</span>
+            </a>
+            <button class="button" type="submit">ยืนยัน</button>
+        </div>
+    </div>
+</form>
+
+<div id="pa_transfer_done" class="invisible">
+    <p id="confirm_msg" class="invisible"></p>
+    <p>
+        <a class="button" href="/binary-static/br_master/th/user/statementws.html">
+            <span class="button">ดูสเตทเมนท์ของท่าน</span>
+        </a>
+    </p>
+</div>
+
+<div id="no_balance_error" class="invisible">
+    <p class="center-text notice-msg">โปรด <a href="/binary-static/br_master/th/cashier/forwardws.html#deposit">ฝากเงิน</a> ก่อนทำการโอนให้ลูกค้า</p>
+</div>
+
+<div id="not_pa_error" class="invisible">
+    <p class="center-text notice-msg">ฟังก์ชันนี้สัมพันธ์กับบัญชีตัวแทนชำระเงินเท่านั้น</p>
+</div>
+
+<form id="frm_paymentagent_transfer" class="invisible">
+    <p>โปรดกรอกรหัสผู้ใช้งาน และจำนวนเงินที่ท่านต้องการโอนให้กับลูกค้าของท่านในแบบฟอร์มด้านล่าง:</p>
+
+    <fieldset>
+        <legend>รายละเอียด</legend>
+
+        <div class="gr-row gr-padding-10">
+            <div class="gr-4 form_label">
+                <label for="client_id">โอนไปรหัสผู้ใช้งาน</label>
+            </div>
+            <div class="gr-8">
+                <input type="text" name="client_id" id="client_id"/>
+            </div>
+        </div>
+
+        <div class="gr-row gr-padding-10">
+            <div class="gr-4 form_label">
+                <label for="amount">จำนวน</label>
+            </div>
+            <div class="gr-8">
+                <input type="number" name="amount" id="amount" min="10" max="2000" step="any"/>
+                <p class="hint">ต่ำสุด: 10 ค่ามากที่สุด: 2000</p>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="gr-row gr-padding-10">
+        <div class="gr-4"></div>
+        <div class="gr-8">
+            <p id="insufficient_balance" class="errorfield invisible gr-padding-10">ยอดคงเหลือไม่เพียงพอ</p>
+            <p id="form_error" class="errorfield invisible gr-padding-10"></p>
+            <button class="button" type="submit">ส่ง</button>
+        </div>
+    </div>
+</form>
+
+<div id="paymentagent_transfer_notes" class="invisible">
+    <div>บันทึก:</div>
+    <ul>
+        <li>ระบบของเราไม่เรียกเก็บค่าธรรมเนียมใดๆ ในการโอน</li>
+        <li>เมื่อท่านกดปุ่ม 'Submit' เงินหลักประกันของท่านจะถูกถอนจากบัญชีของท่านและโอนไปที่บัญชีลูกค้าของท่าน</li>
+        <li>ลูกค้าของท่านจะได้รับอีเมล์แจ้งให้ทราบว่า การโอนได้ถูกดำเนินการแล้ว</li>
+    </ul>
+</div>
