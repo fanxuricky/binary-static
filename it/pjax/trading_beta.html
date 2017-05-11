@@ -1,10 +1,11 @@
 <div id="content" class="trading_beta-content">
-        <div id="page_info" style="display:none;">
-            <title>Trusted by traders since 2000 | Binary.com</title>
-            <div id="content_class">trading_beta-content</div>
-        </div>
-        
-        <div class="container">
+            <div id="page_info" style="display:none;">
+                <title>Riconosciuto dai trader dal 2000 | Binary.com</title>
+                <div id="content_class">trading_beta-content</div>
+            </div>
+
+            <div class="container">
+
 
 
   <div id="trading_socket_container_beta" class="tab-menu-wrap gr-row">
@@ -122,16 +123,27 @@
                                         </div>
                                         <div class="big-col">
                                             <select id="prediction" class="small_width_input">
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
+                                                
+                                                    <option value="0">0</option>
+                                                
+                                                    <option value="1">1</option>
+                                                
+                                                    <option value="2">2</option>
+                                                
+                                                    <option value="3">3</option>
+                                                
+                                                    <option value="4">4</option>
+                                                
+                                                    <option value="5">5</option>
+                                                
+                                                    <option value="6">6</option>
+                                                
+                                                    <option value="7">7</option>
+                                                
+                                                    <option value="8">8</option>
+                                                
+                                                    <option value="9">9</option>
+                                                
                                             </select>
                                         </div>
                                     </div>
@@ -291,42 +303,50 @@
             <div class="col-right gr-6 gr-5-t gr-12-p gr-12-m">
                 <div id="trading_analysis_content">
     <div class="content-tab-container page-section">
+        
         <div id="analysis_tab_container">
-            <ul id="analysis_tabs" class="tm-ul follow-default">
-                <li id="tab_graph" class="tm-li first">
-                    <a href="#tab_graph" class="tm-a first">Grafico</a>
+        <ul id="analysis_tabs" class="tm-ul follow-default">
+            
+                <li id="tab_graph" class="tm-li ">
+                    <a href="#tab_graph" class="tm-a">Grafico</a>
                 </li>
-                <li id="tab_portfolio" class="tm-li first invisible">
-                    <a href="#tab_portfolio" class="tm-a first">Portafoglio</a>
+            
+                <li id="tab_portfolio" class="tm-li invisible">
+                    <a href="#tab_portfolio" class="tm-a">Portafoglio</a>
                 </li>
-                <li id="tab_explanation" class="tm-li">
-                    <a href="" class="tm-a">Spiegazione</a>
+            
+                <li id="tab_explanation" class="tm-li ">
+                    <a href="#tab_explanation" class="tm-a">Spiegazione</a>
                 </li>
-                <li id="tab_last_digit" class="invisible tm-li">
-                    <a href="javascript:;" class="tm-a">Statistiche sull'ultima cifra</a>
+            
+                <li id="tab_last_digit" class="tm-li invisible">
+                    <a href="#tab_last_digit" class="tm-a">Statistiche sull'ultima cifra</a>
                 </li>
-                <li id="tab_japan_info" class="invisible tm-li">
-                    <a href="javascript:;" class="tm-a"></a>
+            
+                <li id="tab_asset_index" class="tm-li invisible">
+                    <a href="#tab_asset_index" class="tm-a">Indice degli asset</a>
                 </li>
-                <li id="tab_asset_index" class="invisible tm-li">
-                    <a href="javascript:;" class="tm-a">Indice degli asset</a>
+            
+                <li id="tab_trading_times" class="tm-li invisible">
+                    <a href="#tab_trading_times" class="tm-a">Orari di trading</a>
                 </li>
-                <li id="tab_trading_times" class="invisible tm-li last">
-                    <a href="javascript:;" class="tm-a">Orari di trading</a>
-                </li>
-            </ul>
-        </div>
+            
+        </ul>
+    </div>
         <div class="tab-content-wrapper" id="analysis_content">
+        
             <div id="tab_graph-content" class="toggle-content invisible">
+        
                 <p class="error-msg" id="chart-error"></p>
                 <div id="trade_live_chart">
                     <table><tr><td>
                         <iframe src="" width="100%" height="99%" id="chart_frame" style="overflow-y : hidden;" scrolling="no"></iframe>
                     </td></tr></table>
                 </div>
-            </div>
-            <div id="tab_portfolio-content" class="toggle-content invisible"><div id="portfolio">
-
+            
+    </div>
+            <div id="tab_portfolio-content" class="toggle-content invisible">
+        <div id="portfolio">
     <h1 class="portfolio-header-margin">Portafoglio</h1>
 
     <p class="notice-msg center-text invisible" id="error-msg"></p>
@@ -343,7 +363,7 @@
                 <a href="/binary-static/it/cashier/forwardws.html#deposit" class="button nowrap ja-hide">
                     <span>Effettua un deposito</span>
                 </a>
-                <a href="/binary-static/it/cashier/deposit-jp.html" class="button nowrap all-hide ja-show">
+                <a href="/binary-static/it/cashier/deposit-jp.html" class="button nowrap invisible ja-show">
                     <span>Effettua un deposito</span>
                 </a>
             </span>
@@ -354,68 +374,115 @@
         </div>
 
         <div class="table-container">
-        <table id="portfolio-table">
-            <thead>
+    <table id="portfolio-table">
+        
+        <thead>
+            
                 <tr>
-                    <th class="ref">Rif.</th>
-                    <th class="payout nowrap">Payout potenziale</th>
-                    <th class="details">Dettagli del contratto</th>
-                    <th class="purchase">Acquisto</th>
-                    <th class="indicative nowrap">Indicativo</th>
-                    <th class="button"></th>
+                    
+                        <th class="ref">Rif.</th>
+                    
+                        <th class="payout nowrap">Payout potenziale</th>
+                    
+                        <th class="details">Dettagli del contratto</th>
+                    
+                        <th class="purchase">Acquisto</th>
+                    
+                        <th class="indicative nowrap">Indicativo</th>
+                    
+                        <th class="button"></th>
+                    
                 </tr>
-            </thead>
-
-            <tbody id="portfolio-body"></tbody>
-
+            
+        </thead>
+        
+        <tbody id="portfolio-body">
+        
+    </tbody>
+        
             <tfoot>
+                
                 <tr>
-                    <th>Totale</th>
-                    <th class="ref" colspan="2"></th>
-                    <th class="cost" id="cost-of-open-positions"></th>
-                    <th class="value" id="value-of-open-positions" colspan="2"></th>
+                    
+                        <th >
+                            Totale
+                        </th>
+                    
+                        <th class="ref" colspan="2">
+                            
+                        </th>
+                    
+                        <th class="cost" id="cost-of-open-positions" >
+                            
+                        </th>
+                    
+                        <th class="value" id="value-of-open-positions" colspan="2">
+                            
+                        </th>
+                    
                 </tr>
+                
             </tfoot>
-        </table>
+        
+    </table>
+    </div>
+    </div>
+</div>
+    </div>
+            <div id="tab_explanation-content" class="toggle-content invisible">
+        
+    </div>
+            <div id="tab_last_digit-content" class="toggle-content invisible">
+        <div class="gr-parent">
+    <div id="last_digit_histo_form" class="gr-12 gr-12-m gr-centered">
+        <div class="smallfont gr-row">
+            <div class="gr-6 gr-12-m center-text">
+                <label class="gr-padding-10" for="digit_underlying">Seleziona il mercato:</label>
+                <br/>
+                <select class="smallfont" id="digit_underlying"></select>
+            </div>
+            <div class="gr-6 gr-12-m center-text">
+                <label class="gr-padding-10" for="tick_count">Numero di tick:</label>
+                <br/>
+                <select id="tick_count" class="smallfont">
+        
+            <option value="25">
+                25
+            </option>
+        
+            <option value="50">
+                50
+            </option>
+        
+            <option value="100" selected="selected">
+                100
+            </option>
+        
+            <option value="500">
+                500
+            </option>
+        
+            <option value="1000">
+                1000
+            </option>
+        
+    </select>
+            </div>
         </div>
     </div>
-</div></div>
-            <div id="tab_explanation-content" class="toggle-content selectedTab"></div>
-            <div id="tab_last_digit-content" class="toggle-content invisible">
-                <div class="gr-parent">
-                    <div id="last_digit_histo_form" class="gr-12 gr-12-m gr-centered">
-                        <div class="smallfont gr-row">
-                            <div class="gr-6 gr-12-m center-text">
-                                <label class="gr-padding-10" for="digit_underlying">Select market:</label>
-                                <br/>
-                                <select class="smallfont" id="digit_underlying"></select>
-                            </div>
-                            <div class="gr-6 gr-12-m center-text">
-                                <label class="gr-padding-10" for="tick_count">Number of ticks:</label>
-                                <br/>
-                                <select class="smallfont" id="tick_count">
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option selected="selected" value="100">100</option>
-                                    <option value="500">500</option>
-                                    <option value="1000">1000</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="last_digit_histo" class="gr-12 gr-12-m gr-centered"></div>
-                    <div id="last_digit_title" class="gr-hide"><span id="digit_domain"></span> - Le statistiche delle ultime cifre per i <span id="digit_info_count">100</span> tick più recenti su <span id="digit_info_underlying"></span></div>
-                </div>
-            </div>
-            <div id="tab_japan_info-content" class="toggle-content invisible"></div>
-            <div id="tab_asset_index-content" class="toggle-content invisible"><h1>Indice degli asset</h1>
-
+    <div id="last_digit_histo" class="gr-12 gr-12-m gr-centered"></div>
+    <div id="last_digit_title" class="gr-hide"><span id="digit_domain"></span> - Le statistiche delle ultime cifre per i <span id="digit_info_count">100</span> tick più recenti su <span id="digit_info_underlying"></span></div>
+</div>
+    </div>
+            <div id="tab_asset_index-content" class="toggle-content invisible">
+        <h1>Indice degli asset</h1>
 <div class="gr-padding-10">
-    <p class="error-msg hidden" id="errorMsg"></p>
-
+    <p class="error-msg invisible" id="errorMsg"></p>
     <div id="asset-index" class="has-tabs gr-parent"></div>
-</div></div>
-            <div id="tab_trading_times-content" class="toggle-content invisible"><h1>Orari di trading</h1>
+</div>
+    </div>
+            <div id="tab_trading_times-content" class="toggle-content invisible">
+        <h1>Orari di trading</h1>
 <p>
     <label for="trading-date">Data: </label>
     <input type="text" id="trading-date" readonly="readonly" size="12" />
@@ -423,11 +490,13 @@
 <p>Tutti gli orari sono espressi in GMT (Greenwich Mean Time).</p>
 
 <div class="gr-padding-10">
-    <p class="error-msg hidden" id="errorMsg"></p>
-
+    <p class="error-msg invisible" id="errorMsg"></p>
     <div id="trading-times" class="has-tabs gr-parent"></div>
-</div></div>
-        </div>
+</div>
+    </div>
+        
+    </div>
+    
     </div>
 </div>
             </div>
@@ -437,10 +506,16 @@
 <div id="all_prices"></div>
 <div id="trading_init_progress">
     <div class="barspinner dark">
+    
     <div class="rect1"></div>
+    
     <div class="rect2"></div>
+    
     <div class="rect3"></div>
+    
     <div class="rect4"></div>
+    
     <div class="rect5"></div>
+    
 </div>
 </div>

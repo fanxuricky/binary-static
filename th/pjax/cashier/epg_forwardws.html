@@ -1,10 +1,11 @@
 <div id="content" class="epg_forwardws-content">
-        <div id="page_info" style="display:none;">
-            <title>แคชเชียร์ | Binary.com</title>
-            <div id="content_class">epg_forwardws-content</div>
-        </div>
-        
-        <div class="container">
+            <div id="page_info" style="display:none;">
+                <title>แคชเชียร์ | Binary.com</title>
+                <div id="content_class">epg_forwardws-content</div>
+            </div>
+
+            <div class="container">
+
 
 
   <div id="deposit_withdraw">
@@ -44,7 +45,7 @@
 
         <div class="gr-10 gr-12-m">
             <p>พวกเราถูกกำหนดโดยใบอนุญาตของพวกเราเพื่อเรียนให้ท่านทราบเกี่ยวกับสิ่งที่เกิดขึ้นกับเงินทุนที่พวกเราดูแลในแต่ละบัญชีของท่าน และการขยายผลเพื่อการบริหารและป้องกันเงินทุนจากภาวะไม่สามารถชำระหนี้ <a href='http://www.gamblingcommission.gov.uk/Consumers/Protection-of-customer-funds.aspx' target='_blank'>http://www.gamblingcommission.gov.uk/Consumers/Protection-of-customer-funds.aspx</a></p>
-            <p>บริษัทฯ ถือเงินทุนของลูกค้าในบัญชีธนาคาร ซึ่งจะไม่เกี่ยวข้องกับส่วนหนึ่งของบริษัทฯ ในแง่ความไม่สามารถชำระหนี้ ซึ่งเป็นเงื่อนไขของ Gambling Commission เกี่ยวกับเงินทุนของลูกค้าที่ระดับ: <strong>การป้องกันระดับกลาง</strong></p>
+            <p>บริษัทฯ ดูแลเงินทุนประกันของลูกค้าในบัญชีที่ถูกจัดสรรแยกเพื่อการปฏิบัติการ และการจัดการเพื่อให้แน่ใจว่า สินทรัพย์ของบัญชีลูกค้ามีการถูกจำหน่ายหากมีกรณีล้มละลาย ซึ่งเป็นไปตามข้อกำหนดของ Gambling Commission ในการแยกเงินทุนลูกค้าโดยเป็นมาตรการการป้องกันระดับ: <strong>การป้องกันระดับกลาง</strong></p>
             <div class='gr-3 gr-6-m gr-centered'>
                 <button class="button" type="submit">ประมวลผล</button>
             </div>
@@ -53,36 +54,57 @@
 
     <form id="frm_currency" class="invisible">
         <fieldset>
-            <div class="gr-padding-10 gr-row clear">
-                <div class="gr-4 form_label">
-                    <label for="select_currency">ธุรกรรม ณ</label>
-                </div>
-                <div class="gr-8">
-                    <select id="select_currency"></select>
-                </div>
+        
+        
+            <div class="gr-row form-row center-text-m ">
+        <div class="gr-4 gr-12-m">
+            <label for="select_currency">
+                ธุรกรรม ณ
+            </label>
+        </div>
+        <div class="gr-8 gr-12-m">
+                                <select id="select_currency" class="form_input " >                     </select>
+            
+        </div>
+    </div>
+            <div class="center-text ">
+            
+        
+        
+        <div class="gr-padding-10">
+            <button id="btn_submit" type="submit">ดำเนินการต่อ</button>
+        </div>
+    
             </div>
-            <div class="gr-padding-10 row clear center-text">
-                <div class="gr-8">
-                    <button class="button" type="submit">ดำเนินการต่อ</button>
-                </div>
-            </div>
-        </fieldset>
+        
+    </fieldset>
     </form>
 
     <form id="frm_withdraw" class="invisible">
         <fieldset>
-            <div class="gr-row gr-parent gr-padding-10">
-                <div class="form_label gr-4">
-                    <label for="verification_code">โทเค่นเพื่อตรวจสอบ</label>
-                </div>
-                <div class="gr-8">
-                    <input id="verification_code" name="verification_code" type="text" maxlength="8" autocomplete="off" />
-                    <div class="hint">โปรดตรวจสอบอีเมล์ของท่านเพื่อการใช้งานโทเค่นนี้</div>
-                </div>
-            </div>
-        </fieldset>
-        <div class="gr-12 gr-parent gr-centered center-text">
-            <button class="button" type="submit">ส่ง</button>
+        
+        
+            <div class="gr-row form-row center-text-m ">
+        <div class="gr-4 gr-12-m">
+            <label for="verification_code">
+                โทเค่นเพื่อตรวจสอบ
+            </label>
         </div>
+        <div class="gr-8 gr-12-m">
+                                <input type="text" id="verification_code" maxlength="8" autocomplete="off" />
+            <div class="hint">โปรดตรวจสอบอีเมล์ของท่านเพื่อการใช้งานโทเค่นนี้</div>
+        </div>
+    </div>
+        
+    </fieldset>
+        <div class="center-text ">
+            
+        
+        
+        <div class="gr-padding-10">
+            <button id="btn_submit" type="submit">ส่ง</button>
+        </div>
+    
+            </div>
     </form>
 </div>

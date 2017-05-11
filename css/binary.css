@@ -158,18 +158,13 @@ fieldset {
   padding: 5px;
   margin-bottom: 10px;
 }
-fieldset#formlayout {
-  /* TODO: remove all occurrences: no point in using fieldset when we hide its border */
-  background: none;
-  border: 0;
-}
 fieldset legend {
   color: #44484c;
   padding: 0 0.8em;
   font-weight: bold;
   text-transform: capitalize;
 }
-fieldset #inputheading, fieldset .text-display {
+fieldset .text-display {
   /* TODO: replace all occurrences of id with the class */
   line-height: 25px;
 }
@@ -206,7 +201,7 @@ label {
   width: 45%;
 }
 
-*, p.no-para-margin, .errorfield {
+*, .no-margin, .errorfield {
   margin: 0;
 }
 
@@ -223,8 +218,11 @@ label {
 }
 
 /* global styles */
-.required_asterisk {
-  color: #e98024;
+.required_field_asterisk {
+  position: absolute;
+  margin: -3px 3px;
+  font-size: 0.86957rem;
+  color: #c03;
 }
 
 .inpage_popup_container {
@@ -354,11 +352,24 @@ button .barspinner.white {
   margin: 3px auto;
 }
 
-#msg_notification {
+#msg_notification, #msg_notification:after {
   font-size: 0.86957rem;
   padding: 3px 0;
+  min-height: 20px;
   line-height: 20px;
   display: none;
+}
+#msg_notification.error:after {
+  display: block;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  content: attr(data-message);
+  background: #fef1cf;
+  color: #c03;
+  border-bottom: 1px solid #c03;
 }
 
 #scrollup {
@@ -370,6 +381,18 @@ button .barspinner.white {
   display: none;
   background: url("../images/common/scrollup_icon.svg") no-repeat;
   z-index: 999;
+}
+
+.inline-flex {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.center-align {
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 *, *:after, *:before {
@@ -582,10 +605,6 @@ body #topbar #select_language {
 #footer #footer-menu li {
   line-height: 1;
 }
-#footer #footer-menu .partner img {
-  max-width: 65%;
-  margin: 0.3em auto;
-}
 #footer #footer-regulatory {
   padding-top: 10px;
 }
@@ -612,8 +631,7 @@ body #topbar #select_language {
   height: 30px;
   padding-left: 5px;
 }
-#footer #footer-regulatory #ratelimit-error-message {
-  display: none;
+#footer #footer-regulatory #ratelimit-error-message, #footer #footer-regulatory #site-status-message {
   position: fixed;
   top: 0;
   width: 100%;
@@ -621,14 +639,15 @@ body #topbar #select_language {
   z-index: 999;
   text-align: center;
 }
-#footer #footer-regulatory #ratelimit-error-message .message {
+#footer #footer-regulatory #ratelimit-error-message .message, #footer #footer-regulatory #site-status-message .message {
   margin: 12px;
-  font-style: italic;
-  color: #c03;
 }
-#footer #footer-regulatory #ratelimit-error-message .message a {
+#footer #footer-regulatory #ratelimit-error-message .message a, #footer #footer-regulatory #site-status-message .message a {
   color: #2e8836;
   font-size: inherit;
+}
+#footer #footer-regulatory #site-status-message {
+  z-index: 9999;
 }
 #footer #footer-last a {
   text-decoration: underline;
@@ -737,6 +756,10 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
   width: 10em;
 }
 
+input#num_reality_duration {
+  margin-left: 10px;
+}
+
 #accordion .ui-accordion-content {
   padding-top: 0;
 }
@@ -750,6 +773,26 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
 }
 .ui-datepicker.ui-corner-all, .ui-datepicker .ui-corner-all, .ui-timepicker-table.ui-corner-all, .ui-timepicker-table .ui-corner-all {
   border-radius: 0;
+}
+
+.clearable {
+  background: #fff url("data:image/gif;base64,R0lGODlhBwAHAIAAAP///5KSkiH5BAAAAAAALAAAAAAHAAcAAAIMTICmsGrIXnLxuDMLADs=") no-repeat right -10px center;
+  padding: 3px 18px 3px 4px;
+  /* Use the same right padding (18px) in jQ */
+  border-radius: 3px;
+  transition: background 0.4s;
+}
+.clearable.clear {
+  background-position: right 5px center;
+}
+.clearable.onClear {
+  cursor: pointer;
+}
+
+.clearable::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* pages */
@@ -800,12 +843,6 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
   width: 10%;
   margin: 0 1em;
 }
-.home-content .xquote, .home-jp-content .xquote {
-  padding: 20px 40px;
-}
-.home-content .xquote p, .home-jp-content .xquote p {
-  font-style: italic;
-}
 .home-content .xbubble-right, .home-jp-content .xbubble-right {
   content: '';
   width: 0;
@@ -848,12 +885,8 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
 .home-jp-content .relative {
   position: relative;
 }
-.home-jp-content .xquote {
-  position: relative;
-  margin-top: 25%;
-}
-.home-jp-content .xquote p {
-  font-style: normal;
+.home-jp-content .box {
+  margin-top: 10%;
 }
 .home-jp-content .small-image {
   width: 8%;
@@ -874,7 +907,7 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
 }
 
 @media screen and (max-width: 768px) {
-  .home-jp-content .xquote {
+  .home-jp-content .box {
     margin-top: auto;
   }
 }
@@ -980,8 +1013,8 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
   background: #14602b;
 }
 .get-started dl #what-is-binary-trading, .get-started dl #binary-options-basics, .get-started dl #how-to-trade-binaries, .get-started dl #types-of-trades,
-.get-started dl #why-trade-with-us, .get-started dl #beginners-faq, .get-started dl #glossary, .get-started dl #random-trades, .get-started-jp dl #what-is-binary-trading, .get-started-jp dl #binary-options-basics, .get-started-jp dl #how-to-trade-binaries, .get-started-jp dl #types-of-trades,
-.get-started-jp dl #why-trade-with-us, .get-started-jp dl #beginners-faq, .get-started-jp dl #glossary, .get-started-jp dl #random-trades {
+.get-started dl #why-trade-with-us, .get-started dl #beginners-faq, .get-started dl #glossary, .get-started dl #volidx-markets, .get-started-jp dl #what-is-binary-trading, .get-started-jp dl #binary-options-basics, .get-started-jp dl #how-to-trade-binaries, .get-started-jp dl #types-of-trades,
+.get-started-jp dl #why-trade-with-us, .get-started-jp dl #beginners-faq, .get-started-jp dl #glossary, .get-started-jp dl #volidx-markets {
   height: 80px;
   background-repeat: no-repeat;
   background-image: url("../images/pages/get-started/intro_2.png");
@@ -1007,7 +1040,7 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
 .get-started dl #glossary, .get-started-jp dl #glossary {
   background-position: 100% 71%;
 }
-.get-started dl #random-trades, .get-started-jp dl #random-trades {
+.get-started dl #volidx-markets, .get-started-jp dl #volidx-markets {
   background-position: 100% 93%;
 }
 .get-started dl #smart-indices, .get-started dl #partners, .get-started-jp dl #smart-indices, .get-started-jp dl #partners {
@@ -1086,25 +1119,11 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
   margin-bottom: 0;
 }
 
-.contact-content h2, .contact-content h3 {
-  margin-bottom: 10px;
-}
-.contact-content .hr-line {
-  border-bottom: 1px solid #dedede;
-}
 .contact-content #cs_telephone_number {
   width: 100%;
 }
-.contact-content .center-align {
-  margin-top: auto;
-  margin-bottom: auto;
-  padding-right: 0;
-}
-.contact-content .bottom-row {
-  padding-top: 10px;
-}
 .contact-content .border-bottom {
-  min-height: 190px;
+  min-height: 200px;
 }
 @media screen and (max-width: 480px) {
   .contact-content .border-bottom {
@@ -1340,22 +1359,9 @@ a.close:hover {
 
 .invisible {
   display: none !important;
-}
-
-.hidden {
-  display: none;
   visibility: hidden;
 }
 
-#content .rbox-heading {
-  font-weight: bold;
-  background-color: #f2f2f2;
-}
-#content .rbox-heading h4 {
-  font-size: 1em;
-  margin: 0;
-  padding: 0.3em 8px;
-}
 #content .rbox-content {
   background-color: #fff;
   padding: 0.3em 0;
@@ -1366,6 +1372,10 @@ a.close:hover {
 
 .center-text {
   text-align: center;
+}
+
+.justify-text {
+  text-align: justify;
 }
 
 .align-start {
@@ -1453,29 +1463,29 @@ select[disabled=disabled] {
 
 /* landing page icon */
 #internet_explorer {
-  background-image: url("../images/pages/logintrouble/ielogo-icon_1.png");
+  background-image: url("../images/pages/browser_support/ielogo-icon_1.png");
 }
 
 #microsoft_edge {
-  background-image: url("../images/pages/logintrouble/edgelogo.png");
+  background-image: url("../images/pages/browser_support/edgelogo.png");
   background-size: 50%;
   margin-top: -1em;
 }
 
 #firefox {
-  background-image: url("../images/pages/logintrouble/firefoxlogo-icon_1.png");
+  background-image: url("../images/pages/browser_support/firefoxlogo-icon_1.png");
 }
 
 #safari {
-  background-image: url("../images/pages/logintrouble/safarilogo-icon_1.png");
+  background-image: url("../images/pages/browser_support/safarilogo-icon_1.png");
 }
 
 #opera {
-  background-image: url("../images/pages/logintrouble/operalogo-icon_1.png");
+  background-image: url("../images/pages/browser_support/operalogo-icon_1.png");
 }
 
 #chrome {
-  background-image: url("../images/pages/logintrouble/chromelogo-icon_1.png");
+  background-image: url("../images/pages/browser_support/chromelogo-icon_1.png");
 }
 
 /* statement */
@@ -2071,7 +2081,7 @@ ol.start {
 }
 @media all and (min-width: 600px) {
   .timeline .year + .event {
-    margin-top: -20px;
+    margin-top: -5px;
   }
 }
 .timeline .year:hover {
@@ -2166,9 +2176,6 @@ ol.start {
   text-decoration: none;
   margin-right: 15px;
 }
-.api_token fieldset #formMessage {
-  margin-bottom: 10px;
-}
 
 @media screen and (max-width: 480px) {
   .api_token table td, .api_token table th {
@@ -2202,63 +2209,6 @@ ol.start {
   #applications-container .errorfield {
     font-size: 80% !important;
   }
-}
-.career .xquote, .career .xquote-inverse, .security_testing .xquote, .security_testing .xquote-inverse, .regulation-content .xquote, .regulation-content .xquote-inverse {
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-.career .xquote div, .career .xquote-inverse div, .security_testing .xquote div, .security_testing .xquote-inverse div, .regulation-content .xquote div, .regulation-content .xquote-inverse div {
-  overflow: hidden;
-  display: table;
-  margin: 0 auto;
-}
-.career .xquote div .picture, .career .xquote-inverse div .picture, .security_testing .xquote div .picture, .security_testing .xquote-inverse div .picture, .regulation-content .xquote div .picture, .regulation-content .xquote-inverse div .picture {
-  float: left;
-  padding-right: 20px;
-}
-.career .xquote div .text, .career .xquote-inverse div .text, .security_testing .xquote div .text, .security_testing .xquote-inverse div .text, .regulation-content .xquote div .text, .regulation-content .xquote-inverse div .text {
-  display: table-cell;
-  vertical-align: middle;
-}
-.career .xquote div .text span, .career .xquote-inverse div .text span, .security_testing .xquote div .text span, .security_testing .xquote-inverse div .text span, .regulation-content .xquote div .text span, .regulation-content .xquote-inverse div .text span {
-  color: #44484c;
-  font-size: 12px;
-}
-.career .xquote-inverse, .security_testing .xquote-inverse, .regulation-content .xquote-inverse {
-  background-color: #2a3052 !important;
-}
-.career .xquote-inverse div .text a, .security_testing .xquote-inverse div .text a, .regulation-content .xquote-inverse div .text a {
-  color: #fff;
-}
-.career h4, .security_testing h4, .regulation-content h4 {
-  font-weight: 700;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #dedede;
-}
-
-.careers-for-americans img.responsive {
-  width: 50%;
-}
-.careers-for-americans .fill-bg-color img.responsive {
-  width: 15%;
-}
-.careers-for-americans h2 {
-  margin-bottom: 0;
-}
-.careers-for-americans .border-bottom {
-  border-bottom: 1px solid #dedede;
-}
-
-.careers-for-americans .margin, .contact-content .margin {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-.careers-for-americans h3.margin, .contact-content h3.margin {
-  margin-bottom: 0;
-}
-
-.about-us {
-  margin-top: 40px;
 }
 .about-us .section:first-child {
   padding-bottom: 50px;
@@ -2798,25 +2748,6 @@ div.kineticjs-content {
   margin-left: auto;
   margin-right: auto;
 }
-.regulation-content h1.margin-top {
-  margin-top: 30px;
-}
-.regulation-content .timeline {
-  padding: 0;
-}
-.regulation-content .xquote div {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-.regulation-content .xquote div .quote-text {
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 0 !important;
-}
-.regulation-content .full-height {
-  height: 100%;
-}
 .regulation-content .background-gray {
   margin-top: -30px;
 }
@@ -3081,7 +3012,7 @@ fieldset .error-msg {
   display: block;
   position: absolute;
   height: 100%;
-  margin-top: -8px;
+  top: 0;
 }
 #trading_socket_container #contract_container input[type=number]::-webkit-inner-spin-button, #trading_socket_container #contract_container input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -3652,6 +3583,7 @@ fieldset .error-msg {
   width: 100%;
   font-size: 85%;
   border-bottom: none;
+  margin: 0;
 }
 #trading_bottom_content ul#betsBottomPage li {
   -webkit-flex: 1;
@@ -4239,7 +4171,7 @@ fieldset .error-msg {
   display: block;
   position: absolute;
   height: 100%;
-  margin-top: -8px;
+  top: 0;
 }
 #trading_socket_container_beta #contract_container input[type=number]::-webkit-inner-spin-button, #trading_socket_container_beta #contract_container input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -5216,9 +5148,6 @@ button:disabled {
 body .calls_recording {
   display: none;
 }
-body .all-hide {
-  display: none !important;
-}
 body ul.checked > li {
   background-position: left top;
   padding-left: 35px;
@@ -5242,22 +5171,6 @@ body.EN .google-play-badge {
 
 body.JA .ja-hide {
   display: none !important;
-}
-body.JA .ja-show {
-  display: inline !important;
-  visibility: visible !important;
-}
-body.JA .ja-show-block {
-  display: block !important;
-  visibility: visible !important;
-}
-body.JA .ja-show-inline-block {
-  display: inline-block !important;
-  visibility: visible !important;
-}
-body.JA .ja-no-padding {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
 }
 body.JA .regulatory-logo {
   display: none !important;
