@@ -84,9 +84,9 @@
           <link rel="alternate" href="/binary-static/zh_cn/trading.html" hreflang="ZH_CN" /> 
           <link rel="alternate" href="/binary-static/zh_tw/trading.html" hreflang="ZH_TW" /> 
         
-         <link rel="stylesheet" href="/binary-static/css/binary.min.css?go60pzva">
-         <link rel="stylesheet" href="https://style.binary.com/binary.css?go60pzva">
-          <script src='/binary-static/js/binary.js?go60pzva'></script>  <script src='https://style.binary.com/binary.js?go60pzva'></script>  </head>
+         <link rel="stylesheet" href="/binary-static/css/binary.min.css?rjas92iu">
+         <link rel="stylesheet" href="https://style.binary.com/binary.css?rjas92iu">
+          <script src='/binary-static/js/binary.js?rjas92iu'></script>  <script src='https://style.binary.com/binary.js?rjas92iu'></script>  </head>
 
 
 
@@ -96,7 +96,7 @@
     <div id="topbar" class="no-print primary-color-dark">
         <div class="container">
             <div class="gr-row">
-                <div id="topbar-msg" class='gr-6 gr-5-t gr-12-p gr-12-m invisible upgrademessage'>
+                <div id="topbar-msg" class='gr-6 gr-5-t gr-12-p gr-12-m invisible upgrademessage center-text'>
                     <span class='gr-hide-m invisible'>
                         <span id='virtual-text'>現在デモ口座を使用されています。</span>
                     </span>
@@ -104,7 +104,7 @@
                 </div>
                 <div class='gr-6 gr-7-t gr-12-p gr-12-m' id='topbar-info'>
                     <div class="gr-row">
-                        <div class='gr-5 gr-6-m no-underline' id="gmt-clock" data-balloon-pos="down"></div>
+                        <div class='gr-5 gr-6-m no-underline nowrap' id="gmt-clock" data-balloon-pos="down"></div>
                         <div class='gr-2 gr-hide-m' id='contact-us'>
                             <a href="/binary-static/ja/contact.html">お問い合わせ</a>
                         </div>
@@ -154,7 +154,7 @@
                     </div>
                     <div class='gr-6 gr-hide-m gr-hide-p gr-padding-10'>
                         <div id='main-navigation'>
-                            <ul id="menu-top">
+                            <ul class="center-text nowrap" id="menu-top">
         
             <li class="ja-hide">
     
@@ -221,7 +221,7 @@
                                 <li class="account">
                                     <a href="javascript:;">
     <div class="main-account">
-        <div class="account-type"></div>
+        <div class="account-type nowrap"></div>
         <div class="account-id"></div>
         <div class="topMenuBalance">0</div>
     </div>
@@ -233,7 +233,7 @@
                                 <li class="account">
                                     <a href="javascript:;">
     <div class="main-account">
-        <div class="account-type"></div>
+        <div class="account-type nowrap"></div>
         <div class="account-id"></div>
         <div class="topMenuBalance">0</div>
     </div>
@@ -277,10 +277,10 @@
         <div id="main-menu" class="tab-menu no-print fill-bg-color border-color">
     <div class="tab-menu-wrap container gr-hide-m gr-hide-p">
         <div class="gr-12 gr-no-gutter">
-            <ul class="items">  <li id="topMenuTrading" class="item ja-hide hide-tablet-mobile">
+            <ul class="items">  <li id="topMenuTrading" class="item ja-hide gr-hide-m gr-hide-p">
                     <a class="link" target="" href="/binary-static/ja/trading.html">トレード</a>
                     
-                </li>  <li id="topMenuJPTrading" class="item invisible ja-show hide-tablet-mobile">
+                </li>  <li id="topMenuJPTrading" class="item invisible ja-show gr-hide-m gr-hide-p">
                     <a class="link" target="" href="/binary-static/ja/multi_barriers_trading.html">トレード</a>
                     
                 </li>  <li id="topMenuPortfolio" class="item client_logged_in invisible">
@@ -352,10 +352,10 @@
     <a href="/binary-static/ja/tour-jp.html" >
      ご利用方法 
     </a>
-</li>  <li id="topMenuTrading" class="item ja-hide hide-tablet-mobile">
+</li>  <li id="topMenuTrading" class="item ja-hide gr-hide-m gr-hide-p">
                 <a class="link " href="/binary-static/ja/trading.html">トレード</a>
                 
-            </li>  <li id="topMenuJPTrading" class="item invisible ja-show hide-tablet-mobile">
+            </li>  <li id="topMenuJPTrading" class="item invisible ja-show gr-hide-m gr-hide-p">
                 <a class="link " href="/binary-static/ja/multi_barriers_trading.html">トレード</a>
                 
             </li>  <li id="topMenuPortfolio" class="item client_logged_in invisible">
@@ -437,7 +437,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div>
             <select id="underlying"></select>
             <span class="unicode-info-icon" id="symbol_tip" target="">&#9432;</span>
-            <label for="spot" id="spot_label">スポットレート</label>
             <span id="spot"></span>
             <span id="trading_worm_chart"></span>
         </div>
@@ -451,16 +450,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <div id="contract_container" class="col row">
                 <div id="loading_container3" class="overlay_container"></div>
                 <div id="contract_form_container" class="col">
-                    <div id="contract_form_content">
+                    <div id="contract_form_content" class="gr-gutter">
                         <form id='websocket_form'>
-                            <div class="row" id="period_row">
-                                <div class="col form_label">
-                                    <label for="period" id="period_label">期間</label>
-                                </div>
-                                <div class="big-col">
-                                    <select id="period"></select>
-                                </div>
-                            </div>
                             <div class="row" id="date_start_row">
                                 <div class="col form_label" id="start_time_label">開始時間</div>
                                 <div class="big-col">
@@ -495,7 +486,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </label>
                                 </div>
                                 <div class="big-col">
-                                    <input id="barrier" type="text" name="H" pattern="^[\+-]\d+(\.\d{1,5})?|\d+(\.\d{1,5})?" title="数字をご入力ください。" autocomplete="off" />
+                                    <input id="barrier" type="text" name="H" autocomplete="off" />
                                     <span id="indicative_barrier_tooltip" data-balloon="このバリアは予想値です。実際のバリア値はスポット価格にバリア値を差し引いたものになります。" data-balloon-length="xlarge"></span>
                                 </div>
                             </div>
@@ -507,7 +498,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </label>
                                 </div>
                                 <div class="big-col">
-                                    <input id="barrier_high" type="text" name="H" pattern="^[\+-]\d+(\.\d{1,5})?|\d+(\.\d{1,5})?" title="数字をご入力ください。" autocomplete="off" />
+                                    <input id="barrier_high" type="text" name="H" autocomplete="off" />
                                     <span id="indicative_high_barrier_tooltip" data-balloon="このバリアは予想値です。実際のバリア値はスポット価格にバリア値を差し引いたものになります。" data-balloon-length="xlarge"></span>
                                 </div>
                             </div>
@@ -519,7 +510,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </label>
                                 </div>
                                 <div class="big-col">
-                                    <input id="barrier_low" type="text" name="L" pattern="^[\+-]\d+(\.\d{1,5})?|\d+(\.\d{1,5})?" title="数字をご入力ください。" autocomplete="off" />
+                                    <input id="barrier_low" type="text" name="L" autocomplete="off" />
                                     <span id="indicative_low_barrier_tooltip" data-balloon="このバリアは予想値です。実際のバリア値はスポット価格にバリア値を差し引いたものになります。" data-balloon-length="xlarge"></span>
                                 </div>
                             </div>
@@ -781,6 +772,180 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
         <div id="tab_explanation-content" class="toggle-content invisible">
         
+            <div class='gr-parent'>
+    <!-- ========== Winning ========== -->
+    <div id="explanation_winning" class="invisible">
+        <h3>取引条件が満たされる基準</h3>
+
+        <div id="winning_asian" class="invisible">
+            <p>Asian options settle by comparing the <strong>last tick</strong> with the average spot over the period.</p>
+            <p>「Asian アップ」を選択された場合、<strong>最後のTick</strong>が平均のTickよりも<strong>高い</strong>とペイアウトを獲得いただけます。</p>
+            <p>「Asianダウン」を選択された場合、<strong>最後のtick</strong>がtickの<strong>平均</strong>よりも<strong>低い</strong>とペイアウトを獲得いただけます。</p>
+        </div>
+
+        <div id="winning_digits" class="invisible">
+            <p>「MATCH」を選択された場合、最後のtickの<strong>下一桁</strong>が<strong>推測された数字</strong>と<strong>同じ</strong>であるとペイアウトを獲得いただけます。</p>
+            <p>「DIFFER」を選択された場合、最後のtickの<strong>下一桁</strong>がお客さまの<strong>予測</strong>と違うとペイアウトを獲得いただけます。</p>
+        </div>
+
+        <div id="winning_endsinout" class="invisible">
+            <p>「END-IN」を選択された場合、判定時刻に<strong>判定レート</strong>が <strong>上限バリア未満かつ下限バリア以上</strong>の場合、ペイアウトを受け取れます。</p>
+            <p>「END-OUT」を選択された場合、 <strong>判定レート</strong>が<strong>上限バリア以上</strong>もしくは、<strong>下限バリア未満の場合</strong>ペイアウトを受け取れます。</p>
+        </div>
+
+        <div id="winning_evenodd" class="invisible">
+            <p>「偶数」を選択された場合、最後のtickの<strong>下一桁</strong>が<strong>偶数（例：0、2、4、6、8）</strong>であるとペイアウトを獲得いただけます。</p>
+            <p>「奇数」を選択された場合、最後のtickの<strong>下一桁</strong>が<strong>奇数（例：1、3、5、7、9）</strong>であるとペイアウトを獲得いただけます。</p>
+        </div>
+
+        <div id="winning_higherlower" class="invisible">
+            <p>「HIGH」を選択された場合、判定時刻の時点で<strong>判定レート</strong>が<strong>バリア価格</strong>以上の場合、ペイアウトを受け取れます。</p>
+            <p>「LOW」を選択された場合、 判定時刻の時点で<strong>判定レート</strong>が<strong>バリア価格</strong>未満の場合、ペイアウトを受け取れます。</p>
+        </div>
+
+        <div id="winning_overunder" class="invisible">
+            <p>「OVER」を選択された場合、最後のtickの<strong>下一桁</strong>が<strong>予測を超える</strong>とペイアウトを獲得いただけます。</p>
+            <p>「UNDER」を選択された場合、最後のtickの<strong>下一桁</strong>が<strong>予測を下回る</strong>とペイアウトを獲得いただけます。</p>
+        </div>
+
+        <div id="winning_risefall" class="invisible">
+            <p>「アップ」を選択された場合、<strong>終値</strong>が<strong>エントリー価格</strong>より正確に高くなるとペイアウトを獲得いただけます。同値は条件を満たしていないと判定されます。</p>
+            <p>「ダウン」を選択された場合、 <strong>終値</strong>が<strong>エントリー価格</strong>より正確に低くなるとペイアウトを獲得いただけます。同値は条件を満たしていないと判定されます。</p>
+        </div>
+
+        <div id="winning_runbet-lucky10" class="invisible">
+            <p>市場価格の末尾がご指定頂いた数値となった場合、ペイアウトを獲得いただけます。</p>
+        </div>
+
+        <div id="winning_runbet-quick10" class="invisible">
+            <p>市場価格の末尾がご指定頂いた数値ではなかった場合、ペイアウトを獲得いただけます。</p>
+        </div>
+
+        <div id="winning_runbet-updown" class="invisible">
+            <p>「アップ」を選択された場合、トレード終了時間の市場価格が<strong>エントリー価格</strong>より高くなるとペイアウトを獲得いただけます。同値は条件を満たしていないと判定されます。</p>
+            <p>"ダウン"を選択された場合、トレード終了時間の市場価格が<strong>エントリー価格</strong>より低くなるとペイアウトを獲得いただけます。同値は条件を満たしていないと判定されます。</p>
+        </div>
+
+        <div id="winning_staysinout" class="invisible">
+            <p>「STAY-IN」を選択された場合、<strong>取引期間が終了するまで常に</strong>市場価格がバリアを設定した<strong>上下両方</strong>のバリア価格のレンジ内に留まること、すなわち<strong>バリア価格にタッチしたら</strong>ペイアウトを受け取れます。</p>
+            <p>「BREAK-OUT」を選択された場合、<strong>取引期間が終了までに</strong>市場価格が<strong>上下に設定されたバリア価格</strong>の<strong>レンジ外に出れば</strong>ペイアウトを受け取れます。</p>
+        </div>
+
+        <div id="winning_ticks" class="invisible">
+            <p>「アップ」を選択された場合、<strong>終値</strong>が<strong>エントリー価格</strong>より正確に高くなるとペイアウトを獲得いただけます。同値は条件を満たしていないと判定されます。</p>
+            <p>「ダウン」を選択された場合、 <strong>終値</strong>が<strong>エントリー価格</strong>より正確に低くなるとペイアウトを獲得いただけます。同値は条件を満たしていないと判定されます。</p>
+        </div>
+
+        <div id="winning_touchnotouch" class="invisible">
+            <p>「TOUCH」を選択された場合、<strong>取引期間が終了するまで</strong>に市場価格が<strong>バリア</strong>設定した価格にタッチすればペイアウトを受け取れます。</p>
+            <p>「NO-TOUCH」を選択された場合、<strong>取引期間が終了</strong>まで市場価格が<strong>バリア</strong>設定した価格にタッチしなければペイアウトを受け取れます。</p>
+        </div>
+
+        <div id="winning_updown" class="invisible">
+            <p>「アップ」を選択された場合、トレード終了時間の市場価格がエントリー価格より高くなるとペイアウトを獲得いただけます。同値条件を満たしていないと判定されます。</p>
+            <p>"ダウン"を選択された場合、トレード終了時間の市場価格がエントリー価格より低くなるとペイアウトを獲得いただけます。同値は条件を満たしていないと判定されます。</p>
+        </div>
+    </div>
+
+    <!-- ========== Image ========== -->
+    <div id="explanation_image" class="invisible">
+        <div class='gr-row'>
+            <div class='gr-2 hide-mobile'></div>
+            <div class='gr-4 gr-12-m padding-right'>
+                <img id="explanation_image_1" class="responsive" />
+            </div>
+            <div class='gr-4 gr-12-m padding-left'>
+                <img id="explanation_image_2" class="responsive" />
+            </div>
+            <div class='gr-2 hide-mobile'></div>
+        </div>
+    </div>
+
+    <!-- ========== Explain ========== -->
+    <div id="explanation_explain" class="invisible gr-padding-20 gr-child">
+        <div id="explain_asian" class="invisible">
+            <h3>最初のTick</h3>
+            <p>最初のTickとは、当社のサーバにてトレードが処理された後に検出された最初のTickを指します。</p>
+            <h3>平均</h3>
+            <p>平均は最初と最後のTickを含む平均値です。</p>
+            <p class="hint"><strong>注意: </strong>Asianトレードはトレードが5分以内に終了しない場合、購入金額が返金されます。</p>
+        </div>
+
+        <div id="explain_digits" class="invisible">
+            <h3>最初のTick</h3>
+            <p>最初のTickとは、当社のサーバにてトレードが処理された後に検出された最初のTickを指します。</p>
+            <p class="hint"><strong>注意: </strong>DIGITトレードはトレードが5分以内に終了しない場合、購入金額が返金されます。</p>
+        </div>
+
+        <div id="explain_endsinout" class="invisible">
+            <h3>判定レート</h3>
+            <p><strong>判定レート</strong>とは<strong>判定時刻時</strong>の市場価格のことです。</p>
+            <p><strong>取引期間</strong>は、取引期間開始時から判定時刻までとなります。購入・売却は<strong>判定時刻2分前</strong>まで可能です。判定時刻2分前から新規購入＆売却注文は行なえません。</p>
+            <p><strong>取引開始時間</strong>とは回号の取引開始時刻のことです。各回号の詳細につきまして契約締結前交付書面をご確認ください。</p>
+            <p class="hint"><strong>注意: </strong>ご不明な点等ありましたら、カスタマーサポートまでご連絡ください。</p>
+        </div>
+
+        <div id="explain_evenodd" class="invisible">
+            <h3>最初のTick</h3>
+            <p>最初のTickとは、当社のサーバにてトレードが処理された後に検出された最初のTickを指します。</p>
+            <p class="hint"><strong>注意: </strong>Even/Oddはトレードが5分以内で終了しない場合、購入金額が返金されます。</p>
+        </div>
+
+        <div id="explain_higherlower" class="invisible">
+            <h3>判定レート</h3>
+            <p><strong>判定レート</strong>とは<strong>判定時刻時</strong>の市場価格のことです。</p>
+            <p><strong>取引期間</strong>は、取引期間開始時から判定時刻までとなります。購入・売却は<strong>判定時刻2分前</strong>まで可能です。判定時刻2分前から新規購入＆売却注文は行えません。</p>
+            <p><strong>取引開始時間</strong>とは回号の取引開始時刻のことです。各回号の詳細につきまして契約締結前交付書面をご確認ください。</p>
+            <p class="hint"><strong>注意: </strong>ご不明な点等ありましたら、カスタマーサポートまでご連絡ください。</p>
+        </div>
+
+        <div id="explain_overunder" class="invisible">
+            <h3>最初のTick</h3>
+            <p>最初のTickとは、当社のサーバにてトレードが処理された後に検出された最初のTickを指します。</p>
+            <p class="hint"><strong>注意: </strong>Over/Underトレードは5分以内にトレードが終了しない場合、購入金額が返金されます。</p>
+        </div>
+
+        <div id="explain_risefall" class="invisible">
+            <h3>取引時刻直後のティック</h3>
+            <p>
+                "Now"を<strong>開始時間に指定</strong>した場合、<strong>トレード開始時間</strong>は当社のサーバで認識したクリックの瞬間に開始され、<strong>エントリー価格は</strong>開始時間の<strong>次のTick</strong>が採用されます。
+                <br />
+                未来の時間を<strong>開始時間</strong>に指定した場合、トレードの<strong>開始時間</strong>はその選択時間が採用され、<strong>エントリー価格</strong>もその時間でのデータが採用されます。
+            </p>
+            <br />
+            <h3>判定レート</h3>
+            <p>
+                <strong>判定レート</strong>とは<strong>判定時刻時</strong>の市場価格のことです。
+                <br />
+                <strong>取引可能時間</strong>は、取引期間開始時から取引終了時間までとなります。取引<strong>終了時間</strong>とは<strong>判定時刻2分前</strong>までで、取引終了時間を過ぎると新規購入注文＆売却取引は行えません。
+                <br />
+                もし特定の<strong>終了時間</strong>を選択した場合は、トレードはその<strong>終了時間</strong>に終了します。
+            </p>
+            <br />
+            <p class="hint"><strong>注意: </strong>ラダートレードは下記の条件が発生した場合に、購入金額が返金されます。
+(1) 開始から終了までの取引期間中にTickが2未満である
+(2) Tick期間のトレードが5分以内で終了しない
+(3) トレード開始前の5分以内にTickが発生しない</p>
+        </div>
+
+        <div id="explain_staysinout" class="invisible">
+            <h3>取引期間</h3>
+            <p><strong>取引期間</strong>は、<strong>取引開始時間直後</strong>の<strong>ティック</strong>から<strong>取引終了時間</strong>までとなります。</p>
+            <p><strong>取引開始時間</strong>とは回号の取引開始時刻のことです。各回号の詳細につきまして契約締結前交付書面をご確認ください。</p>
+            <p><strong>取引期間</strong>は、取引期間開始時から判定時刻までとなります。購入・売却は<strong>判定時刻2分前</strong>まで可能です。判定時刻2分前から新規購入＆売却注文は行なえません。</p>
+            <p class="hint"><strong>注意: </strong>ご不明な点等ありましたら、カスタマーサポートまでご連絡ください。</p>
+        </div>
+
+        <div id="explain_touchnotouch" class="invisible">
+            <h3>取引期間</h3>
+            <p><strong>取引期間</strong>は、<strong>取引開始時間直後</strong>の<strong>ティック</strong>から<strong>取引終了時間</strong>までとなります。</p>
+            <p><strong>取引開始時間</strong>とは回号の取引開始時刻のことです。各回号の詳細につきまして契約締結前交付書面をご確認ください。</p>
+            <p><strong>取引期間</strong>は、取引期間開始時から判定時刻までとなります。購入・売却は<strong>判定時刻2分前</strong>まで可能です。判定時刻2分前から新規購入＆売却注文は行なえません。</p>
+            <p class="hint"><strong>注意: </strong>ご不明な点等ありましたら、カスタマーサポートまでご連絡ください。</p>
+        </div>
+    </div>
+</div><!-- gr-parent closes -->
+        
     </div>
         <div id="tab_last_digit-content" class="toggle-content invisible">
         
@@ -849,13 +1014,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div> 
 </div>
 <div id="footer" class="no-print">
-    <div id="footer-menu" class="primary-bg-color">
+    <div id="footer-menu" class="primary-bg-color gr-padding-10">
         <div class="container">
             <div class="gr-row gr-padding-10">
                 <div class="gr-6 gr-12-m gr-parent gr-no-gutter">
                     <div class="gr-row">
                         <div class="gr-4 ">
-    <h4 class="secondary-color">会社案内</h4>
+    <h4 class="secondary-color"><strong>会社案内</strong></h4>
     <ul>
         
             <li>
@@ -911,7 +1076,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 ">
-    <h4 class="secondary-color">お役立ち情報</h4>
+    <h4 class="secondary-color"><strong>お役立ち情報</strong></h4>
     <ul>
         
             <li class="ja-hide">
@@ -988,7 +1153,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 ">
-    <h4 class="secondary-color">決済</h4>
+    <h4 class="secondary-color"><strong>決済</strong></h4>
     <ul>
         
             <li>
@@ -1012,7 +1177,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div class="gr-6 gr-12-m gr-parent gr-no-gutter">
                     <div class="gr-row">
                         <div class="gr-4 ">
-    <h4 class="secondary-color">取引規定・約款</h4>
+    <h4 class="secondary-color"><strong>取引規定・約款</strong></h4>
     <ul>
         
             <li class="ja-hide">
@@ -1061,7 +1226,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 ja-hide">
-    <h4 class="secondary-color">トレード</h4>
+    <h4 class="secondary-color"><strong>トレード</strong></h4>
     <ul>
         
             <li>
@@ -1082,7 +1247,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 ja-hide">
-    <h4 class="secondary-color">パートナー協定</h4>
+    <h4 class="secondary-color"><strong>パートナー協定</strong></h4>
     <ul>
         
             <li>
@@ -1124,7 +1289,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 invisible ja-show">
-    <h4 class="secondary-color">会社概要</h4>
+    <h4 class="secondary-color"><strong>会社概要</strong></h4>
     <ul>
         
             <li>
@@ -1141,12 +1306,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </div>
         </div>
     </div>
-    <div id="footer-regulatory" class="primary-color-dark">
+    <div id="footer-regulatory" class="primary-color-dark gr-padding-10 gr-child">
         <div class="container">
             <div class="gr-row">
-                <div id="regulatory-text" class="gr-9 gr-12-m gr-7-p gr-padding-10 gr-parent content-inverse-color">
+                <p id="regulatory-text" class="gr-9 gr-12-m gr-7-p gr-padding-10 gr-parent content-inverse-color no-margin">
                     ■店頭バイナリーオプション取引は金融商品取引法に規定される店頭デリバティブ取引であり、元本や利益が保証されていません。■店頭バイナリーオプション取引は、判定時刻に自動的に権利行使されるヨーロピアンタイプと、取引期間中に決められた条件に達すると権利が自動行使されるアメリカンタイプがあります。■店頭バイナリーオプションは、外国為替相場等の変動により投資元本の全てを失うおそれのあるリスクの高い金融商品です。■判定時刻及び取引期間中における一定の権利を、オプション料を支払って購入する期限がある取引のため、権利が消滅した場合は支払ったオプション料の全額を失います。■ペイアウトは1ロットあたり1,000円です。■購入価格と売却価格にはスプレッドがあり、相場情勢により拡大することがあります。■相場情勢により、お客様が希望した価格より不利な価格で取引が成立する場合があります。■店頭バイナリーオプションの取引上限は以下のとおりです。1)1取引の取引上限は100ロット。2)1日の取引上限額は100万円〜300万円（保有金融資産に応じて）。前記2)に達した時点でその日は取引ができなくなります。■取引手数料は無料。当該日から遡り12ヶ月間、新規又は売却取引がなかった場合は口座維持手数料（2,500円税込）が発生、引き続き取引等がない場合、6ヶ月毎に同額が発生します。3,000円未満を出金の際は250円（税込）の出金手数料がかかります。■オプションの購入後の注文取り消しは行う事ができませんが、取引可能期間であれば売却は可能です。ただし、購入価格と売却価格にはスプレッドがあり、売却時に損失を被る可能性があります。■お取引開始前に、契約締結前交付書面を熟読の上、必ず約款及び取扱説明書に書かれてある取引の特徴、取引条件、仕組み及びリスクを十分確認いただき、ご自身の判断と責任において、自己の計算によりお取引ください。
-                </div>
+                </p>
                 <div class="ja-hide gr-3 gr-12-m gr-5-p center-text" id="social-networks">
                     <div class="gr-row ja-hide id-hide">
                         <div class="gr-5">
@@ -1160,29 +1325,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             </a>
                         </div>
                     </div>
-                    <div class="social-icons gr-padding-10">
-    
-        <a href="https://www.youtube.com/user/BinaryTradingVideos" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/youtube.svg"/>
-        </a>
-    
-        <a href="https://plus.google.com/106251151552682209951" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/google-plus.svg"/>
-        </a>
-    
-        <a href="https://www.facebook.com/binarydotcom" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/facebook.svg"/>
-        </a>
-    
-        <a href="https://twitter.com/Binarydotcom" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/twitter.svg"/>
-        </a>
-    
-        <a href="https://www.linkedin.com/company/binary-com" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/linkedin.svg"/>
-        </a>
-    
-</div>
+                    
+
+                    <div class="gr-padding-10 gr-row">
+                            <div class="gr-2 gr-1-p gr-3-m"></div>
+                            
+                                <a href="https://www.youtube.com/user/BinaryTradingVideos" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/youtube.svg"/>
+                                </a>
+                            
+                                <a href="https://plus.google.com/106251151552682209951" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/google-plus.svg"/>
+                                </a>
+                            
+                                <a href="https://www.facebook.com/binarydotcom" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/facebook.svg"/>
+                                </a>
+                            
+                                <a href="https://twitter.com/Binarydotcom" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/twitter.svg"/>
+                                </a>
+                            
+                                <a href="https://www.linkedin.com/company/binary-com" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/linkedin.svg"/>
+                                </a>
+                            
+                        </div>
                 </div>
             </div>
         </div>
@@ -1190,13 +1358,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div id="footer-last" class="primary-bg-color">
         <div class="container">
             <div class="gr-padding-10">
-                <p class="gambling content-inverse-color">
+                <p class="gambling content-inverse-color no-para-margin">
                     【商号】Binary株式会社　金融商品取引業者　関東財務局長（金商）第2949号【加入協会】一般社団法人金融先物取引業協会 <br>Copyright (c) 2017 Binary K.K. All Rights Reserved.
                 </p>
             </div>
         </div>
     </div>
-    <div id="end-note" class="invisible"></div>
+    <div id="end-note" class="invisible content-inverse-color center-text"></div>
 </div>
 
         </div>

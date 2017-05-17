@@ -84,9 +84,9 @@
           <link rel="alternate" href="/binary-static/zh_cn/trading_beta.html" hreflang="ZH_CN" /> 
           <link rel="alternate" href="/binary-static/zh_tw/trading_beta.html" hreflang="ZH_TW" /> 
         
-         <link rel="stylesheet" href="/binary-static/css/binary.min.css?go60pzva">
-         <link rel="stylesheet" href="https://style.binary.com/binary.css?go60pzva">
-          <script src='/binary-static/js/binary.js?go60pzva'></script>  <script src='https://style.binary.com/binary.js?go60pzva'></script>  </head>
+         <link rel="stylesheet" href="/binary-static/css/binary.min.css?rjas92iu">
+         <link rel="stylesheet" href="https://style.binary.com/binary.css?rjas92iu">
+          <script src='/binary-static/js/binary.js?rjas92iu'></script>  <script src='https://style.binary.com/binary.js?rjas92iu'></script>  </head>
 
 
 
@@ -96,7 +96,7 @@
     <div id="topbar" class="no-print primary-color-dark">
         <div class="container">
             <div class="gr-row">
-                <div id="topbar-msg" class='gr-6 gr-5-t gr-12-p gr-12-m invisible upgrademessage'>
+                <div id="topbar-msg" class='gr-6 gr-5-t gr-12-p gr-12-m invisible upgrademessage center-text'>
                     <span class='gr-hide-m invisible'>
                         <span id='virtual-text'>Вы находитесь на демо-счету.</span>
                     </span>
@@ -104,7 +104,7 @@
                 </div>
                 <div class='gr-6 gr-7-t gr-12-p gr-12-m' id='topbar-info'>
                     <div class="gr-row">
-                        <div class='gr-5 gr-6-m no-underline' id="gmt-clock" data-balloon-pos="down"></div>
+                        <div class='gr-5 gr-6-m no-underline nowrap' id="gmt-clock" data-balloon-pos="down"></div>
                         <div class='gr-2 gr-hide-m' id='contact-us'>
                             <a href="/binary-static/ru/contact.html">Контакты</a>
                         </div>
@@ -154,7 +154,7 @@
                     </div>
                     <div class='gr-6 gr-hide-m gr-hide-p gr-padding-10'>
                         <div id='main-navigation'>
-                            <ul id="menu-top">
+                            <ul class="center-text nowrap" id="menu-top">
         
             <li class="ja-hide">
     
@@ -221,7 +221,7 @@
                                 <li class="account">
                                     <a href="javascript:;">
     <div class="main-account">
-        <div class="account-type"></div>
+        <div class="account-type nowrap"></div>
         <div class="account-id"></div>
         <div class="topMenuBalance">0</div>
     </div>
@@ -233,7 +233,7 @@
                                 <li class="account">
                                     <a href="javascript:;">
     <div class="main-account">
-        <div class="account-type"></div>
+        <div class="account-type nowrap"></div>
         <div class="account-id"></div>
         <div class="topMenuBalance">0</div>
     </div>
@@ -277,10 +277,10 @@
         <div id="main-menu" class="tab-menu no-print fill-bg-color border-color">
     <div class="tab-menu-wrap container gr-hide-m gr-hide-p">
         <div class="gr-12 gr-no-gutter">
-            <ul class="items">  <li id="topMenuTrading" class="item ja-hide hide-tablet-mobile">
+            <ul class="items">  <li id="topMenuTrading" class="item ja-hide gr-hide-m gr-hide-p">
                     <a class="link" target="" href="/binary-static/ru/trading.html">Торговля</a>
                     
-                </li>  <li id="topMenuJPTrading" class="item invisible ja-show hide-tablet-mobile">
+                </li>  <li id="topMenuJPTrading" class="item invisible ja-show gr-hide-m gr-hide-p">
                     <a class="link" target="" href="/binary-static/ru/multi_barriers_trading.html">Торговля</a>
                     
                 </li>  <li id="topMenuPortfolio" class="item client_logged_in invisible">
@@ -352,10 +352,10 @@
     <a href="/binary-static/ru/tour-jp.html" >
      Тур 
     </a>
-</li>  <li id="topMenuTrading" class="item ja-hide hide-tablet-mobile">
+</li>  <li id="topMenuTrading" class="item ja-hide gr-hide-m gr-hide-p">
                 <a class="link " href="/binary-static/ru/trading.html">Торговля</a>
                 
-            </li>  <li id="topMenuJPTrading" class="item invisible ja-show hide-tablet-mobile">
+            </li>  <li id="topMenuJPTrading" class="item invisible ja-show gr-hide-m gr-hide-p">
                 <a class="link " href="/binary-static/ru/multi_barriers_trading.html">Торговля</a>
                 
             </li>  <li id="topMenuPortfolio" class="item client_logged_in invisible">
@@ -458,16 +458,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <div id="contract_container" class="col row">
                         <div id="loading_container3" class="overlay_container"></div>
                         <div id="contract_form_container" class="col">
-                            <div id="contract_form_content">
+                            <div id="contract_form_content" class="gr-gutter">
                                 <form id='websocket_form'>
-                                    <div class="row" id="period_row">
-                                        <div class="col form_label">
-                                            <label for="period" id="period_label">Период</label>
-                                        </div>
-                                        <div class="big-col">
-                                            <select id="period"></select>
-                                        </div>
-                                    </div>
                                     <div class="row" id="date_start_row">
                                         <div class="col form_label" id="start_time_label">Время начала</div>
                                         <div class="big-col">
@@ -503,7 +495,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                             </label>
                                         </div>
                                         <div class="big-col">
-                                            <input id="barrier" type="text" name="H" pattern="^[\+-]\d+(\.\d{1,5})?|\d+(\.\d{1,5})?" title="Пожалуйста, введите число." autocomplete="off" />
+                                            <input id="barrier" type="text" name="H" autocomplete="off" />
                                             <span id="indicative_barrier_tooltip" data-balloon="Это ориентировочный барьер. Настоящим барьером будет спот-котировка плюс изменение барьера." data-balloon-length="xlarge"></span>
                                         </div>
                                     </div>
@@ -515,7 +507,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                             </label>
                                         </div>
                                         <div class="big-col">
-                                            <input id="barrier_high" type="text" name="H" pattern="^[\+-]\d+(\.\d{1,5})?|\d+(\.\d{1,5})?" title="Пожалуйста, введите число." autocomplete="off" />
+                                            <input id="barrier_high" type="text" name="H" autocomplete="off" />
                                             <span id="indicative_high_barrier_tooltip" data-balloon="Это ориентировочный барьер. Настоящим барьером будет спот-котировка плюс изменение барьера." data-balloon-length="xlarge"></span>
                                         </div>
                                     </div>
@@ -527,7 +519,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                             </label>
                                         </div>
                                         <div class="big-col">
-                                            <input id="barrier_low" type="text" name="L" pattern="^[\+-]\d+(\.\d{1,5})?|\d+(\.\d{1,5})?" title="Пожалуйста, введите число." autocomplete="off" />
+                                            <input id="barrier_low" type="text" name="L" autocomplete="off" />
                                             <span id="indicative_low_barrier_tooltip" data-balloon="Это ориентировочный барьер. Настоящим барьером будет спот-котировка плюс изменение барьера." data-balloon-length="xlarge"></span>
                                         </div>
                                     </div>
@@ -845,6 +837,175 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </div>
             <div id="tab_explanation-content" class="toggle-content invisible">
         
+                <div class='gr-12'>
+    <!-- ========== Winning ========== -->
+    <div id="explanation_winning" class="invisible">
+        <h3>Условия выигрыша контракта</h3>
+
+        <div id="winning_asian" class="invisible">
+            <p>Исход азиатских опционов рассчитывается путем сравнения <strong>последней котировки</strong> с общим средним значением котировок за весь период.</p>
+            <p>Если Вы выбираете "Азиатские – Повышение", Вы выигрываете, если <strong>последняя котировка</strong> окажется <strong>выше</strong>, чем <strong>общее среднее значение</strong> котировок.</p>
+            <p>Если Вы выбираете "Азиатские – Падение", Вы выигрываете, если <strong>последняя котировка</strong> окажется <strong>ниже</strong>, чем <strong>общее среднее значение</strong> котировок.</p>
+        </div>
+
+        <div id="winning_digits" class="invisible">
+            <p>Если Вы выбираете "Совпадет", Вы выигрываете, если <strong>последняя десятичная</strong> последней котировки <strong>равна</strong> Вашему <strong>прогнозу</strong></p>
+            <p>Если Вы выбираете "Отличается", Вы выигрываете, если <strong>последняя десятичная</strong> последней котировки <strong>не соответствует</strong> Вашему <strong>прогнозу</strong>.</p>
+        </div>
+
+        <div id="winning_endsinout" class="invisible">
+            <p>Если Вы выбираете "Закончится между", Вы получаете прибыль, если <strong>выходная цена рынка</strong> строго выше, чем <strong>Нижний барьер</strong> и строго ниже, чем <strong>Верхний барьер</strong>.</p>
+            <p>Если Вы выбираете "Закончится вне", Вы выиграете, если <strong>выходная цена рынка</strong> ЛИБО строго выше, чем <strong>Верхний барьер</strong>, ЛИБО строго ниже, чем <strong>Нижний барьер</strong>.</p>
+        </div>
+
+        <div id="winning_evenodd" class="invisible">
+            <p>Если Вы выбираете "Чётное число", Вы выигрываете, если <strong>последняя десятичная</strong> последней котировки будет <strong>чётным числом (напр., 2, 4, 6, 8 или 0).</strong></p>
+            <p>Если Вы выбираете "Нечётное число", Вы выигрываете, если <strong>последняя десятичная</strong> последней котировки будет <strong>нечётным числом (напр., 1, 3, 5, 7, или 9).</strong></p>
+        </div>
+
+        <div id="winning_higherlower" class="invisible">
+            <p>Если Вы выбираете "Выше", Вы выигрываете, если <strong>выходная котировка</strong> строго выше, чем <strong>выбранный барьер</strong>.</p>
+            <p>Если Вы выбираете "Ниже", Вы выигрываете, если <strong>выходная котировка</strong> строго ниже, чем <strong>выбранный барьер</strong>.</p>
+        </div>
+
+        <div id="winning_overunder" class="invisible">
+            <p>Если Вы выбираете "Больше", Вы выигрываете, если <strong>последняя десятичная</strong> последней котировки будет <strong>больше Вашего прогноза.</strong></p>
+            <p>Если Вы выбираете "Ниже", Вы выигрываете, если <strong>последняя десятичная</strong> последней котировки будет <strong>ниже Вашего прогноза.</strong></p>
+        </div>
+
+        <div id="winning_risefall" class="invisible">
+            <p>Если Вы выбираете "Повысится", Вы выигрываете, если <strong>выходная котировка</strong> строго выше, чем <strong>входная котировка</strong>.</p>
+            <p>Если Вы выбираете "Упадет", Вы выигрываете, если <strong>спот-котировка при окончании</strong> строго ниже, чем <strong>входная котировка</strong>.</p>
+        </div>
+
+        <div id="winning_runbet-lucky10" class="invisible">
+            <p>Контракт выиграет, если цена рынка закончится выбранной Вами цифрой.</p>
+        </div>
+
+        <div id="winning_runbet-quick10" class="invisible">
+            <p>Вы выигрываете, если рыночная цена при окончании не будет заканчиваться выбранной Вами цифрой.</p>
+        </div>
+
+        <div id="winning_runbet-updown" class="invisible">
+            <p>Если Вы выбираете "повысится", Вы выигрываете, если рыночная цена выше, чем <strong>входная котировка</strong>.</p>
+            <p>Если Вы выбираете "упадет", Вы выигрываете, если рыночная цена ниже, чем <strong>входная котировка</strong>.</p>
+        </div>
+
+        <div id="winning_staysinout" class="invisible">
+            <p>Если Вы выбираете "Останется между", Вы получаете прибыль, если рынок останется между <strong>верхним</strong> и <strong>нижним</strong> барьером (не коснется ни одного из них) за все время <strong>действия контракта</strong>.</p>
+            <p>Если Вы выбираете "Выйдет за пределы", Вы получаете прибыль, если рынок коснется либо <strong>верхнего</strong>, либо <strong>нижнего</strong> барьера в любое время в <strong>течение контракта</strong>.</p>
+        </div>
+
+        <div id="winning_ticks" class="invisible">
+            <p>Если Вы выбираете "Повысится", Вы выигрываете, если <strong>выходная котировка</strong> строго выше, чем <strong>входная котировка</strong>.</p>
+            <p>Если Вы выбираете "Упадет", Вы выигрываете, если <strong>спот-котировка при окончании</strong> строго ниже, чем <strong>входная котировка</strong>.</p>
+        </div>
+
+        <div id="winning_touchnotouch" class="invisible">
+            <p>Если Вы выбираете "Коснется", Вы получаете прибыль, если рынок коснется заданного <strong>барьера</strong> в любое время в <strong>течение контракта</strong>.</p>
+            <p>Если Вы выбираете "Не коснется", Вы получаете прибыль, если рынок не коснется заданного <strong>ценового барьера</strong> в любое время в <strong>течение контракта</strong>.</p>
+        </div>
+
+        <div id="winning_updown" class="invisible">
+            <p>Если Вы выбираете "повысится", Вы выигрываете, если рыночная цена выше, чем входная котировка.</p>
+            <p>Если Вы выбираете "упадет", Вы выигрываете, если рыночная цена ниже, чем входная котировка.</p>
+        </div>
+    </div>
+
+    <!-- ========== Image ========== -->
+    <div id="explanation_image" class="invisible">
+        <div class='gr-row'>
+            <div class='gr-6'>
+                <img id="explanation_image_1" class="responsive" />
+            </div>
+            <div class='gr-6'>
+                <img id="explanation_image_2" class="responsive" />
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== Explain ========== -->
+    <div id="explanation_explain" class="invisible gr-padding-20 gr-child">
+        <div id="explain_asian" class="invisible">
+            <h3>Первая котировка</h3>
+            <p>Первой котировкой считается первая котировка после обработки контракта нашими серверами.</p>
+            <h3>Среднее</h3>
+            <p>Общее среднее значение является усредненной суммой котировок, включая первую и последнюю за период.</p>
+            <p class="hint"><strong>Примечание: </strong>Цена покупки азиатских контрактов будет возмещена, если контракт не истечёт в течение 5 минут.</p>
+        </div>
+
+        <div id="explain_digits" class="invisible">
+            <h3>Первая котировка</h3>
+            <p>Первой котировкой считается первая котировка после обработки контракта нашими серверами.</p>
+            <p class="hint"><strong>Примечание: </strong>Цена покупки цифровых контрактов будет возмещена, если контракт не истечёт в течение 5 минут.</p>
+        </div>
+
+        <div id="explain_endsinout" class="invisible">
+            <h3>Выходная котировка</h3>
+            <p><strong>Выходной котировкой</strong> считается котировка, действительная на <strong>момент окончания</strong> контракта.</p>
+            <p><strong>Временем окончания</strong> является момент по истечении выбранного количества минут или часов после <strong>начала контракта</strong> (если контракт меньше дня по продолжительности) или момент окончания торгового дня (если контракт дольше одного дня по продолжительности).</p>
+            <p><strong>Временем начала</strong> считается момент, когда контракт был обработан нашим сервером.</p>
+            <p class="hint"><strong>Примечание: </strong>Цена покупки контрактов Закончится Внутри/Вне будет возмещена трейдеру, если разница между временем начала и окончания контракта составляет менее двух тиков.</p>
+        </div>
+
+        <div id="explain_evenodd" class="invisible">
+            <h3>Первая котировка</h3>
+            <p>Первой котировкой считается первая котировка после обработки контракта нашими серверами.</p>
+            <p class="hint"><strong>Примечание: </strong>Цена покупки контрактов Чётное/Нечётное будет возмещена, если контракт не истечёт в течение 5 минут.</p>
+        </div>
+
+        <div id="explain_higherlower" class="invisible">
+            <h3>Выходная котировка</h3>
+            <p><strong>Выходной котировкой</strong> считается котировка, действительная на <strong>момент окончания</strong> контракта.</p>
+            <p><strong>Временем окончания</strong> является момент по истечении выбранного количества секунд, минут или часов после <strong>начала контракта</strong> (если контракт меньше дня по продолжительности) или момент окончания торгового дня (если контракт дольше одного дня по продолжительности).</p>
+            <p><strong>Временем начала</strong> считается момент, когда контракт был обработан нашим сервером.</p>
+            <p class="hint"><strong>Примечание: </strong>Цена покупки контрактов Выше/Ниже будет возмещена трейдеру, если разница между временем начала и окончания контракта составляет менее двух тиков.</p>
+        </div>
+
+        <div id="explain_overunder" class="invisible">
+            <h3>Первая котировка</h3>
+            <p>Первой котировкой считается первая котировка после обработки контракта нашими серверами.</p>
+            <p class="hint"><strong>Примечание: </strong>Цена покупки контрактов Над/Под будет возмещена, если контракт не истечёт в течение 5 минут.</p>
+        </div>
+
+        <div id="explain_risefall" class="invisible">
+            <h3>Входная котировка</h3>
+            <p>
+                Если вы выбираете <strong>время начала</strong> "Сейчас", контракт <strong>начнется</strong>, как только он будет обработан, а <strong>входной котировкой</strong> будет <strong>следующий тик</strong> после начала.
+                <br />
+                Если вы выбираете <strong>время начала</strong> контракта в будущем, он <strong>начнется</strong> в выбранное время, а <strong>входная котировка</strong> будет действительной на тот момент ценой.
+            </p>
+            <br />
+            <h3>Выходная котировка</h3>
+            <p>
+                <strong>Выходной котировкой</strong> считается котировка, действительная на <strong>момент окончания</strong> контракта.
+                <br />
+                Если Вы выбираете <strong>время начала</strong> контракта "Cейчас", контракт <strong>закончится</strong> через выбранное количество минут/часов после <strong>времени начала</strong> контракта (если он длится менее дня), или в конце выбранного торгового дня (если контракт длится один день или более).
+                <br />
+                Если Вы выбираете определенное <strong>время окончания</strong>, <strong>временем окончания</strong> контракта будет выбранное Вами время.
+            </p>
+            <br />
+            <p class="hint"><strong>Примечание: </strong>Цена покупки контрактов Повышение/Падение будет возмещена трейдеру в случае возникновения следующих условий: (1) разница между временем начала и окончания контракта составляет менее двух тиков; (2) для контрактов, длительность которых измеряется тиками – если контракт не заканчивается в течение 5 минут; (3) для контрактов, начинающихся в будущем – если в течение 5 минут до начала действия контракта не было отмечено ни одного тика.</p>
+        </div>
+
+        <div id="explain_staysinout" class="invisible">
+            <h3>Период контракта</h3>
+            <p><strong>Период действия контракта</strong> – это период между <strong>следующей котировкой</strong> после <strong>времени начала</strong> контракта и <strong>временем окончания</strong>.</p>
+            <p><strong>Временем начала</strong> считается момент, когда контракт был обработан нашим сервером.</p>
+            <p><strong>Временем окончания</strong> является момент по истечении выбранного количества минут или часов после <strong>начала контракта</strong> (если контракт меньше дня по продолжительности) или момент окончания торгового дня (если контракт дольше одного дня по продолжительности).</p>
+            <p class="hint"><strong>Примечание: </strong>Цена покупки контрактов Останется Внутри/Выйдет за пределы будет возмещена трейдеру, если разница между временем начала и окончания контракта составляет менее двух тиков.</p>
+        </div>
+
+        <div id="explain_touchnotouch" class="invisible">
+            <h3>Период контракта</h3>
+            <p><strong>Период действия контракта</strong> – это период между <strong>следующей котировкой</strong> после <strong>времени начала</strong> контракта и <strong>временем окончания</strong>.</p>
+            <p><strong>Временем начала</strong> считается момент, когда контракт был обработан нашим сервером.</p>
+            <p><strong>Временем окончания</strong> является момент по истечении выбранного количества минут или часов после <strong>начала контракта</strong> (если контракт меньше дня по продолжительности) или момент окончания торгового дня (если контракт дольше одного дня по продолжительности).</p>
+            <p class="hint"><strong>Примечание: </strong>Цена покупки контрактов Касание/Нет касания будет возмещена трейдеру, если разница между временем начала и окончания контракта составляет менее двух тиков.</p>
+        </div>
+    </div>
+</div>
+            
     </div>
             <div id="tab_last_digit-content" class="toggle-content invisible">
         <div class="gr-parent">
@@ -940,13 +1101,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div> 
 </div>
 <div id="footer" class="no-print">
-    <div id="footer-menu" class="primary-bg-color">
+    <div id="footer-menu" class="primary-bg-color gr-padding-10">
         <div class="container">
             <div class="gr-row gr-padding-10">
                 <div class="gr-6 gr-12-m gr-parent gr-no-gutter">
                     <div class="gr-row">
                         <div class="gr-4 ">
-    <h4 class="secondary-color">Наша компания</h4>
+    <h4 class="secondary-color"><strong>Наша компания</strong></h4>
     <ul>
         
             <li>
@@ -1002,7 +1163,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 ">
-    <h4 class="secondary-color">Обучение</h4>
+    <h4 class="secondary-color"><strong>Обучение</strong></h4>
     <ul>
         
             <li class="ja-hide">
@@ -1079,7 +1240,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 ">
-    <h4 class="secondary-color">Финансы</h4>
+    <h4 class="secondary-color"><strong>Финансы</strong></h4>
     <ul>
         
             <li>
@@ -1103,7 +1264,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div class="gr-6 gr-12-m gr-parent gr-no-gutter">
                     <div class="gr-row">
                         <div class="gr-4 ">
-    <h4 class="secondary-color">Правила</h4>
+    <h4 class="secondary-color"><strong>Правила</strong></h4>
     <ul>
         
             <li class="ja-hide">
@@ -1152,7 +1313,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 ja-hide">
-    <h4 class="secondary-color">Контракты</h4>
+    <h4 class="secondary-color"><strong>Контракты</strong></h4>
     <ul>
         
             <li>
@@ -1173,7 +1334,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 ja-hide">
-    <h4 class="secondary-color">Партнерство</h4>
+    <h4 class="secondary-color"><strong>Партнерство</strong></h4>
     <ul>
         
             <li>
@@ -1215,7 +1376,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 
                         <div class="gr-4 invisible ja-show">
-    <h4 class="secondary-color">{JAPAN ONLY}Company Profile</h4>
+    <h4 class="secondary-color"><strong>{JAPAN ONLY}Company Profile</strong></h4>
     <ul>
         
             <li>
@@ -1232,12 +1393,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </div>
         </div>
     </div>
-    <div id="footer-regulatory" class="primary-color-dark">
+    <div id="footer-regulatory" class="primary-color-dark gr-padding-10 gr-child">
         <div class="container">
             <div class="gr-row">
-                <div id="regulatory-text" class="gr-9 gr-12-m gr-7-p gr-padding-10 gr-parent content-inverse-color">
+                <p id="regulatory-text" class="gr-9 gr-12-m gr-7-p gr-padding-10 gr-parent content-inverse-color no-margin">
                     Данный сайт действует в Великобритании, на Острове Мэн и находится под управлением компании Binary (IOM) Ltd., расположенной по адресу First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles, лицензируемой и контролируемой (1) Комиссией по надзору за азартными играми Острова Мэн, Британские острова; текущая лицензия для ведения игорной деятельности выдана 31 августа 2012; для британских клиентов – (2) Комиссией по азартным играм Великобритании – <a href='https://secure.gamblingcommission.gov.uk/gccustomweb/PublicRegister/PRSearch.aspx?ExternalAccountId=39172' target='_blank'>просмотрите лицензию</a>. Также данный сайт действует в остальной части Европы, а его инвестиционные продукты находятся под управлением компании Binary Investments (Europe) Ltd., расположенной по адресу Mompalao Building, Suite 2, Tower Road, Msida MSD1825, Malta, лицензированной и контролируемой в качестве поставщика инвестиционных услуг категории 3 Управлением по азартным играм Мальты (лицензия номер IS/70156). Игорные продукты сайта находятся под управлением компании Binary (Europe) Ltd., расположенной по адресу Mompalao Building, Suite 2, Tower Road, Msida MSD1825, Мальта, лицензированной и контролируемой (1) Управлением по азартным играм Мальты, лицензия MGA/CL2/118/2000 от 26 мая 2015 года; для британских клиентов – (2) Комиссией по азартным играм Великобритании – <a href='https://secure.gamblingcommission.gov.uk/gccustomweb/PublicRegister/PRSearch.aspx?ExternalAccountId=39495' target='_blank'>просмотрите лицензию</a>; для ирландских клиентов – (3) Государственной налоговой инспекцией  Ирландии; текущая лицензия удаленного букмекера выдана 29 сентября 2015 г. (лицензия номер 1010285). Услуги данного сайта не доступны в ряде стран: в США, Коста-Рике и Гонконге, а также лицам младше 18 лет.
-                </div>
+                </p>
                 <div class="ja-hide gr-3 gr-12-m gr-5-p center-text" id="social-networks">
                     <div class="gr-row ja-hide id-hide">
                         <div class="gr-5">
@@ -1251,29 +1412,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             </a>
                         </div>
                     </div>
-                    <div class="social-icons gr-padding-10">
-    
-        <a href="https://www.youtube.com/user/BinaryTradingVideos" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/youtube.svg"/>
-        </a>
-    
-        <a href="https://plus.google.com/106251151552682209951" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/google-plus.svg"/>
-        </a>
-    
-        <a href="https://www.facebook.com/binarydotcom" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/facebook.svg"/>
-        </a>
-    
-        <a href="https://twitter.com/Binarydotcom" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/twitter.svg"/>
-        </a>
-    
-        <a href="https://www.linkedin.com/company/binary-com" target="_blank">
-            <img class="responsive social-network-icon" src="/binary-static/images/pages/footer/linkedin.svg"/>
-        </a>
-    
-</div>
+                    
+
+                    <div class="gr-padding-10 gr-row">
+                            <div class="gr-2 gr-1-p gr-3-m"></div>
+                            
+                                <a href="https://www.youtube.com/user/BinaryTradingVideos" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/youtube.svg"/>
+                                </a>
+                            
+                                <a href="https://plus.google.com/106251151552682209951" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/google-plus.svg"/>
+                                </a>
+                            
+                                <a href="https://www.facebook.com/binarydotcom" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/facebook.svg"/>
+                                </a>
+                            
+                                <a href="https://twitter.com/Binarydotcom" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/twitter.svg"/>
+                                </a>
+                            
+                                <a href="https://www.linkedin.com/company/binary-com" target="_blank" class="gr-2 gr-1-m gr-no-gutter-right">
+                                    <img class="responsive" src="/binary-static/images/pages/footer/linkedin.svg"/>
+                                </a>
+                            
+                        </div>
                 </div>
             </div>
         </div>
@@ -1281,13 +1445,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div id="footer-last" class="primary-bg-color">
         <div class="container">
             <div class="gr-padding-10">
-                <p class="gambling content-inverse-color">
+                <p class="gambling content-inverse-color no-para-margin">
                     Торговля бинарными опционами подходит далеко не всем, поэтому, пожалуйста, убедитесь, что Вы полностью осознаёте все риски. Ваши потери могут превысить первоначальную инвестицию, а Вы не владеете и не получаете никакой доли от базового актива. Помните, что некоторые вариации бинарных опционов являются разновидностью азартных игр и могут вызвать привыкание, поэтому, пожалуйста, играйте ответственно. <span class="ja-hide">Узнайте больше об <a href="/binary-static/ru/responsible-trading.html">Ответственной торговле</a>.</span>
                 </p>
             </div>
         </div>
     </div>
-    <div id="end-note" class="invisible"></div>
+    <div id="end-note" class="invisible content-inverse-color center-text"></div>
 </div>
 
         </div>
