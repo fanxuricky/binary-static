@@ -261,7 +261,7 @@ label {
 }
 
 .popup_page_overlay {
-  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -828,6 +828,9 @@ table td {
   .table-container #statement-table tr th, .table-container #statement-table tr td, .table-container #profit-table tr th, .table-container #profit-table tr td {
     font-size: 0.75614rem;
   }
+}
+.table-container #statement-table tr:hover, .table-container #profit-table tr:hover {
+  background-color: #e98024;
 }
 @media (max-width: 600px) {
   .table-container #profit-table tr > th.contract, .table-container #profit-table tr > td.contract {
@@ -2107,6 +2110,113 @@ div.kineticjs-content {
 
 #sell_popup_container {
   width: 90%;
+  font-size: 0.86957rem;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
+}
+#sell_popup_container a.close {
+  right: 0;
+  line-height: 30px;
+  width: 30px;
+  height: 30px;
+}
+#sell_popup_container .inpage_popup_content {
+  margin: 0;
+}
+#sell_popup_container.message_popup {
+  width: 500px;
+  line-height: 25px;
+}
+
+.inpage_popup_container {
+  border: 2px solid #2a3052;
+  border-top: 1px solid #fff;
+  background-color: #fff;
+}
+.inpage_popup_container .inpage_popup_content_box {
+  border: 0;
+}
+.inpage_popup_container .inpage_popup_content_box #contract_win_status {
+  line-height: 30px;
+}
+.inpage_popup_container .inpage_popup_content_box #contract_win_status.won {
+  background-color: rgba(46, 136, 54, 0.2);
+}
+.inpage_popup_container .inpage_popup_content_box #contract_win_status.lost {
+  background-color: rgba(204, 0, 0, 0.1);
+}
+.inpage_popup_container .inpage_popup_content_box .popup_bet_desc {
+  border: 0;
+  padding: 5px;
+  line-height: 20px;
+  background-color: #2a3052;
+  color: #fff;
+  padding-right: 30px;
+}
+.inpage_popup_container .inpage_popup_content_box td {
+  padding-left: 6%;
+  text-align: left;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper {
+  max-height: calc(100vh - 35px);
+  overflow: auto;
+  overflow-x: hidden;
+  -ms-overflow-x: hidden;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_chart_wrapper {
+  border-right: 1px solid #44484c;
+  margin-right: -1px;
+  padding: 0;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table {
+  padding: 0;
+  border-left: 1px solid #44484c;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table th {
+  line-height: 24px;
+  border-bottom: #c2c2c2;
+  cursor: pointer;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table td, .inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table td[data-balloon] {
+  border-bottom: 1px solid #f2f2f2;
+  vertical-align: middle;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table #trade_details_profit_loss {
+  font-weight: bold;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table #trade_details_profit_loss span {
+  font-size: 0.65752rem;
+  padding-left: 7px;
+  font-weight: normal;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table .last_cell {
+  border-bottom: 0;
+  min-height: 20px;
+  padding: 5px 15px;
+  text-align: center;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table #trade_details_message {
+  font-style: italic;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table #contract_sell_message {
+  font-size: 1rem;
+  line-height: 20px;
+}
+.inpage_popup_container .inpage_popup_content_box #sell_content_wrapper #sell_details_table #sell_at_market_wrapper .note {
+  line-height: 18px;
+  margin-bottom: 10px;
+  font-size: 0.75614rem;
+  padding: 3px 10px;
+}
+
+.popup_bet_desc {
+  padding: 5px 0;
+  border: 1px solid #dedede;
+}
+
+#sell_popup_container {
+  width: 100%;
   font-size: 0.86957rem;
   max-width: 960px;
   margin: 0 auto;
@@ -4191,6 +4301,10 @@ body.JA #mb_trading .payout-input .hint, body.JA #mb_trading .payout-input label
 }
 
 /*Vietnamese Language */
+body.VI {
+  -webkit-font-kerning: none;
+          font-kerning: none;
+}
 body.VI #legal-tab li.tm-li-2 {
   margin-right: 0 !important;
   padding: 0 8px !important;
