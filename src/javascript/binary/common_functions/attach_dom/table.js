@@ -86,6 +86,26 @@ const Table = (() => {
         return $tr;
     };
 
+    // clickable table row
+    const createClickableFlexTableRow = (data, metadata, opt) => {
+        if (data.length !== metadata.length) {
+            throw new Error('metadata and data does not match');
+        }
+
+        const is_data = (opt === 'data');
+
+        const $tr = $('<tr></tr>');
+        for (let i = 0; i < data.length; i++) {
+            const class_name = metadata[i].toLowerCase().replace(/\s/g, '-');
+            const row_element = (is_data) ?
+                $('<td></td>', { class: class_name, html: data[i] }) :
+                $('<th></th>', { class: class_name, html: data[i] });
+            row_element.appendTo($tr);
+        }
+
+        return $tr;
+    };
+
     const clearTableBody = (id) => {
         const tbody = document.querySelector(`#${id} > tbody`);
         while (tbody && tbody.firstElementChild) {
@@ -114,6 +134,7 @@ const Table = (() => {
     return {
         createFlexTable   : createFlexTable,
         createFlexTableRow: createFlexTableRow,
+        createClickableFlexTableRow: createClickableFlexTableRow,
         clearTableBody    : clearTableBody,
         appendTableBody   : appendTableBody,
     };

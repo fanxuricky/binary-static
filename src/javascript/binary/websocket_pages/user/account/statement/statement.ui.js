@@ -68,12 +68,14 @@ const StatementUI = (() => {
 
         $statement_row.children('.credit').addClass(credit_debit_type);
         $statement_row.children('.date').addClass('pre');
-        $statement_row.children('.desc').html(`${localize(statement_data.desc)}<br>`);
+        $statement_row.children('.desc').html(`${localize(statement_data.desc)}</br>`);
 
         // create view button and append
         if (statement_data.action === 'Sell' || statement_data.action === 'Buy') {
-            const $view_button = $('<button/>', { class: 'button open_contract_details', text: localize('View'), contract_id: statement_data.id });
-            $statement_row.children('.desc,.details').append($view_button);
+            // const $view_button = $('<button/>', { class: 'button open_contract_details', text: localize('View'), contract_id:  statement_data.id});
+            // $statement_row.children('.desc,.details').append($view_button);
+            $statement_row.addClass('open_contract_details');
+            $statement_row.attr('contract_id', statement_data.id);
         }
 
         return $statement_row[0];        // return DOM instead of jquery object

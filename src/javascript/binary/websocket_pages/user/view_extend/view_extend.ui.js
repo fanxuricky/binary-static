@@ -105,22 +105,28 @@ const ViewPopupUI = (() => {
             $('.inpage_popup_content', con).html(data);
         }
         const body = $(document.body);
-        con.css('position', 'fixed').css('z-index', getHighestZIndex() + 100);
+        // con.css('position', 'fixed').css('z-index', getHighestZIndex() + 100);
+        con.css('position', 'fixed');
         body.append(con);
-        con.show();
+        con.hide();
+        // moveIn(con);
+
         // $('html').addClass('no-scroll');
+
+        // popup overlay
         $(document.body).append($('<div/>', { class: 'popup_page_overlay' }));
         $('.popup_page_overlay').click(() => { container().find('a.close').click(); });
-        con.draggable({
-            stop: () => {
-                repositionConfirmationOnDrag();
-            },
-            handle: dragHandle,
-            scroll: false,
-        });
-        $(dragHandle).disableSelection();
-        repositionConfirmation();
-        $(window).resize(() => { repositionConfirmation(); });
+        $('.popup_page_overlay').scroll(() => { container().find('a.close').click(); });
+        // con.draggable({
+        //     stop: () => {
+        //         repositionConfirmationOnDrag();
+        //     },
+        //     handle: dragHandle,
+        //     scroll: false,
+        // });
+        // $(dragHandle).disableSelection();
+        // repositionConfirmation();
+        // $(window).resize(() => { repositionConfirmation(); });
         return con;
     };
 
@@ -146,16 +152,22 @@ const ViewPopupUI = (() => {
             y_min = 0;
         }
         if (x === undefined) {
-            x = Math
-                .max(Math.floor((win_.width() - win_.scrollLeft() - con.width()) / 2), x_min) + win_.scrollLeft();
+            x = Math.max(Math.floor((win_.width() - win_.scrollLeft() - con.width()) / 2), x_min) + win_.scrollLeft();
         }
         if (y === undefined) {
-            y = Math.min(Math.floor((win_.height() - con.height()) / 2), y_min) + win_.scrollTop();
-            if (y < win_.scrollTop()) { y = win_.scrollTop(); }
+            // y = Math.min(Math.floor((win_.height() - con.height()) / 2), y_min) + win_.scrollTop();
+            // if (y < win_.scrollTop()) { y = win_.scrollTop(); }
+            y=win_.scrollTop()-con.height();
         }
-        con.offset({ left: x, top: y });
-        repositionConfirmationOnDrag();
+        con.offset({ left: x , top: y });
+        // repositionConfirmationOnDrag();
     };
+
+    const moveIn = () => {
+        const con = container();
+        const win_ = $(window);
+        con.animate({ "opacity": "show" ,  "top": "0"} , 800);
+    }
 
     // ===== Dispatch =====
     const storeSubscriptionID = (id, is_chart) => {
@@ -181,6 +193,7 @@ const ViewPopupUI = (() => {
         enableButton          : enableButton,
         showInpagePopup       : showInpagePopup,
         repositionConfirmation: repositionConfirmation,
+        moveIn                : moveIn,
         storeSubscriptionID   : storeSubscriptionID,
         setStreamFunction     : (streamFnc) => { getPageTickStream = streamFnc; },
     };

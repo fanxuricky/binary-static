@@ -1,6 +1,6 @@
 const moment               = require('moment');
 const StatementUI          = require('./statement.ui');
-const ViewPopup            = require('../../view_popup/view_popup');
+const ViewPopup            = require('../../view_extend/view_extend'); //view_popup
 const BinarySocket         = require('../../../socket');
 const getLanguage          = require('../../../../base/language').get;
 const localize             = require('../../../../base/localize').localize;

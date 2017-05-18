@@ -88,6 +88,9 @@ table {
                 }
             }
         }
+        tr:hover {
+            background-color: $COLOR_ORANGE;
+        }
     }
     @media (max-width: $md) {
         #profit-table tr {
