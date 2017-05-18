@@ -72,7 +72,8 @@ const StatementUI = (() => {
 
         // create view button and append
         if (statement_data.action === 'Sell' || statement_data.action === 'Buy') {
-            // const $view_button = $('<button/>', { class: 'button open_contract_details', text: localize('View'), contract_id:  statement_data.id});
+            // const $view_button = $('<button/>', { class: 'button open_contract_details',
+            // text: localize('View'), contract_id:  statement_data.id});
             // $statement_row.children('.desc,.details').append($view_button);
             $statement_row.addClass('open_contract_details');
             $statement_row.attr('contract_id', statement_data.id);

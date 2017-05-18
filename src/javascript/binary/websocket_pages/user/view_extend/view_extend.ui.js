@@ -1,5 +1,5 @@
 const BinarySocket     = require('../../socket');
-const getHighestZIndex = require('../../../base/utility').getHighestZIndex;
+// const getHighestZIndex = require('../../../base/utility').getHighestZIndex;
 
 const ViewPopupUI = (() => {
     'use strict';
@@ -95,8 +95,9 @@ const ViewPopupUI = (() => {
         button.fadeTo(0, 1);
     };
 
-    //this code show the popup
-    const showInpagePopup = (data, containerClass, dragHandle) => {
+    // this code show the popup
+    // const showInpagePopup = (data, containerClass, dragHandle) => {
+    const showInpagePopup = (data, containerClass) => {
         const con = container(true);
         if (containerClass) {
             con.addClass(containerClass);
@@ -130,26 +131,26 @@ const ViewPopupUI = (() => {
         return con;
     };
 
-    const repositionConfirmationOnDrag = () => {
-        const con = container();
-        const offset = con.offset();
-        const win_ = $(window);
-        // top
-        if (offset.top < win_.scrollTop()) { con.offset({ top: win_.scrollTop() }); }
-        // left
-        if (offset.left < 0) { con.offset({ left: 0 }); }
-        // right
-        if (offset.left > win_.width() - con.width()) { con.offset({ left: win_.width() - con.width() }); }
-    };
+    // const repositionConfirmationOnDrag = () => {
+    //     const con = container();
+    //     const offset = con.offset();
+    //     const win_ = $(window);
+    //     // top
+    //     if (offset.top < win_.scrollTop()) { con.offset({ top: win_.scrollTop() }); }
+    //     // left
+    //     if (offset.left < 0) { con.offset({ left: 0 }); }
+    //     // right
+    //     if (offset.left > win_.width() - con.width()) { con.offset({ left: win_.width() - con.width() }); }
+    // };
 
     const repositionConfirmation = (x, y) => {
         const con = container();
         const win_ = $(window);
-        let x_min = 0,
-            y_min = 500;
+        let x_min = 0;
+            // ,y_min = 500;
         if (win_.width() < 767) { // To be responsive, on mobiles and phablets we show popup as full screen.
             x_min = 0;
-            y_min = 0;
+            // y_min = 0;
         }
         if (x === undefined) {
             x = Math.max(Math.floor((win_.width() - win_.scrollLeft() - con.width()) / 2), x_min) + win_.scrollLeft();
@@ -157,17 +158,16 @@ const ViewPopupUI = (() => {
         if (y === undefined) {
             // y = Math.min(Math.floor((win_.height() - con.height()) / 2), y_min) + win_.scrollTop();
             // if (y < win_.scrollTop()) { y = win_.scrollTop(); }
-            y=win_.scrollTop()-con.height();
+            y = win_.scrollTop() - con.height();
         }
-        con.offset({ left: x , top: y });
+        con.offset({ left: x, top: y });
         // repositionConfirmationOnDrag();
     };
 
     const moveIn = () => {
         const con = container();
-        const win_ = $(window);
-        con.animate({ "opacity": "show" ,  "top": "0"} , 800);
-    }
+        con.animate({ opacity: 'show',  top: '0' }, 800);
+    };
 
     // ===== Dispatch =====
     const storeSubscriptionID = (id, is_chart) => {

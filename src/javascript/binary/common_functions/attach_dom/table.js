@@ -132,11 +132,11 @@ const Table = (() => {
     };
 
     return {
-        createFlexTable   : createFlexTable,
-        createFlexTableRow: createFlexTableRow,
+        createFlexTable            : createFlexTable,
+        createFlexTableRow         : createFlexTableRow,
         createClickableFlexTableRow: createClickableFlexTableRow,
-        clearTableBody    : clearTableBody,
-        appendTableBody   : appendTableBody,
+        clearTableBody             : clearTableBody,
+        appendTableBody            : appendTableBody,
     };
 })();
 

@@ -280,7 +280,8 @@ const ViewPopup = (() => {
             .append($sections.html())
             .append($('<div/>', { id: 'errMsg', class: `notice-msg ${hidden_class}` }));
 
-        ViewPopupUI.showInpagePopup(`<div class="${popupbox_id}">${$container.html()}</div>`, '', '#sell_bet_desc');
+        // ViewPopupUI.showInpagePopup(`<div class="${popupbox_id}">${$container.html()}</div>`, '', '#sell_bet_desc');
+        ViewPopupUI.showInpagePopup(`<div class="${popupbox_id}">${$container.html()}</div>`, '');
         return $(`#${wrapper_id}`);
     };
 
@@ -327,7 +328,9 @@ const ViewPopup = (() => {
         $con.append(
             $('<div/>', { id: wrapper_id })
             .append($('<div/>', { class: msg_class, html: localize(message) })));
-        ViewPopupUI.showInpagePopup(`<div class="${popupbox_id}">${$con.html()}</div>`, 'message_popup', '#sell_bet_desc');
+        // ViewPopupUI.showInpagePopup
+        // (`<div class="${popupbox_id}">${$con.html()}</div>`, 'message_popup', '#sell_bet_desc');
+        ViewPopupUI.showInpagePopup(`<div class="${popupbox_id}">${$con.html()}</div>`, 'message_popup');
     };
 
     const showErrorPopup = (response, message) => {
