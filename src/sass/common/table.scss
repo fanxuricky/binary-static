@@ -90,6 +90,7 @@ table {
         }
         tr:hover {
             background-color: $COLOR_ORANGE;
+            cursor: pointer;
         }
     }
     @media (max-width: $md) {
