@@ -1,5 +1,5 @@
 const BinarySocket     = require('../../socket');
-const getHighestZIndex = require('../../../base/utility').getHighestZIndex;
+// const getHighestZIndex = require('../../../base/utility').getHighestZIndex;
 
 const ViewPopupUI = (() => {
     'use strict';
@@ -74,11 +74,11 @@ const ViewPopupUI = (() => {
 
     const closeContainer = () => {
         if ($container) {
-              $container.animate({ top: (-$(window).height() - $container.height()) }, 800, function() {
-                  $container.hide().remove();
-                  $('.popup_page_overlay').hide().remove();
-                  init();
-              });
+            $container.animate({ top: (-$(window).height() - $container.height()) }, 800, function() {
+                $container.hide().remove();
+                $('.popup_page_overlay').hide().remove();
+                init();
+            });
         }
         $('html').removeClass('no-scroll');
     };
