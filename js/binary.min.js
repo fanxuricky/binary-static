@@ -83300,7 +83300,6 @@
 	        forgetChartStreams();
 	        clearTimer();
 	        closeContainer();
-	        init();
 	        if (typeof getPageTickStream === 'function') getPageTickStream();
 	        $(window).off('resize', function () {
 	            repositionConfirmation();
@@ -83334,9 +83333,11 @@
 
 	    var closeContainer = function closeContainer() {
 	        if ($container) {
-	            $container.hide().remove();
-	            $('.popup_page_overlay').hide().remove();
-	            $container = null;
+	            $container.animate({ top: -$(window).height() - $container.height() }, 800, function () {
+	                $container.hide().remove();
+	                $('.popup_page_overlay').hide().remove();
+	                init();
+	            });
 	        }
 	        $('html').removeClass('no-scroll');
 	    };
@@ -83369,7 +83370,6 @@
 	        con.css('position', 'fixed');
 	        body.append(con);
 	        con.hide();
-	        // moveIn(con);
 
 	        // $('html').addClass('no-scroll');
 
@@ -83378,33 +83378,29 @@
 	        $('.popup_page_overlay').click(function () {
 	            container().find('a.close').click();
 	        });
-	        $('.popup_page_overlay').scroll(function () {
-	            container().find('a.close').click();
+	        $(window).resize(function () {
+	            repositionConfirmation();
 	        });
-	        // con.draggable({
-	        //     stop: () => {
-	        //         repositionConfirmationOnDrag();
-	        //     },
-	        //     handle: dragHandle,
-	        //     scroll: false,
-	        // });
-	        // $(dragHandle).disableSelection();
-	        // repositionConfirmation();
-	        // $(window).resize(() => { repositionConfirmation(); });
 	        return con;
 	    };
 
-	    // const repositionConfirmationOnDrag = () => {
-	    //     const con = container();
-	    //     const offset = con.offset();
-	    //     const win_ = $(window);
-	    //     // top
-	    //     if (offset.top < win_.scrollTop()) { con.offset({ top: win_.scrollTop() }); }
-	    //     // left
-	    //     if (offset.left < 0) { con.offset({ left: 0 }); }
-	    //     // right
-	    //     if (offset.left > win_.width() - con.width()) { con.offset({ left: win_.width() - con.width() }); }
-	    // };
+	    var repositionConfirmationOnDrag = function repositionConfirmationOnDrag() {
+	        var con = container();
+	        var offset = con.offset();
+	        var win_ = $(window);
+	        // top
+	        if (offset.top < win_.scrollTop()) {
+	            con.offset({ top: win_.scrollTop() });
+	        }
+	        // left
+	        if (offset.left < 0) {
+	            con.offset({ left: 0 });
+	        }
+	        // right
+	        if (offset.left > win_.width() - con.width()) {
+	            con.offset({ left: win_.width() - con.width() });
+	        }
+	    };
 
 	    var repositionConfirmation = function repositionConfirmation(x, y) {
 	        var con = container();
@@ -83420,12 +83416,10 @@
 	            x = Math.max(Math.floor((win_.width() - win_.scrollLeft() - con.width()) / 2), x_min) + win_.scrollLeft();
 	        }
 	        if (y === undefined) {
-	            // y = Math.min(Math.floor((win_.height() - con.height()) / 2), y_min) + win_.scrollTop();
-	            // if (y < win_.scrollTop()) { y = win_.scrollTop(); }
 	            y = win_.scrollTop() - con.height();
 	        }
 	        con.offset({ left: x, top: y });
-	        // repositionConfirmationOnDrag();
+	        repositionConfirmationOnDrag();
 	    };
 
 	    var moveIn = function moveIn() {
