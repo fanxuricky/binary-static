@@ -1990,6 +1990,9 @@ div.kineticjs-content {
   max-height: 150px;
 }
 
+#portfolio {
+  padding: 10px;
+}
 #portfolio td {
   padding: 10px;
   vertical-align: middle;
@@ -4199,6 +4202,9 @@ div.kineticjs-content {
   border: none;
 }
 
+#profit-table-container {
+  padding: 10px;
+}
 #profit-table-container th {
   padding-right: 8px;
 }
@@ -4227,6 +4233,9 @@ div.kineticjs-content {
   min-width: 100px;
 }
 
+#statement-container {
+  padding: 10px;
+}
 #statement-container #download_csv {
   line-height: 28px;
 }
