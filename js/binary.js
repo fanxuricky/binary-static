@@ -72,6 +72,12 @@
 	var BinaryLoader = __webpack_require__(481);
 
 	$(window).on('load', BinaryLoader.init);
+	$(window).on('pageshow', function (e) {
+	    // Safari doesn't fire load event when using back button
+	    if (e.originalEvent.persisted) {
+	        BinaryLoader.init();
+	    }
+	});
 
 /***/ }),
 /* 1 */
@@ -44458,7 +44464,7 @@
 	        var content = container.find(content_selector);
 
 	        // put current content to cache, so we won't need to load it again
-	        if (title && content && content.length) {
+	        if (content && content.length) {
 	            window.history.replaceState({ url: url }, title, url);
 	            setDataPage(content, url);
 	            params.container.trigger('binarypjax:after', content);
@@ -50508,11 +50514,19 @@
 	                status = void 0,
 	                should_authenticate = false;
 
+	            var costarica_landing_company = /costarica/.test(Client.get('landing_company_name'));
+
 	            var riskAssessment = function riskAssessment() {
 	                if (get_account_status.risk_classification === 'high') {
 	                    return isEmptyObject(State.get(['response', 'get_financial_assessment', 'get_financial_assessment']));
 	                }
 	                return false;
+	            };
+
+	            var _authenticate = function _authenticate() {
+	                // don't show age verification check for costarica clients
+	                var should_age_verify = !/age_verification/.test(status) && !costarica_landing_company;
+	                return (!/authenticated/.test(status) || should_age_verify) && !jpClient() && should_authenticate;
 	            };
 
 	            var buildMessage = function buildMessage(string, path) {
@@ -50546,7 +50560,7 @@
 
 	            var validations = {
 	                authenticate: function authenticate() {
-	                    return (!/authenticated/.test(status) || !/age_verification/.test(status)) && !jpClient() && should_authenticate;
+	                    return _authenticate();
 	                },
 	                financial_limit: function financial_limit() {
 	                    return (/ukrts_max_turnover_limit_not_set/.test(status)
@@ -50593,7 +50607,7 @@
 	                BinarySocket.wait('website_status', 'get_account_status', 'get_settings', 'get_financial_assessment', 'balance').then(function () {
 	                    get_account_status = State.get(['response', 'get_account_status', 'get_account_status']) || {};
 	                    status = get_account_status.status;
-	                    if (/costarica/.test(Client.get('landing_company_name')) && +Client.get('balance') < 200) {
+	                    if (costarica_landing_company && +Client.get('balance') < 200) {
 	                        BinarySocket.send({ mt5_login_list: 1 }).then(function (response) {
 	                            if (response.mt5_login_list.length) {
 	                                should_authenticate = true;
@@ -84299,23 +84313,150 @@
 
 	var KnowledgeTestUI = __webpack_require__(591);
 	var BinaryPjax = __webpack_require__(474);
+	var Client = __webpack_require__(427);
 	var toJapanTimeIfNeeded = __webpack_require__(470).toJapanTimeIfNeeded;
 	var Header = __webpack_require__(501);
 	var localize = __webpack_require__(435).localize;
 	var Url = __webpack_require__(430);
 	var BinarySocket = __webpack_require__(434);
+	var Cookies = __webpack_require__(429);
 
 	var KnowledgeTest = function () {
 	    'use strict';
 
 	    var submitted = {};
-	    var submit_completed = false;
-	    var random_picks = [];
 	    var obj_random_picks = {};
-	    var result_score = 0;
-
+	    var passing_score = 14; // minimum score to pass the test
 	    var msg_pass = '{JAPAN ONLY}Congratulations, you have pass the test, our Customer Support will contact you shortly.';
 	    var msg_fail = '{JAPAN ONLY}Sorry, you have failed the test, please try again after 24 hours.';
+
+	    var submit_completed = false;
+	    var random_picks = [];
+	    var result_score = 0;
+	    var $container = void 0;
+	    var $header = void 0;
+	    var $message = void 0;
+	    var $questions = void 0;
+	    var $instructions = void 0;
+
+	    var onLoad = function onLoad() {
+	        // need to send get_settings because client status needs to be checked against latest available data
+	        BinarySocket.send({ get_settings: 1 }, { forced: true }).then(function (response) {
+	            var jp_status = response.get_settings.jp_account_status;
+
+	            if (!jp_status) {
+	                BinaryPjax.load(Url.defaultRedirectUrl());
+	                return;
+	            }
+
+	            $container = $('#knowledge-test-container');
+	            $header = $container.find('#knowledge-test-header');
+	            $message = $container.find('#knowledge-test-msg');
+	            $questions = $container.find('#knowledge-test-questions');
+	            $instructions = $container.find('#knowledge-test-instructions');
+
+	            // show knowledge test link in header after updated get_settings call
+	            Header.upgradeMessageVisibility();
+
+	            switch (jp_status.status) {
+	                case 'jp_knowledge_test_pending':
+	                    populateQuestions();
+	                    break;
+	                case 'jp_knowledge_test_fail':
+	                    {
+	                        if (Date.now() >= jp_status.next_test_epoch * 1000) {
+	                            // show Knowledge Test cannot be taken
+	                            populateQuestions();
+	                        } else {
+	                            showDisallowedMsg(jp_status);
+	                        }
+	                        break;
+	                    }
+	                default:
+	                    {
+	                        window.location.href = Url.defaultRedirectUrl(); // needs to be loaded without pjax
+	                    }
+	            }
+	        });
+	    };
+
+	    var populateQuestions = function populateQuestions() {
+	        random_picks = randomPick20();
+	        random_picks.reduce(function (a, b) {
+	            return a.concat(b);
+	        }).forEach(function (question) {
+	            obj_random_picks[question.id] = question;
+	        });
+
+	        showQuestionsTable();
+	    };
+
+	    var randomPick20 = function randomPick20() {
+	        var questions = {};
+	        // retrieve questions text from html
+	        $container.find('#data-questions').find('> div').each(function () {
+	            // sections
+	            var category = +$(this).attr('data-section-id');
+	            questions['section' + category] = [];
+
+	            $(this).find('> div').each(function () {
+	                // questions
+	                var question_id = +$(this).attr('data-question-id');
+	                questions['section' + category].push({
+	                    category: category,
+	                    id: question_id,
+	                    question: $(this).attr('data-question-en'),
+	                    question_localized: $(this).text(),
+	                    correct_answer: answers[question_id],
+	                    tooltip: $(this).attr('data-tip')
+	                });
+	            });
+	        });
+
+	        var picked_questions = [];
+	        Object.keys(questions).forEach(function (section) {
+	            return picked_questions.push(randomPick4(questions[section]));
+	        });
+	        return picked_questions;
+	    };
+
+	    var randomPick4 = function randomPick4(obj_questions) {
+	        var availables = Object.keys(obj_questions);
+
+	        var random_picks_four = [];
+	        for (var i = 0; i < 4; i++) {
+	            var random_index = Math.floor(Math.random() * 100) % availables.length;
+	            random_picks_four.push(obj_questions[availables[random_index]]);
+	            availables.splice(random_index, 1);
+	        }
+
+	        return random_picks_four;
+	    };
+
+	    var answers = {
+	        /* eslint-disable */
+	        1: false, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: false, 10: true,
+	        11: false, 12: true, 13: false, 14: true, 15: true, 16: true, 17: false, 18: true, 19: true, 20: true,
+	        21: true, 22: false, 23: true, 24: false, 25: false, 26: true, 27: true, 28: true, 29: true, 30: true,
+	        31: false, 32: true, 33: false, 34: true, 35: false, 36: true, 37: true, 38: false, 39: true, 40: false,
+	        41: false, 42: true, 43: true, 44: true, 45: true, 46: true, 47: true, 48: false, 49: false, 50: true,
+	        51: false, 52: true, 53: true, 54: false, 55: true, 56: true, 57: true, 58: true, 59: true, 60: true,
+	        61: true, 62: false, 63: true, 64: true, 65: true, 66: false, 67: true, 68: true, 69: true, 70: true,
+	        71: true, 72: true, 73: true, 74: false, 75: false, 76: true, 77: false, 78: true, 79: true, 80: true,
+	        81: true, 82: true, 83: true, 84: true, 85: true, 86: true, 87: true, 88: false, 89: true, 90: true,
+	        91: true, 92: true, 93: true, 94: true, 95: false, 96: true, 97: true, 98: false, 99: true, 100: true
+	    };
+
+	    var showQuestionsTable = function showQuestionsTable() {
+	        for (var j = 0; j < random_picks.length; j++) {
+	            var table = KnowledgeTestUI.createQuestionTable(random_picks[j]);
+	            $container.find('#section' + (j + 1) + '-question').append(table);
+	        }
+
+	        $questions.find('input[type=radio]').click(questionAnswerHandler);
+	        $container.find('#knowledge-test-submit').click(submitHandler);
+	        showMessage('{JAPAN ONLY}Please complete the following questions.', 1);
+	    };
 
 	    var questionAnswerHandler = function questionAnswerHandler(ev) {
 	        submitted[ev.target.name] = +ev.target.value === 1;
@@ -84328,8 +84469,8 @@
 	            return +k;
 	        });
 	        if (answered_qid.length !== 20) {
-	            $('#knowledge-test-instructions').setVisibility(0);
-	            $('#knowledge-test-msg').addClass('notice-msg').text(localize('You need to finish all 20 questions.'));
+	            $instructions.setVisibility(0);
+	            $message.addClass('notice-msg').text(localize('You need to finish all 20 questions.'));
 
 	            var unanswered = random_picks.reduce(function (a, b) {
 	                return a.concat(b);
@@ -84360,164 +84501,49 @@
 	        submit_completed = true;
 	    };
 
-	    var showQuestionsTable = function showQuestionsTable() {
-	        for (var j = 0; j < random_picks.length; j++) {
-	            var table = KnowledgeTestUI.createQuestionTable(random_picks[j]);
-	            $('#section' + (j + 1) + '-question').append(table);
-	        }
-
-	        var $questions = $('#knowledge-test-questions');
-	        $questions.find('input[type=radio]').click(questionAnswerHandler);
-	        $('#knowledge-test-submit').click(submitHandler);
-	        $questions.setVisibility(1);
-	        $('#knowledge-test-msg').text(localize('{JAPAN ONLY}Please complete the following questions.'));
-	        $('#knowledge-test-instructions').setVisibility(1);
-	    };
-
-	    var showResult = function showResult(score, time) {
-	        $('#knowledge-test-instructions').setVisibility(0);
-	        $('#knowledge-test-header').text(localize('{JAPAN ONLY}Knowledge Test Result'));
-	        var msg = score >= 14 ? msg_pass : msg_fail;
-	        $('#knowledge-test-msg').text(localize(msg));
-
-	        var $result_table = KnowledgeTestUI.createResultUI(score, time);
-
-	        $('#knowledge-test-container').append($result_table);
-	        $('#knowledge-test-questions').setVisibility(0);
-	    };
-
-	    var showMsgOnly = function showMsgOnly(msg) {
-	        $('#knowledge-test-questions').setVisibility(0);
-	        $('#knowledge-test-msg').text(localize(msg));
-	        $('#knowledge-test-instructions').setVisibility(0);
-	    };
-
-	    var showDisallowedMsg = function showDisallowedMsg(jp_status) {
-	        return showMsgOnly(localize('{JAPAN ONLY}Dear customer, you are not allowed to take knowledge test until [_1]. Last test taken at [_2].', [toJapanTimeIfNeeded(jp_status.next_test_epoch), toJapanTimeIfNeeded(jp_status.last_test_epoch)]));
-	    };
-
-	    var populateQuestions = function populateQuestions() {
-	        random_picks = randomPick20();
-	        random_picks.reduce(function (a, b) {
-	            return a.concat(b);
-	        }).forEach(function (question) {
-	            obj_random_picks[question.id] = question;
-	        });
-
-	        showQuestionsTable();
-	    };
-
-	    var onLoad = function onLoad() {
-	        // need to send get_settings because client status needs to be checked against latest available data
-	        BinarySocket.send({ get_settings: 1 }, { forced: true }).then(function (response) {
-	            var jp_status = response.get_settings.jp_account_status;
-
-	            if (!jp_status) {
-	                BinaryPjax.load(Url.defaultRedirectUrl());
-	                return;
-	            }
-
-	            // show knowledge test link in header after updated get_settings call
-	            Header.upgradeMessageVisibility();
-
-	            switch (jp_status.status) {
-	                case 'jp_knowledge_test_pending':
-	                    populateQuestions();
-	                    break;
-	                case 'jp_knowledge_test_fail':
-	                    {
-	                        if (Date.now() >= jp_status.next_test_epoch * 1000) {
-	                            // show Knowledge Test cannot be taken
-	                            populateQuestions();
-	                        } else {
-	                            showDisallowedMsg(jp_status);
-	                        }
-	                        break;
-	                    }
-	                default:
-	                    {
-	                        window.location.href = Url.defaultRedirectUrl(); // needs to be loaded without pjax
-	                    }
-	            }
-	        });
-	    };
-
-	    var answers = {
-	        /* eslint-disable */
-	        1: false, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: false, 10: true,
-	        11: false, 12: true, 13: false, 14: true, 15: true, 16: true, 17: false, 18: true, 19: true, 20: true,
-	        21: true, 22: false, 23: true, 24: false, 25: false, 26: true, 27: true, 28: true, 29: true, 30: true,
-	        31: false, 32: true, 33: false, 34: true, 35: false, 36: true, 37: true, 38: false, 39: true, 40: false,
-	        41: false, 42: true, 43: true, 44: true, 45: true, 46: true, 47: true, 48: false, 49: false, 50: true,
-	        51: false, 52: true, 53: true, 54: false, 55: true, 56: true, 57: true, 58: true, 59: true, 60: true,
-	        61: true, 62: false, 63: true, 64: true, 65: true, 66: false, 67: true, 68: true, 69: true, 70: true,
-	        71: true, 72: true, 73: true, 74: false, 75: false, 76: true, 77: false, 78: true, 79: true, 80: true,
-	        81: true, 82: true, 83: true, 84: true, 85: true, 86: true, 87: true, 88: false, 89: true, 90: true,
-	        91: true, 92: true, 93: true, 94: true, 95: false, 96: true, 97: true, 98: false, 99: true, 100: true
-	    };
-
-	    var randomPick4 = function randomPick4(obj_questions) {
-	        var availables = Object.keys(obj_questions);
-
-	        var random_picks_four = [];
-	        for (var i = 0; i < 4; i++) {
-	            var random_index = Math.floor(Math.random() * 100) % availables.length;
-	            random_picks_four.push(obj_questions[availables[random_index]]);
-	            availables.splice(random_index, 1);
-	        }
-
-	        return random_picks_four;
-	    };
-
-	    var randomPick20 = function randomPick20() {
-	        var questions = {};
-	        // retrieve questions text from html
-	        $('#data-questions').find('> div').each(function () {
-	            // sections
-	            var category = +$(this).attr('data-section-id');
-	            questions['section' + category] = [];
-
-	            $(this).find('> div').each(function () {
-	                // questions
-	                var question_id = +$(this).attr('data-question-id');
-	                questions['section' + category].push({
-	                    category: category,
-	                    id: question_id,
-	                    question: $(this).attr('data-question-en'),
-	                    question_localized: $(this).text(),
-	                    correct_answer: answers[question_id],
-	                    tooltip: $(this).attr('data-tip')
-	                });
-	            });
-	        });
-
-	        var picked_questions = [];
-	        Object.keys(questions).forEach(function (section) {
-	            return picked_questions.push(randomPick4(questions[section]));
-	        });
-	        return picked_questions;
-	    };
-
 	    var sendResult = function sendResult(questions) {
 	        BinarySocket.send({
 	            jp_knowledge_test: 1,
 	            score: result_score,
-	            status: result_score >= 14 ? 'pass' : 'fail',
+	            status: result_score >= passing_score ? 'pass' : 'fail',
 	            questions: questions
 	        }).then(function (response) {
 	            if (!response.error) {
 	                showResult(result_score, response.jp_knowledge_test.test_taken_epoch * 1000);
-	                $('html, body').animate({ scrollTop: 0 }, 'slow');
+	                $.scrollTo('body', 500);
 	                BinarySocket.send({ get_settings: 1 }, { forced: true }).then(function () {
 	                    Header.upgradeMessageVisibility();
 	                });
 	            } else if (response.error.code === 'TestUnavailableNow') {
-	                showMsgOnly('{JAPAN ONLY}The test is unavailable now, test can only be taken again on next business day with respect of most recent test.');
+	                showMessage('{JAPAN ONLY}The test is unavailable now, test can only be taken again on next business day with respect of most recent test.');
 	            } else {
 	                $('#form-msg').html(response.error.message).setVisibility(1);
 	                submit_completed = false;
 	            }
 	        });
+	    };
+
+	    var showResult = function showResult(score, time) {
+	        $header.text(localize('{JAPAN ONLY}Knowledge Test Result'));
+	        showMessage(score >= passing_score ? msg_pass : msg_fail);
+	        $container.append(KnowledgeTestUI.createResultUI(score, time));
+
+	        // affiiates measure of fulfillment (TCS-ASP)
+	        if (score >= passing_score && Cookies.get('affiliate_tracking')) {
+	            $message.append($('<img/>', { src: 'https://www.tcs-asp.net/aresult?LC=BINARY1&NK=' + Client.get('loginid') }).setVisibility(0));
+	        }
+	    };
+
+	    var showMessage = function showMessage(msg) {
+	        var set_visible = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+	        $instructions.setVisibility(set_visible);
+	        $questions.setVisibility(set_visible);
+	        $message.text(localize(msg));
+	    };
+
+	    var showDisallowedMsg = function showDisallowedMsg(jp_status) {
+	        return showMessage(localize('{JAPAN ONLY}Dear customer, you are not allowed to take knowledge test until [_1]. Last test taken at [_2].', [toJapanTimeIfNeeded(jp_status.next_test_epoch), toJapanTimeIfNeeded(jp_status.last_test_epoch)]));
 	    };
 
 	    return {
