@@ -82675,9 +82675,12 @@
 
 	    var liveSearchbox = function liveSearchbox() {
 	        var search_box = '#search-box';
+	        var noResultbox = '.no-result-box';
+
 	        $(search_box).keyup(function () {
 	            var toSearch = $(this).val();
 	            var count = 0;
+	            $(noResultbox).remove();
 
 	            // search through each line of table and search for result, i stands for case-insensitive
 	            $('table tbody tr').each(function () {
@@ -82691,7 +82694,7 @@
 
 	            // show a message if there is no result
 	            if (count <= 0) {
-	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'flex-tr' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('No search result found.') }))));
+	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'no-result-box' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('No search result found.') }))));
 	            }
 	        });
 	    };
@@ -82714,7 +82717,7 @@
 	        while (switching) {
 	            switching = false;
 	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 1; i++) {
+	            for (i = 1; i < rows.length - 2; i++) {
 	                shouldSwitch = false;
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
@@ -82769,7 +82772,7 @@
 	        while (switching) {
 	            switching = false;
 	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 1; i++) {
+	            for (i = 1; i < rows.length - 2; i++) {
 	                shouldSwitch = false;
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
@@ -82812,7 +82815,7 @@
 	        while (switching) {
 	            switching = false;
 	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 1; i++) {
+	            for (i = 1; i < rows.length - 2; i++) {
 	                shouldSwitch = false;
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
@@ -82856,7 +82859,7 @@
 	        while (switching) {
 	            switching = false;
 	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 1; i++) {
+	            for (i = 1; i < rows.length - 2; i++) {
 	                shouldSwitch = false;
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
