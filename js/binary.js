@@ -82675,7 +82675,7 @@
 
 	    var liveSearchbox = function liveSearchbox() {
 	        var search_box = '#search-box';
-	        $(search_box).keydown(function () {
+	        $(search_box).keyup(function () {
 	            var toSearch = $(this).val();
 	            var count = 0;
 
