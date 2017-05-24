@@ -53611,24 +53611,6 @@
 	        return $tr;
 	    };
 
-	    // clickable table row
-	    var createClickableFlexTableRow = function createClickableFlexTableRow(data, metadata, opt) {
-	        if (data.length !== metadata.length) {
-	            throw new Error('metadata and data does not match');
-	        }
-
-	        var is_data = opt === 'data';
-
-	        var $tr = $('<tr></tr>');
-	        for (var i = 0; i < data.length; i++) {
-	            var class_name = metadata[i].toLowerCase().replace(/\s/g, '-');
-	            var row_element = is_data ? $('<td></td>', { class: class_name, html: data[i] }) : $('<th></th>', { class: class_name, html: data[i] });
-	            row_element.appendTo($tr);
-	        }
-
-	        return $tr;
-	    };
-
 	    var clearTableBody = function clearTableBody(id) {
 	        var tbody = document.querySelector('#' + id + ' > tbody');
 	        while (tbody && tbody.firstElementChild) {
@@ -53657,7 +53639,6 @@
 	    return {
 	        createFlexTable: createFlexTable,
 	        createFlexTableRow: createFlexTableRow,
-	        createClickableFlexTableRow: createClickableFlexTableRow,
 	        clearTableBody: clearTableBody,
 	        appendTableBody: appendTableBody
 	    };
@@ -82588,6 +82569,25 @@
 	        if (!tableExist()) {
 	            StatementUI.createEmptyStatementTable().appendTo('#statement-container');
 	            $('.act, .credit').addClass('nowrap');
+	            $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
+	            $('.date').click(function () {
+	                sortDate(0);
+	            });
+	            $('.ref').click(function () {
+	                sortRef(1);
+	            });
+	            $('.payout').click(function () {
+	                sortNumber(2);
+	            });
+	            $('.act').click(function () {
+	                sortAlphabet(3);
+	            });
+	            $('.credit').click(function () {
+	                sortNumber(5);
+	            });
+	            $('.bal').click(function () {
+	                sortNumber(6);
+	            });
 	            StatementUI.updateStatementTable(getNextChunkStatement());
 
 	            // Show a message when the table is empty
@@ -82673,9 +82673,221 @@
 	        if ($(jump_to).attr('data-picker') !== 'native') $(jump_to).val(localize('Today'));
 	    };
 
+	    var liveSearchbox = function liveSearchbox() {
+	        var search_box = '#search-box';
+	        $(search_box).keydown(function () {
+	            var toSearch = $(this).val();
+	            var count = 0;
+
+	            // search through each line of table and search for result, i stands for case-insensitive
+	            $('table tbody tr').each(function () {
+	                if ($(this).text().search(new RegExp(toSearch, 'i')) < 0) {
+	                    $(this).hide();
+	                } else {
+	                    $(this).show();
+	                    count++;
+	                }
+	            });
+
+	            // show a message if there is no result
+	            if (count <= 0) {
+	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'flex-tr' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('No search result found.') }))));
+	            }
+	        });
+	    };
+
+	    var sortNumber = function sortNumber(n) {
+	        var dir = void 0;
+	        var switching = void 0;
+	        var rows = void 0;
+	        var shouldSwitch = void 0;
+	        var x = void 0;
+	        var y = void 0;
+	        var i = void 0;
+	        var intx = void 0;
+	        var inty = void 0;
+	        var switchcount = 0;
+	        var sortTable = document.getElementById('statement-table');
+	        dir = 'asc';
+	        switching = true;
+
+	        while (switching) {
+	            switching = false;
+	            rows = sortTable.getElementsByTagName('TR');
+	            for (i = 1; i < rows.length - 1; i++) {
+	                shouldSwitch = false;
+	                x = rows[i].getElementsByTagName('TD')[n];
+	                y = rows[i + 1].getElementsByTagName('TD')[n];
+
+	                intx = parseFloat(x.innerText.replace(/,/g, ''));
+	                inty = parseFloat(y.innerText.replace(/,/g, ''));
+
+	                if (isNaN(intx)) {
+	                    intx = 0;
+	                } else if (isNaN(inty)) {
+	                    inty = 0;
+	                }
+
+	                if (dir === 'asc') {
+	                    if (intx > inty) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                } else if (dir === 'desc') {
+	                    if (intx < inty) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                }
+	            }
+
+	            if (shouldSwitch) {
+	                // move the node 1 step above
+	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	                switching = true;
+	                switchcount++;
+	            } else if (switchcount === 0 && dir === 'asc') {
+	                dir = 'desc';
+	                switching = true;
+	            }
+	        }
+	    };
+
+	    var sortAlphabet = function sortAlphabet(n) {
+	        var dir = void 0;
+	        var switching = void 0;
+	        var rows = void 0;
+	        var shouldSwitch = void 0;
+	        var x = void 0;
+	        var y = void 0;
+	        var i = void 0;
+	        var switchcount = 0;
+	        var sortTable = document.getElementById('statement-table');
+	        dir = 'asc';
+	        switching = true;
+
+	        while (switching) {
+	            switching = false;
+	            rows = sortTable.getElementsByTagName('TR');
+	            for (i = 1; i < rows.length - 1; i++) {
+	                shouldSwitch = false;
+	                x = rows[i].getElementsByTagName('TD')[n];
+	                y = rows[i + 1].getElementsByTagName('TD')[n];
+	                if (dir === 'asc') {
+	                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                } else if (dir === 'desc') {
+	                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                }
+	            }
+	            if (shouldSwitch) {
+	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	                switching = true;
+	                switchcount++;
+	            } else if (switchcount === 0 && dir === 'asc') {
+	                dir = 'desc';
+	                switching = true;
+	            }
+	        }
+	    };
+
+	    var sortDate = function sortDate(n) {
+	        var dir = void 0;
+	        var switching = void 0;
+	        var rows = void 0;
+	        var shouldSwitch = void 0;
+	        var x = void 0;
+	        var y = void 0;
+	        var i = void 0;
+	        var switchcount = 0;
+	        var sortTable = document.getElementById('statement-table');
+	        dir = 'asc';
+	        switching = true;
+
+	        while (switching) {
+	            switching = false;
+	            rows = sortTable.getElementsByTagName('TR');
+	            for (i = 1; i < rows.length - 1; i++) {
+	                shouldSwitch = false;
+	                x = rows[i].getElementsByTagName('TD')[n];
+	                y = rows[i + 1].getElementsByTagName('TD')[n];
+
+	                if (dir === 'asc') {
+	                    if (x.innerHTML.replace(/[-:GMT \n]/g, '') > y.innerHTML.replace(/[-:GMT \n]/g, '')) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                } else if (dir === 'desc') {
+	                    if (x.innerHTML.replace(/[-:GMT \n]/g, '') < y.innerHTML.replace(/[-:GMT \n]/g, '')) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                }
+	            }
+	            if (shouldSwitch) {
+	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	                switching = true;
+	                switchcount++;
+	            } else if (switchcount === 0 && dir === 'asc') {
+	                dir = 'desc';
+	                switching = true;
+	            }
+	        }
+	    };
+
+	    var sortRef = function sortRef(n) {
+	        var dir = void 0;
+	        var switching = void 0;
+	        var rows = void 0;
+	        var shouldSwitch = void 0;
+	        var x = void 0;
+	        var y = void 0;
+	        var i = void 0;
+	        var switchcount = 0;
+	        var sortTable = document.getElementById('statement-table');
+	        dir = 'asc';
+	        switching = true;
+
+	        while (switching) {
+	            switching = false;
+	            rows = sortTable.getElementsByTagName('TR');
+	            for (i = 1; i < rows.length - 1; i++) {
+	                shouldSwitch = false;
+	                x = rows[i].getElementsByTagName('TD')[n];
+	                y = rows[i + 1].getElementsByTagName('TD')[n];
+
+	                if (dir === 'asc') {
+	                    if (x.innerText > y.innerText) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                } else if (dir === 'desc') {
+	                    if (x.innerText < y.innerText) {
+	                        shouldSwitch = true;
+	                        break;
+	                    }
+	                }
+	            }
+	            if (shouldSwitch) {
+	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	                switching = true;
+	                switchcount++;
+	            } else if (switchcount === 0 && dir === 'asc') {
+	                dir = 'desc';
+	                switching = true;
+	            }
+	        }
+	    };
+
 	    var onLoad = function onLoad() {
 	        initPage();
 	        attachDatePicker();
+	        liveSearchbox();
 	        ViewPopup.viewButtonOnClick('#statement-container');
 	    };
 
@@ -82711,10 +82923,10 @@
 	        oauth_apps = {};
 
 	    var table_id = 'statement-table';
-	    var columns = ['date', 'ref', 'payout', 'act', 'desc', 'credit', 'bal', 'details'];
+	    var columns = ['date', 'ref', 'payout', 'act', 'desc', 'credit', 'bal'];
 
 	    var createEmptyStatementTable = function createEmptyStatementTable() {
-	        var header = [localize('Date'), localize('Ref.'), localize('Potential Payout'), localize('Action'), localize('Description'), localize('Credit/Debit'), localize('Balance'), localize('Details')];
+	        var header = [localize('Date'), localize('Ref.'), localize('Potential Payout'), localize('Action'), localize('Description'), localize('Credit/Debit'), localize('Balance')];
 
 	        var jp_client = jpClient();
 	        var currency = Client.get('currency');
@@ -82743,7 +82955,7 @@
 	        }));
 	        var credit_debit_type = parseFloat(transaction.amount) >= 0 ? 'profit' : 'loss';
 
-	        var $statement_row = Table.createFlexTableRow([statement_data.date, '<span ' + showTooltip(statement_data.app_id, oauth_apps[statement_data.app_id]) + '>' + statement_data.ref + '</span>', statement_data.payout, localize(statement_data.action), '', statement_data.amount, statement_data.balance, ''], columns, 'data');
+	        var $statement_row = Table.createFlexTableRow([statement_data.date, '<span ' + showTooltip(statement_data.app_id, oauth_apps[statement_data.app_id]) + '>' + statement_data.ref + '</span>', statement_data.payout, localize(statement_data.action), '', statement_data.amount, statement_data.balance], columns, 'data');
 
 	        $statement_row.children('.credit').addClass(credit_debit_type);
 	        $statement_row.children('.date').addClass('pre');
@@ -82754,7 +82966,7 @@
 	            // const $view_button = $('<button/>', { class: 'button open_contract_details',
 	            // text: localize('View'), contract_id:  statement_data.id});
 	            // $statement_row.children('.desc,.details').append($view_button);
-	            $statement_row.addClass('open_contract_details');
+	            $statement_row.addClass('open_contract_details hoverable');
 	            $statement_row.attr('contract_id', statement_data.id);
 	        }
 
@@ -83347,7 +83559,7 @@
 
 	    var closeContainer = function closeContainer() {
 	        if ($container) {
-	            $container.animate({ top: -$(window).height() - $container.height() }, 800, function () {
+	            $container.animate({ top: -$(window).height() - $container.height() }, 500, function () {
 	                $container.hide().remove();
 	                $('.popup_page_overlay').hide().remove();
 	                init();
@@ -83438,7 +83650,8 @@
 
 	    var moveIn = function moveIn() {
 	        var con = container();
-	        con.animate({ opacity: 'show', top: '0' }, 800);
+	        con.show();
+	        con.animate({ top: 0 }, 500);
 	    };
 
 	    // ===== Dispatch =====

@@ -829,8 +829,11 @@ table td {
     font-size: 0.75614rem;
   }
 }
-.table-container #statement-table tr:hover, .table-container #profit-table tr:hover {
-  background-color: #e98024;
+.table-container #statement-table tr.hoverable:hover, .table-container #profit-table tr.hoverable:hover {
+  background-color: #fffebd;
+  cursor: pointer;
+}
+.table-container #statement-table th.sortable:hover, .table-container #profit-table th.sortable:hover {
   cursor: pointer;
 }
 @media (max-width: 600px) {
