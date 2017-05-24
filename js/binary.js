@@ -82684,7 +82684,7 @@
 
 	            // search through each line of table and search for result, i stands for case-insensitive
 	            $('table tbody tr').each(function () {
-	                if ($(this).text().search(new RegExp(toSearch, 'i')) < 0) {
+	                if ($(this).text().search(new RegExp(toSearch.replace(/\\/g, '\\\\'), 'i')) < 0) {
 	                    $(this).hide();
 	                } else {
 	                    $(this).show();
