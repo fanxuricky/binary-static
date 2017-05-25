@@ -82575,22 +82575,22 @@
 	            $('.act, .credit').addClass('nowrap');
 	            $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
 	            $('.date').click(function () {
-	                sortDate(0);
+	                sortAnything(0, 'date');
 	            });
 	            $('.ref').click(function () {
-	                sortNumber(1);
+	                sortAnything(1, 'number');
 	            });
 	            $('.payout').click(function () {
-	                sortNumber(2);
+	                sortAnything(2, 'number');
 	            });
 	            $('.act').click(function () {
-	                sortAlphabet(3);
+	                sortAnything(3, 'alphabet');
 	            });
 	            $('.credit').click(function () {
-	                sortNumber(5);
+	                sortAnything(5, 'number');
 	            });
 	            $('.bal').click(function () {
-	                sortNumber(6);
+	                sortAnything(6, 'number');
 	            });
 	            StatementUI.updateStatementTable(getNextChunkStatement());
 
@@ -82703,7 +82703,7 @@
 	        });
 	    };
 
-	    var sortNumber = function sortNumber(n) {
+	    var sortAnything = function sortAnything(n, sortType) {
 	        var dir = void 0;
 	        var switching = void 0;
 	        var rows = void 0;
@@ -82726,13 +82726,21 @@
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
 
-	                intx = parseFloat(x.innerText.replace(/,/g, ''));
-	                inty = parseFloat(y.innerText.replace(/,/g, ''));
+	                if (sortType === 'number') {
+	                    intx = parseFloat(x.innerText.replace(/,/g, ''));
+	                    inty = parseFloat(y.innerText.replace(/,/g, ''));
 
-	                if (isNaN(intx)) {
-	                    intx = 0;
-	                } else if (isNaN(inty)) {
-	                    inty = 0;
+	                    if (isNaN(intx)) {
+	                        intx = 0;
+	                    } else if (isNaN(inty)) {
+	                        inty = 0;
+	                    }
+	                } else if (sortType === 'alphabet') {
+	                    intx = x.innerHTML.toLowerCase();
+	                    inty = y.innerHTML.toLowerCase();
+	                } else if (sortType === 'date') {
+	                    intx = x.innerHTML.replace(/[-:GMT \n]/g, '');
+	                    inty = y.innerHTML.replace(/[-:GMT \n]/g, '');
 	                }
 
 	                if (dir === 'asc') {
@@ -82750,93 +82758,6 @@
 
 	            if (shouldSwitch) {
 	                // move the node 1 step above
-	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-	                switching = true;
-	                switchcount++;
-	            } else if (switchcount === 0 && dir === 'asc') {
-	                dir = 'desc';
-	                switching = true;
-	            }
-	        }
-	    };
-
-	    var sortAlphabet = function sortAlphabet(n) {
-	        var dir = void 0;
-	        var switching = void 0;
-	        var rows = void 0;
-	        var shouldSwitch = void 0;
-	        var x = void 0;
-	        var y = void 0;
-	        var i = void 0;
-	        var switchcount = 0;
-	        var sortTable = document.getElementById('statement-table');
-	        dir = 'asc';
-	        switching = true;
-
-	        while (switching) {
-	            switching = false;
-	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 1; i++) {
-	                shouldSwitch = false;
-	                x = rows[i].getElementsByTagName('TD')[n];
-	                y = rows[i + 1].getElementsByTagName('TD')[n];
-	                if (dir === 'asc') {
-	                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-	                        shouldSwitch = true;
-	                        break;
-	                    }
-	                } else if (dir === 'desc') {
-	                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-	                        shouldSwitch = true;
-	                        break;
-	                    }
-	                }
-	            }
-	            if (shouldSwitch) {
-	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-	                switching = true;
-	                switchcount++;
-	            } else if (switchcount === 0 && dir === 'asc') {
-	                dir = 'desc';
-	                switching = true;
-	            }
-	        }
-	    };
-
-	    var sortDate = function sortDate(n) {
-	        var dir = void 0;
-	        var switching = void 0;
-	        var rows = void 0;
-	        var shouldSwitch = void 0;
-	        var x = void 0;
-	        var y = void 0;
-	        var i = void 0;
-	        var switchcount = 0;
-	        var sortTable = document.getElementById('statement-table');
-	        dir = 'asc';
-	        switching = true;
-
-	        while (switching) {
-	            switching = false;
-	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 1; i++) {
-	                shouldSwitch = false;
-	                x = rows[i].getElementsByTagName('TD')[n];
-	                y = rows[i + 1].getElementsByTagName('TD')[n];
-
-	                if (dir === 'asc') {
-	                    if (x.innerHTML.replace(/[-:GMT \n]/g, '') > y.innerHTML.replace(/[-:GMT \n]/g, '')) {
-	                        shouldSwitch = true;
-	                        break;
-	                    }
-	                } else if (dir === 'desc') {
-	                    if (x.innerHTML.replace(/[-:GMT \n]/g, '') < y.innerHTML.replace(/[-:GMT \n]/g, '')) {
-	                        shouldSwitch = true;
-	                        break;
-	                    }
-	                }
-	            }
-	            if (shouldSwitch) {
 	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
 	                switching = true;
 	                switchcount++;
