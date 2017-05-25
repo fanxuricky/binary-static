@@ -82717,7 +82717,7 @@
 	        while (switching) {
 	            switching = false;
 	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 2; i++) {
+	            for (i = 1; i < rows.length - 1; i++) {
 	                shouldSwitch = false;
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
@@ -82772,7 +82772,7 @@
 	        while (switching) {
 	            switching = false;
 	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 2; i++) {
+	            for (i = 1; i < rows.length - 1; i++) {
 	                shouldSwitch = false;
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
@@ -82815,7 +82815,7 @@
 	        while (switching) {
 	            switching = false;
 	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 2; i++) {
+	            for (i = 1; i < rows.length - 1; i++) {
 	                shouldSwitch = false;
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
@@ -82859,7 +82859,7 @@
 	        while (switching) {
 	            switching = false;
 	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 2; i++) {
+	            for (i = 1; i < rows.length - 1; i++) {
 	                shouldSwitch = false;
 	                x = rows[i].getElementsByTagName('TD')[n];
 	                y = rows[i + 1].getElementsByTagName('TD')[n];
