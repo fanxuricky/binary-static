@@ -88,8 +88,11 @@ table {
                 }
             }
         }
-        tr:hover {
-            background-color: $COLOR_ORANGE;
+        tr.hoverable:hover {
+            background-color: $COLOR_LIGHT_YELLOW;
+            cursor: pointer;
+        }
+        th.sortable:hover {
             cursor: pointer;
         }
     }

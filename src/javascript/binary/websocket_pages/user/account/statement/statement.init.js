@@ -78,6 +78,13 @@ const StatementInit = (() => {
         if (!tableExist()) {
             StatementUI.createEmptyStatementTable().appendTo('#statement-container');
             $('.act, .credit').addClass('nowrap');
+            $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
+            $('.date').click(function() { sortDate(0); });
+            $('.ref').click(function() { sortRef(1); });
+            $('.payout').click(function() { sortNumber(2); });
+            $('.act').click(function() { sortAlphabet(3); });
+            $('.credit').click(function() { sortNumber(5); });
+            $('.bal').click(function() { sortNumber(6); });
             StatementUI.updateStatementTable(getNextChunkStatement());
 
             // Show a message when the table is empty
@@ -168,9 +175,227 @@ const StatementInit = (() => {
         if ($(jump_to).attr('data-picker') !== 'native') $(jump_to).val(localize('Today'));
     };
 
+    const liveSearchbox = () => {
+        const search_box = '#search-box';
+        const noResultbox = '.no-result-box';
+
+        $(search_box).keyup(function() {
+            const toSearch = $(this).val();
+            let count = 0;
+            $(noResultbox).remove();
+
+            // search through each line of table and search for result, i stands for case-insensitive
+            $('table tbody tr').each(function() {
+                if ($(this).text().search(new RegExp(toSearch.replace(/\\/g, '\\\\'), 'i')) < 0) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                    count++;
+                }
+            });
+
+            // show a message if there is no result
+            if (count <= 0) {
+                $('#statement-table').find('tbody')
+                    .append($('<tr/>', { class: 'no-result-box' })
+                        .append($('<td/>', { colspan: 7 })
+                            .append($('<p/>', { class: 'notice-msg center-text', text: localize('No search result found.') }))));
+            }
+        });
+    };
+
+    const sortNumber = (n) => {
+        let dir;
+        let switching;
+        let rows;
+        let shouldSwitch;
+        let x;
+        let y;
+        let i;
+        let intx;
+        let inty;
+        let switchcount = 0;
+        const sortTable = document.getElementById('statement-table');
+        dir = 'asc';
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = sortTable.getElementsByTagName('TR');
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName('TD')[n];
+                y = rows[i + 1].getElementsByTagName('TD')[n];
+
+                intx = parseFloat(x.innerText.replace(/,/g, ''));
+                inty = parseFloat(y.innerText.replace(/,/g, ''));
+
+                if (isNaN(intx)) {
+                    intx = 0;
+                } else if (isNaN(inty)) {
+                    inty = 0;
+                }
+
+                if (dir === 'asc') {
+                    if (intx > inty) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === 'desc') {
+                    if (intx < inty) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldSwitch) {
+                // move the node 1 step above
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else if (switchcount === 0 && dir === 'asc') {
+                dir = 'desc';
+                switching = true;
+            }
+        }
+    };
+
+    const sortAlphabet = (n) => {
+        let dir;
+        let switching;
+        let rows;
+        let shouldSwitch;
+        let x;
+        let y;
+        let i;
+        let switchcount = 0;
+        const sortTable = document.getElementById('statement-table');
+        dir = 'asc';
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = sortTable.getElementsByTagName('TR');
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName('TD')[n];
+                y = rows[i + 1].getElementsByTagName('TD')[n];
+                if (dir === 'asc') {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === 'desc') {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else if (switchcount === 0 && dir === 'asc') {
+                dir = 'desc';
+                switching = true;
+            }
+        }
+    };
+
+    const sortDate = (n) => {
+        let dir;
+        let switching;
+        let rows;
+        let shouldSwitch;
+        let x;
+        let y;
+        let i;
+        let switchcount = 0;
+        const sortTable = document.getElementById('statement-table');
+        dir = 'asc';
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = sortTable.getElementsByTagName('TR');
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName('TD')[n];
+                y = rows[i + 1].getElementsByTagName('TD')[n];
+
+                if (dir === 'asc') {
+                    if (x.innerHTML.replace(/[-:GMT \n]/g, '') > y.innerHTML.replace(/[-:GMT \n]/g, '')) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === 'desc') {
+                    if (x.innerHTML.replace(/[-:GMT \n]/g, '') < y.innerHTML.replace(/[-:GMT \n]/g, '')) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else if (switchcount === 0 && dir === 'asc') {
+                dir = 'desc';
+                switching = true;
+            }
+        }
+    };
+
+    const sortRef = (n) => {
+        let dir;
+        let switching;
+        let rows;
+        let shouldSwitch;
+        let x;
+        let y;
+        let i;
+        let switchcount = 0;
+        const sortTable = document.getElementById('statement-table');
+        dir = 'asc';
+        switching = true;
+
+        while (switching) {
+            switching = false;
+            rows = sortTable.getElementsByTagName('TR');
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName('TD')[n];
+                y = rows[i + 1].getElementsByTagName('TD')[n];
+
+                if (dir === 'asc') {
+                    if (x.innerText > y.innerText) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === 'desc') {
+                    if (x.innerText < y.innerText) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else if (switchcount === 0 && dir === 'asc') {
+                dir = 'desc';
+                switching = true;
+            }
+        }
+    };
+
     const onLoad = () => {
         initPage();
         attachDatePicker();
+        liveSearchbox();
         ViewPopup.viewButtonOnClick('#statement-container');
     };
 

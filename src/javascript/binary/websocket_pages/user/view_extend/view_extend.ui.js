@@ -74,7 +74,7 @@ const ViewPopupUI = (() => {
 
     const closeContainer = () => {
         if ($container) {
-            $container.animate({ top: (-$(window).height() - $container.height()) }, 800, function() {
+            $container.animate({ top: (-$(window).height() - $container.height()) }, 500, function() {
                 $container.hide().remove();
                 $('.popup_page_overlay').hide().remove();
                 init();
@@ -154,7 +154,8 @@ const ViewPopupUI = (() => {
 
     const moveIn = () => {
         const con = container();
-        con.animate({ opacity: 'show',  top: '0' }, 800);
+        con.show();
+        con.animate({ top: 0 }, 500);
     };
 
     // ===== Dispatch =====
