@@ -80,7 +80,7 @@ const StatementInit = (() => {
             $('.act, .credit').addClass('nowrap');
             $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
             $('.date').click(function() { sortDate(0); });
-            $('.ref').click(function() { sortRef(1); });
+            $('.ref').click(function() { sortNumber(1); });
             $('.payout').click(function() { sortNumber(2); });
             $('.act').click(function() { sortAlphabet(3); });
             $('.credit').click(function() { sortNumber(5); });
@@ -332,50 +332,6 @@ const StatementInit = (() => {
                     }
                 } else if (dir === 'desc') {
                     if (x.innerHTML.replace(/[-:GMT \n]/g, '') < y.innerHTML.replace(/[-:GMT \n]/g, '')) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                switchcount++;
-            } else if (switchcount === 0 && dir === 'asc') {
-                dir = 'desc';
-                switching = true;
-            }
-        }
-    };
-
-    const sortRef = (n) => {
-        let dir;
-        let switching;
-        let rows;
-        let shouldSwitch;
-        let x;
-        let y;
-        let i;
-        let switchcount = 0;
-        const sortTable = document.getElementById('statement-table');
-        dir = 'asc';
-        switching = true;
-
-        while (switching) {
-            switching = false;
-            rows = sortTable.getElementsByTagName('TR');
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName('TD')[n];
-                y = rows[i + 1].getElementsByTagName('TD')[n];
-
-                if (dir === 'asc') {
-                    if (x.innerText > y.innerText) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (dir === 'desc') {
-                    if (x.innerText < y.innerText) {
                         shouldSwitch = true;
                         break;
                     }
