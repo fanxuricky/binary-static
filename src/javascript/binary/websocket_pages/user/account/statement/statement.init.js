@@ -228,8 +228,8 @@ const StatementInit = (() => {
                 y = rows[i + 1].getElementsByTagName('TD')[n];
 
                 if (sortType === 'number') {
-                    intx = parseFloat(x.innerText.replace(/,/g, ''));
-                    inty = parseFloat(y.innerText.replace(/,/g, ''));
+                    intx = parseFloat(x.innerText.replace(/[.,]/g, ''));
+                    inty = parseFloat(y.innerText.replace(/[.,]/g, ''));
 
                     if (isNaN(intx)) {
                         intx = 0;
