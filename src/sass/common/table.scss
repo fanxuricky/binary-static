@@ -99,6 +99,8 @@ table {
         }
         th.sortable:hover {
             cursor: pointer;
+            background-color: $COLOR_DARK_GRAY;
+            color: $COLOR_WHITE;
         }
     }
     @media (max-width: $md) {
