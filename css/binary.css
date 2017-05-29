@@ -829,6 +829,9 @@ table td {
     font-size: 0.75614rem;
   }
 }
+.table-container #statement-table tr.selectedButton, .table-container #profit-table tr.selectedButton {
+  background-color: #fffebd;
+}
 .table-container #statement-table tr.hoverable:hover, .table-container #profit-table tr.hoverable:hover {
   background-color: #fffebd;
   cursor: pointer;
