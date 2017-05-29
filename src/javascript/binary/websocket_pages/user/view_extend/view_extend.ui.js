@@ -77,9 +77,11 @@ const ViewPopupUI = (() => {
             $container.animate({ top: (-$(window).height() - $container.height()) }, 500, function() {
                 $container.hide().remove();
                 $('.popup_page_overlay').hide().remove();
+                $('.selectedButton').removeClass('selectedButton');
                 init();
             });
         }
+
         $('html').removeClass('no-scroll');
     };
 
@@ -87,6 +89,7 @@ const ViewPopupUI = (() => {
         $('.open_contract_details[disabled]').each(function() {
             enableButton($(this));
         });
+        button.addClass('selectedButton');
         button.attr('disabled', 'disabled');
         button.fadeTo(0, 0.5);
     };

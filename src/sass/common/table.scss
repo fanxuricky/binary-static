@@ -93,6 +93,9 @@ table {
                 }
             }
         }
+        tr.selectedButton {
+            background-color: $COLOR_LIGHT_YELLOW;
+        }
         tr.hoverable:hover {
             background-color: $COLOR_LIGHT_YELLOW;
             cursor: pointer;
