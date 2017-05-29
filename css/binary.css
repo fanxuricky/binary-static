@@ -835,6 +835,8 @@ table td {
 }
 .table-container #statement-table th.sortable:hover, .table-container #profit-table th.sortable:hover {
   cursor: pointer;
+  background-color: #44484c;
+  color: #fff;
 }
 @media (max-width: 600px) {
   .table-container #profit-table tr > th.contract, .table-container #profit-table tr > td.contract {
