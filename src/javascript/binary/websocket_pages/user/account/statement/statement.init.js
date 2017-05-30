@@ -78,6 +78,13 @@ const StatementInit = (() => {
         if (!tableExist()) {
             StatementUI.createEmptyStatementTable().appendTo('#statement-container');
             $('.act, .credit').addClass('nowrap');
+            $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
+            $('.date').click(function() { sortAnything(0, 'date'); });
+            $('.ref').click(function() { sortAnything(1, 'number'); });
+            $('.payout').click(function() { sortAnything(2, 'number'); });
+            $('.act').click(function() { sortAnything(3, 'alphabet'); });
+            $('.credit').click(function() { sortAnything(5, 'number'); });
+            $('.bal').click(function() { sortAnything(6, 'number'); });
             StatementUI.updateStatementTable(getNextChunkStatement());
 
             // Show a message when the table is empty
@@ -88,13 +95,6 @@ const StatementInit = (() => {
                             .append($('<p/>', { class: 'notice-msg center-text', text: localize('Your account has no trading activity.') }))));
             } else {
                 $('#util_row').setVisibility(1);
-                $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
-                $('.date').click(function() { sortAnything(0, 'date'); });
-                $('.ref').click(function() { sortAnything(1, 'number'); });
-                $('.payout').click(function() { sortAnything(2, 'number'); });
-                $('.act').click(function() { sortAnything(3, 'alphabet'); });
-                $('.credit').click(function() { sortAnything(5, 'number'); });
-                $('.bal').click(function() { sortAnything(6, 'number'); });
                 if (getLanguage() === 'JA') {
                     $('#download_csv').setVisibility(1)
                                       .find('a')
@@ -215,7 +215,7 @@ const StatementInit = (() => {
         let intx;
         let inty;
         let switchcount = 0;
-        const sortTable = document.getElementById('statement-table');
+        const sortTable = tableExist();
         dir = 'asc';
         switching = true;
 
