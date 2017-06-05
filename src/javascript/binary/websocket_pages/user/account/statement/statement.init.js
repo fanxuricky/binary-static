@@ -119,7 +119,7 @@ const StatementInit = (() => {
 
             const p_from_top = $(document).scrollTop();
 
-            if (!tableExist() || p_from_top < hidableHeight(40)) return;
+            if (!tableExist() || p_from_top < hidableHeight(70)) return;
             if (finishedConsumed() && !no_more_data && !pending) {
                 getNextBatchStatement();
                 return;
@@ -202,7 +202,12 @@ const StatementInit = (() => {
                 }
             });
             // show a message if there is no result
-            if (count <= 0) {
+            if (!no_more_data || !finishedConsumed()) {
+                $('#statement-table').find('tbody')
+                    .append($('<tr/>', { class: 'no-result-box' })
+                        .append($('<td/>', { colspan: 7 })
+                            .append($('<p/>', { class: 'notice-msg center-text', text: localize('Scroll down to search more.') }))));
+            } else if (count <= 0) {
                 $('#statement-table').find('tbody')
                     .append($('<tr/>', { class: 'no-result-box' })
                         .append($('<td/>', { colspan: 7 })
@@ -212,6 +217,7 @@ const StatementInit = (() => {
 
         if (nextChunk === true) {
             const toSearch = $(search_box).val();
+            $(noResultbox).remove();
             searchThru(toSearch);
         } else {
             $(search_box).keyup(function() {
@@ -223,10 +229,8 @@ const StatementInit = (() => {
     };
 
     const sortAnything = (typeArray) => { // n(number of column), sortType, m(header)
-        let k,
-            i,
+        let i,
             j;
-            // rowArr = [];
         const sortTable = tableExist();
         const rows = sortTable.getElementsByTagName('TR');
         if (typeArray[2] !== current_sort[2]) {
@@ -237,12 +241,9 @@ const StatementInit = (() => {
         }
         sorted = true;
 
-        // rowArr = Array.prototype.slice.call(rows);
-
         function replaceRegex(x) {
             if (typeArray[1] === 'number') {
                 x = parseFloat(x.innerText.replace(/[.,]/g, ''));
-
                 if (isNaN(x)) {
                     x = 0;
                 }
@@ -257,11 +258,9 @@ const StatementInit = (() => {
         function sorting(arr, left, right) {
             let pivot,
                 pindex;
-
             if (left < right) {
                 pivot = right;
                 pindex = partition(arr, pivot, left, right);
-
                 sorting(arr, left, pindex - 1);
                 sorting(arr, pindex + 1, right);
             }
@@ -282,11 +281,9 @@ const StatementInit = (() => {
         }
 
         function swap(arr, x, y) {
-            for (k = 0; k < arr[x].children.length; k++) {
-                const temp = arr[x].children[k].outerHTML;
-                arr[x].children[k].outerHTML = arr[y].children[k].outerHTML;
-                arr[y].children[k].outerHTML = temp;
-            }
+            const temp = arr[x].outerHTML;
+            arr[x].outerHTML = arr[y].outerHTML;
+            arr[y].outerHTML = temp;
         }
 
         function reverseRow() {
