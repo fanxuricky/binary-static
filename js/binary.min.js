@@ -82951,7 +82951,7 @@
 
 	            var p_from_top = $(document).scrollTop();
 
-	            if (!tableExist() || p_from_top < hidableHeight(40)) return;
+	            if (!tableExist() || p_from_top < hidableHeight(70)) return;
 	            if (finishedConsumed() && !no_more_data && !pending) {
 	                getNextBatchStatement();
 	                return;
@@ -83035,13 +83035,16 @@
 	                }
 	            });
 	            // show a message if there is no result
-	            if (count <= 0) {
+	            if (!no_more_data || !finishedConsumed()) {
+	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'no-result-box' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('Scroll down to search more.') }))));
+	            } else if (count <= 0) {
 	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'no-result-box' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('No search result found.') }))));
 	            }
 	        };
 
 	        if (nextChunk === true) {
 	            var toSearch = $(search_box).val();
+	            $(noResultbox).remove();
 	            searchThru(toSearch);
 	        } else {
 	            $(search_box).keyup(function () {
@@ -83054,8 +83057,7 @@
 
 	    var sortAnything = function sortAnything(typeArray) {
 	        // n(number of column), sortType, m(header)
-	        var k = void 0,
-	            i = void 0,
+	        var i = void 0,
 	            j = void 0;
 	        var sortTable = tableExist();
 	        var rows = sortTable.getElementsByTagName('TR');
