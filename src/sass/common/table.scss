@@ -94,11 +94,19 @@ table {
             }
         }
         tr.selectedButton {
-            background-color: $COLOR_LIGHT_YELLOW;
+            background-color: $COLOR_YELLOW;
         }
         tr.hoverable:hover {
-            background-color: $COLOR_LIGHT_YELLOW;
+            background-color: $COLOR_YELLOW;
             cursor: pointer;
+        }
+        th.ascending {
+            background-color: $COLOR_GREEN;
+            color: $COLOR_WHITE;
+        }
+        th.descending {
+            background-color: $COLOR_RED;
+            color: $COLOR_WHITE;
         }
         th.sortable:hover {
             cursor: pointer;

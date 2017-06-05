@@ -41,7 +41,7 @@ const ViewPopup = (() => {
 
         if (btn_view) {
             ViewPopupUI.disableButton($(btn_view));
-            ViewPopupUI.cleanup();
+            // ViewPopupUI.cleanup();
         }
 
         getContract();
@@ -89,7 +89,6 @@ const ViewPopup = (() => {
         update();
         ViewPopupUI.repositionConfirmation();
         ViewPopupUI.moveIn();
-
         if (State.get('is_mb_trading')) {
             State.call('ViewPopup.onDisplayed');
         }

@@ -26,7 +26,10 @@ const StatementInit = (() => {
         pending,
         current_batch,
         transactions_received,
-        transactions_consumed;
+        transactions_consumed,
+        sorted,
+        sort_direction = null,
+        current_sort = [];
 
     const tableExist = () => (document.getElementById('statement-table'));
 
@@ -79,12 +82,12 @@ const StatementInit = (() => {
             StatementUI.createEmptyStatementTable().appendTo('#statement-container');
             $('.act, .credit').addClass('nowrap');
             $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
-            $('.date').click(function() { sortAnything(0, 'date'); });
-            $('.ref').click(function() { sortAnything(1, 'number'); });
-            $('.payout').click(function() { sortAnything(2, 'number'); });
-            $('.act').click(function() { sortAnything(3, 'alphabet'); });
-            $('.credit').click(function() { sortAnything(5, 'number'); });
-            $('.bal').click(function() { sortAnything(6, 'number'); });
+            $('.date').click(function() { sortAnything([0, 'date', '.date']); });
+            $('.ref').click(function() { sortAnything([1, 'number', '.ref']); });
+            $('.payout').click(function() { sortAnything([2, 'number', '.payout']); });
+            $('.act').click(function() { sortAnything([3, 'alphabet', '.act']); });
+            $('.credit').click(function() { sortAnything([5, 'number', '.credit']); });
+            $('.bal').click(function() { sortAnything([6, 'number', '.bal']); });
             StatementUI.updateStatementTable(getNextChunkStatement());
 
             // Show a message when the table is empty
@@ -104,6 +107,7 @@ const StatementInit = (() => {
             }
         }
         showLocalTimeOnHover('td.date');
+        liveSearchbox(true);
     };
 
     const loadStatementChunkWhenScroll = () => {
@@ -115,14 +119,20 @@ const StatementInit = (() => {
 
             const p_from_top = $(document).scrollTop();
 
-            if (!tableExist() || p_from_top < hidableHeight(70)) return;
-
+            if (!tableExist() || p_from_top < hidableHeight(40)) return;
             if (finishedConsumed() && !no_more_data && !pending) {
                 getNextBatchStatement();
                 return;
             }
 
-            if (!finishedConsumed()) StatementUI.updateStatementTable(getNextChunkStatement());
+            if (!finishedConsumed()) {
+                StatementUI.updateStatementTable(getNextChunkStatement());
+                if (sorted) {
+                    sort_direction = null;
+                    sortAnything(current_sort);
+                }
+                liveSearchbox(true);
+            }
         });
     };
 
@@ -140,7 +150,7 @@ const StatementInit = (() => {
     };
 
     const initPage = () => {
-        batch_size = 200;
+        batch_size = 20;
         chunk_size = batch_size / 2;
         no_more_data = false;
         pending = false;            // serve as a lock to prevent ws request is sequential
@@ -154,6 +164,7 @@ const StatementInit = (() => {
         });
         getNextBatchStatement();
         loadStatementChunkWhenScroll();
+        liveSearchbox(true);
     };
 
     const attachDatePicker = () => {
@@ -172,18 +183,15 @@ const StatementInit = (() => {
             selector: jump_to,
             maxDate : 0,
         });
-        if ($(jump_to).attr('data-picker') !== 'native') $(jump_to).val(localize('Today'));
+        if ($(jump_to).attr('data-picker') !== 'native') { $(jump_to).val(localize('Today')); }
     };
 
-    const liveSearchbox = () => {
+    const liveSearchbox = (nextChunk) => {
         const search_box = '#search-box';
         const noResultbox = '.no-result-box';
 
-        $(search_box).keyup(function() {
-            const toSearch = $(this).val();
+        const searchThru = (toSearch) => {
             let count = 0;
-            $(noResultbox).remove();
-
             // search through each line of table and search for result, i stands for case-insensitive
             $('table tbody tr').each(function() {
                 if ($(this).text().search(new RegExp(toSearch.replace(/\\/g, '\\\\'), 'i')) < 0) {
@@ -193,7 +201,6 @@ const StatementInit = (() => {
                     count++;
                 }
             });
-
             // show a message if there is no result
             if (count <= 0) {
                 $('#statement-table').find('tbody')
@@ -201,72 +208,109 @@ const StatementInit = (() => {
                         .append($('<td/>', { colspan: 7 })
                             .append($('<p/>', { class: 'notice-msg center-text', text: localize('No search result found.') }))));
             }
-        });
+        };
+
+        if (nextChunk === true) {
+            const toSearch = $(search_box).val();
+            searchThru(toSearch);
+        } else {
+            $(search_box).keyup(function() {
+                const toSearch = $(this).val();
+                $(noResultbox).remove();
+                searchThru(toSearch);
+            });
+        }
     };
 
-    const sortAnything = (n, sortType) => {
-        let dir;
-        let switching;
-        let rows;
-        let shouldSwitch;
-        let x;
-        let y;
-        let i;
-        let intx;
-        let inty;
-        let switchcount = 0;
+    const sortAnything = (typeArray) => { // n(number of column), sortType, m(header)
+        let k,
+            i,
+            j;
+            // rowArr = [];
         const sortTable = tableExist();
-        dir = 'asc';
-        switching = true;
+        const rows = sortTable.getElementsByTagName('TR');
+        if (typeArray[2] !== current_sort[2]) {
+            $('.ascending').removeClass('ascending');
+            $('.descending').removeClass('descending');
+            current_sort = typeArray;
+            sort_direction = null;
+        }
+        sorted = true;
 
-        while (switching) {
-            switching = false;
-            rows = sortTable.getElementsByTagName('TR');
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName('TD')[n];
-                y = rows[i + 1].getElementsByTagName('TD')[n];
+        // rowArr = Array.prototype.slice.call(rows);
 
-                if (sortType === 'number') {
-                    intx = parseFloat(x.innerText.replace(/[.,]/g, ''));
-                    inty = parseFloat(y.innerText.replace(/[.,]/g, ''));
+        function replaceRegex(x) {
+            if (typeArray[1] === 'number') {
+                x = parseFloat(x.innerText.replace(/[.,]/g, ''));
 
-                    if (isNaN(intx)) {
-                        intx = 0;
-                    } else if (isNaN(inty)) {
-                        inty = 0;
-                    }
-                } else if (sortType === 'alphabet') {
-                    intx = x.innerHTML.toLowerCase();
-                    inty = y.innerHTML.toLowerCase();
-                } else if (sortType === 'date') {
-                    intx = x.innerHTML.replace(/[-:GMT \n]/g, '');
-                    inty = y.innerHTML.replace(/[-:GMT \n]/g, '');
+                if (isNaN(x)) {
+                    x = 0;
                 }
+            } else if (typeArray[1] === 'alphabet') {
+                x = x.innerHTML.toLowerCase();
+            } else if (typeArray[1] === 'date') {
+                x = x.innerHTML.replace(/[-:GMT \n]/g, '');
+            }
+            return x;
+        }
 
+        function sorting(arr, left, right) {
+            let pivot,
+                pindex;
 
-                if (dir === 'asc') {
-                    if (intx > inty) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (dir === 'desc') {
-                    if (intx < inty) {
-                        shouldSwitch = true;
-                        break;
-                    }
+            if (left < right) {
+                pivot = right;
+                pindex = partition(arr, pivot, left, right);
+
+                sorting(arr, left, pindex - 1);
+                sorting(arr, pindex + 1, right);
+            }
+            return arr;
+        }
+
+        function partition(arr, pivot, left, right) {
+            const pivotValue = replaceRegex(arr[pivot].children[typeArray[0]]);
+            let pindex = left;
+            for (i = left; i < right; i++) {
+                if (replaceRegex(arr[i].children[typeArray[0]]) < pivotValue) {
+                    swap(arr, i, pindex);
+                    pindex++;
                 }
             }
+            swap(arr, right, pindex);
+            return pindex;
+        }
 
-            if (shouldSwitch) {
-                // move the node 1 step above
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                switchcount++;
-            } else if (switchcount === 0 && dir === 'asc') {
-                dir = 'desc';
-                switching = true;
+        function swap(arr, x, y) {
+            for (k = 0; k < arr[x].children.length; k++) {
+                const temp = arr[x].children[k].outerHTML;
+                arr[x].children[k].outerHTML = arr[y].children[k].outerHTML;
+                arr[y].children[k].outerHTML = temp;
             }
+        }
+
+        function reverseRow() {
+            for (j = 1; j < rows.length / 2; j++) {
+                const temp = rows[j].outerHTML;
+                rows[j].outerHTML = rows[rows.length - j].outerHTML;
+                rows[rows.length - j].outerHTML = temp;
+            }
+        }
+
+        if (sort_direction === null) {
+            sorting(rows, 1, (rows.length - 1));
+            $(typeArray[2]).addClass('ascending');
+            sort_direction = 'ascending';
+        } else if (sort_direction === 'ascending') {
+            reverseRow();
+            $(typeArray[2]).removeClass('ascending');
+            $(typeArray[2]).addClass('descending');
+            sort_direction = 'descending';
+        } else if (sort_direction === 'descending') {
+            reverseRow();
+            $(typeArray[2]).removeClass('descending');
+            $(typeArray[2]).addClass('ascending');
+            sort_direction = 'ascending';
         }
     };
 

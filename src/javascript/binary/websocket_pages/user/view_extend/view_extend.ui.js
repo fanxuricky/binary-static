@@ -78,7 +78,6 @@ const ViewPopupUI = (() => {
             $container.animate({ top: (-$(window).height() - $container.height()) }, 500, function() {
                 $container.hide().remove();
                 $('.popup_page_overlay').hide().remove();
-                // $('.selectedButton').removeClass('selectedButton');
                 init();
             });
         }
