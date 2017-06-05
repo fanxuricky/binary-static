@@ -83123,18 +83123,18 @@
 	        }
 
 	        if (sort_direction === null) {
-	            sorting(rows, 1, rows.length - 1);
 	            $(typeArray[2]).addClass('ascending');
+	            sorting(rows, 1, rows.length - 1);
 	            sort_direction = 'ascending';
 	        } else if (sort_direction === 'ascending') {
-	            reverseRow();
 	            $(typeArray[2]).removeClass('ascending');
 	            $(typeArray[2]).addClass('descending');
+	            reverseRow();
 	            sort_direction = 'descending';
 	        } else if (sort_direction === 'descending') {
-	            reverseRow();
 	            $(typeArray[2]).removeClass('descending');
 	            $(typeArray[2]).addClass('ascending');
+	            reverseRow();
 	            sort_direction = 'ascending';
 	        }
 	    };
