@@ -150,7 +150,7 @@ const StatementInit = (() => {
     };
 
     const initPage = () => {
-        batch_size = 20;
+        batch_size = 200;
         chunk_size = batch_size / 2;
         no_more_data = false;
         pending = false;            // serve as a lock to prevent ws request is sequential
