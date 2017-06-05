@@ -50496,7 +50496,7 @@
 	                    return buildMessage('[_1]Authenticate your account[_2] now to take full advantage of all withdrawal options available.', 'user/authenticate');
 	                },
 	                financial_limit: function financial_limit() {
-	                    return buildMessage('Please set your 30-day turnover limit in our [_1]self-exclusion facilities[_2] to remove deposit limits.', 'user/security/self_exclusionws', '#max_30day_turnover');
+	                    return buildMessage('Please set your [_1]30-day turnover limit[_2] to remove deposit limits.', 'user/security/self_exclusionws');
 	                },
 	                residence: function residence() {
 	                    return buildMessage('Please set [_1]country of residence[_2] before upgrading to a real-money account.', 'user/settings/detailsws');
@@ -76201,9 +76201,11 @@
 
 	var moment = __webpack_require__(305);
 	var BinarySocket = __webpack_require__(434);
+	var BinaryPjax = __webpack_require__(474);
 	var Client = __webpack_require__(427);
 	var Header = __webpack_require__(500);
 	var localize = __webpack_require__(435).localize;
+	var defaultRedirectUrl = __webpack_require__(430).defaultRedirectUrl;
 	var dateValueChanged = __webpack_require__(437).dateValueChanged;
 	var FormManager = __webpack_require__(489);
 	var scrollToHashSection = __webpack_require__(497).scrollToHashSection;
@@ -76215,7 +76217,8 @@
 
 	    var $form = void 0,
 	        fields = void 0,
-	        self_exclusion_data = void 0;
+	        self_exclusion_data = void 0,
+	        set_30day_turnover = void 0;
 
 	    var form_id = '#frm_self_exclusion';
 	    var timeout_date_id = '#timeout_until_date';
@@ -76247,16 +76250,24 @@
 	                }
 	                return;
 	            }
-
-	            $('#loading').setVisibility(0);
-	            $form.setVisibility(1);
-	            self_exclusion_data = response.get_self_exclusion;
-	            $.each(self_exclusion_data, function (key, value) {
-	                fields[key] = value.toString();
-	                $form.find('#' + key).val(value);
+	            BinarySocket.send({ get_account_status: 1 }).then(function (data) {
+	                var has_to_set_30day_turnover = /ukrts_max_turnover_limit_not_set/.test(data.get_account_status.status);
+	                if (typeof set_30day_turnover === 'undefined') {
+	                    set_30day_turnover = has_to_set_30day_turnover;
+	                }
+	                $('#frm_self_exclusion').find('fieldset > div.form-row:not(.max_30day_turnover)').setVisibility(!has_to_set_30day_turnover);
+	                $('#description_max_30day_turnover').setVisibility(has_to_set_30day_turnover);
+	                $('#description').setVisibility(!has_to_set_30day_turnover);
+	                $('#loading').setVisibility(0);
+	                $form.setVisibility(1);
+	                self_exclusion_data = response.get_self_exclusion;
+	                $.each(self_exclusion_data, function (key, value) {
+	                    fields[key] = value.toString();
+	                    $form.find('#' + key).val(value);
+	                });
+	                bindValidation();
+	                if (scroll) scrollToHashSection();
 	            });
-	            bindValidation();
-	            if (scroll) scrollToHashSection();
 	        });
 	    };
 
@@ -76402,9 +76413,13 @@
 	        }
 	        showFormMessage('Your changes have been updated.', true);
 	        Client.set('session_start', moment().unix()); // used to handle session duration limit
-	        getData();
 	        BinarySocket.send({ get_account_status: 1 }).then(function () {
 	            Header.displayAccountStatus();
+	            if (set_30day_turnover) {
+	                BinaryPjax.load(defaultRedirectUrl());
+	            } else {
+	                getData();
+	            }
 	        });
 	    };
 
@@ -82466,7 +82481,10 @@
 	        pending = void 0,
 	        current_batch = void 0,
 	        transactions_received = void 0,
-	        transactions_consumed = void 0;
+	        transactions_consumed = void 0,
+	        sorted = void 0,
+	        sort_direction = null,
+	        current_sort = [];
 
 	    var tableExist = function tableExist() {
 	        return document.getElementById('statement-table');
@@ -82522,6 +82540,25 @@
 	        if (!tableExist()) {
 	            StatementUI.createEmptyStatementTable().appendTo('#statement-container');
 	            $('.act, .credit').addClass('nowrap');
+	            $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
+	            $('.date').click(function () {
+	                sortAnything([0, 'date', '.date']);
+	            });
+	            $('.ref').click(function () {
+	                sortAnything([1, 'number', '.ref']);
+	            });
+	            $('.payout').click(function () {
+	                sortAnything([2, 'number', '.payout']);
+	            });
+	            $('.act').click(function () {
+	                sortAnything([3, 'alphabet', '.act']);
+	            });
+	            $('.credit').click(function () {
+	                sortAnything([5, 'number', '.credit']);
+	            });
+	            $('.bal').click(function () {
+	                sortAnything([6, 'number', '.bal']);
+	            });
 	            StatementUI.updateStatementTable(getNextChunkStatement());
 
 	            // Show a message when the table is empty
@@ -82529,25 +82566,6 @@
 	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'flex-tr' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('Your account has no trading activity.') }))));
 	            } else {
 	                $('#util_row').setVisibility(1);
-	                $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
-	                $('.date').click(function () {
-	                    sortAnything(0, 'date');
-	                });
-	                $('.ref').click(function () {
-	                    sortAnything(1, 'number');
-	                });
-	                $('.payout').click(function () {
-	                    sortAnything(2, 'number');
-	                });
-	                $('.act').click(function () {
-	                    sortAnything(3, 'alphabet');
-	                });
-	                $('.credit').click(function () {
-	                    sortAnything(5, 'number');
-	                });
-	                $('.bal').click(function () {
-	                    sortAnything(6, 'number');
-	                });
 	                if (getLanguage() === 'JA') {
 	                    $('#download_csv').setVisibility(1).find('a').unbind('click').click(function () {
 	                        StatementUI.exportCSV();
@@ -82556,6 +82574,7 @@
 	            }
 	        }
 	        showLocalTimeOnHover('td.date');
+	        liveSearchbox(true);
 	    };
 
 	    var loadStatementChunkWhenScroll = function loadStatementChunkWhenScroll() {
@@ -82567,14 +82586,20 @@
 
 	            var p_from_top = $(document).scrollTop();
 
-	            if (!tableExist() || p_from_top < hidableHeight(70)) return;
-
+	            if (!tableExist() || p_from_top < hidableHeight(40)) return;
 	            if (finishedConsumed() && !no_more_data && !pending) {
 	                getNextBatchStatement();
 	                return;
 	            }
 
-	            if (!finishedConsumed()) StatementUI.updateStatementTable(getNextChunkStatement());
+	            if (!finishedConsumed()) {
+	                StatementUI.updateStatementTable(getNextChunkStatement());
+	                if (sorted) {
+	                    sort_direction = null;
+	                    sortAnything(current_sort);
+	                }
+	                liveSearchbox(true);
+	            }
 	        });
 	    };
 
@@ -82592,7 +82617,7 @@
 	    };
 
 	    var initPage = function initPage() {
-	        batch_size = 200;
+	        batch_size = 20;
 	        chunk_size = batch_size / 2;
 	        no_more_data = false;
 	        pending = false; // serve as a lock to prevent ws request is sequential
@@ -82606,6 +82631,7 @@
 	        });
 	        getNextBatchStatement();
 	        loadStatementChunkWhenScroll();
+	        liveSearchbox(true);
 	    };
 
 	    var attachDatePicker = function attachDatePicker() {
@@ -82623,18 +82649,17 @@
 	            selector: jump_to,
 	            maxDate: 0
 	        });
-	        if ($(jump_to).attr('data-picker') !== 'native') $(jump_to).val(localize('Today'));
+	        if ($(jump_to).attr('data-picker') !== 'native') {
+	            $(jump_to).val(localize('Today'));
+	        }
 	    };
 
-	    var liveSearchbox = function liveSearchbox() {
+	    var liveSearchbox = function liveSearchbox(nextChunk) {
 	        var search_box = '#search-box';
 	        var noResultbox = '.no-result-box';
 
-	        $(search_box).keyup(function () {
-	            var toSearch = $(this).val();
+	        var searchThru = function searchThru(toSearch) {
 	            var count = 0;
-	            $(noResultbox).remove();
-
 	            // search through each line of table and search for result, i stands for case-insensitive
 	            $('table tbody tr').each(function () {
 	                if ($(this).text().search(new RegExp(toSearch.replace(/\\/g, '\\\\'), 'i')) < 0) {
@@ -82644,76 +82669,114 @@
 	                    count++;
 	                }
 	            });
-
 	            // show a message if there is no result
 	            if (count <= 0) {
 	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'no-result-box' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('No search result found.') }))));
 	            }
-	        });
+	        };
+
+	        if (nextChunk === true) {
+	            var toSearch = $(search_box).val();
+	            searchThru(toSearch);
+	        } else {
+	            $(search_box).keyup(function () {
+	                var toSearch = $(this).val();
+	                $(noResultbox).remove();
+	                searchThru(toSearch);
+	            });
+	        }
 	    };
 
-	    var sortAnything = function sortAnything(n, sortType) {
-	        var dir = void 0;
-	        var switching = void 0;
-	        var rows = void 0;
-	        var shouldSwitch = void 0;
-	        var x = void 0;
-	        var y = void 0;
-	        var i = void 0;
-	        var intx = void 0;
-	        var inty = void 0;
-	        var switchcount = 0;
-	        var sortTable = document.getElementById('statement-table');
-	        dir = 'asc';
-	        switching = true;
+	    var sortAnything = function sortAnything(typeArray) {
+	        // n(number of column), sortType, m(header)
+	        var k = void 0,
+	            i = void 0,
+	            j = void 0;
+	        // rowArr = [];
+	        var sortTable = tableExist();
+	        var rows = sortTable.getElementsByTagName('TR');
+	        if (typeArray[2] !== current_sort[2]) {
+	            $('.ascending').removeClass('ascending');
+	            $('.descending').removeClass('descending');
+	            current_sort = typeArray;
+	            sort_direction = null;
+	        }
+	        sorted = true;
 
-	        while (switching) {
-	            switching = false;
-	            rows = sortTable.getElementsByTagName('TR');
-	            for (i = 1; i < rows.length - 1; i++) {
-	                shouldSwitch = false;
-	                x = rows[i].getElementsByTagName('TD')[n];
-	                y = rows[i + 1].getElementsByTagName('TD')[n];
+	        // rowArr = Array.prototype.slice.call(rows);
 
-	                if (sortType === 'number') {
-	                    intx = parseFloat(x.innerText.replace(/[.,]/g, ''));
-	                    inty = parseFloat(y.innerText.replace(/[.,]/g, ''));
+	        function replaceRegex(x) {
+	            if (typeArray[1] === 'number') {
+	                x = parseFloat(x.innerText.replace(/[.,]/g, ''));
 
-	                    if (isNaN(intx)) {
-	                        intx = 0;
-	                    } else if (isNaN(inty)) {
-	                        inty = 0;
-	                    }
-	                } else if (sortType === 'alphabet') {
-	                    intx = x.innerHTML.toLowerCase();
-	                    inty = y.innerHTML.toLowerCase();
-	                } else if (sortType === 'date') {
-	                    intx = x.innerHTML.replace(/[-:GMT \n]/g, '');
-	                    inty = y.innerHTML.replace(/[-:GMT \n]/g, '');
+	                if (isNaN(x)) {
+	                    x = 0;
 	                }
+	            } else if (typeArray[1] === 'alphabet') {
+	                x = x.innerHTML.toLowerCase();
+	            } else if (typeArray[1] === 'date') {
+	                x = x.innerHTML.replace(/[-:GMT \n]/g, '');
+	            }
+	            return x;
+	        }
 
-	                if (dir === 'asc') {
-	                    if (intx > inty) {
-	                        shouldSwitch = true;
-	                        break;
-	                    }
-	                } else if (dir === 'desc') {
-	                    if (intx < inty) {
-	                        shouldSwitch = true;
-	                        break;
-	                    }
+	        function sorting(arr, left, right) {
+	            var pivot = void 0,
+	                pindex = void 0;
+
+	            if (left < right) {
+	                pivot = right;
+	                pindex = partition(arr, pivot, left, right);
+
+	                sorting(arr, left, pindex - 1);
+	                sorting(arr, pindex + 1, right);
+	            }
+	            return arr;
+	        }
+
+	        function partition(arr, pivot, left, right) {
+	            var pivotValue = replaceRegex(arr[pivot].children[typeArray[0]]);
+	            var pindex = left;
+	            for (i = left; i < right; i++) {
+	                if (replaceRegex(arr[i].children[typeArray[0]]) < pivotValue) {
+	                    swap(arr, i, pindex);
+	                    pindex++;
 	                }
 	            }
+	            swap(arr, right, pindex);
+	            return pindex;
+	        }
 
-	            if (shouldSwitch) {
-	                // move the node 1 step above
-	                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-	                switching = true;
-	                switchcount++;
-	            } else if (switchcount === 0 && dir === 'asc') {
-	                dir = 'desc';
-	                switching = true;
+	        function swap(arr, x, y) {
+	            for (k = 0; k < arr[x].children.length; k++) {
+	                var temp = arr[x].children[k].outerHTML;
+	                arr[x].children[k].outerHTML = arr[y].children[k].outerHTML;
+	                arr[y].children[k].outerHTML = temp;
 	            }
+	        }
+
+	        function reverseRow() {
+	            for (j = 1; j < rows.length / 2; j++) {
+	                var temp = rows[j].outerHTML;
+	                rows[j].outerHTML = rows[rows.length - j].outerHTML;
+	                rows[rows.length - j].outerHTML = temp;
+	            }
+	        }
+
+	        if (sort_direction === null) {
+	            sorting(rows, 1, rows.length - 1);
+	            $(typeArray[2]).addClass('ascending');
+	            sort_direction = 'ascending';
+	        } else if (sort_direction === 'ascending') {
+	            reverseRow();
+	            $(typeArray[2]).removeClass('ascending');
+	            $(typeArray[2]).addClass('descending');
+	            sort_direction = 'descending';
+	        } else if (sort_direction === 'descending') {
+	            reverseRow();
+	            $(typeArray[2]).removeClass('descending');
+	            $(typeArray[2]).addClass('ascending');
+	            sort_direction = 'ascending';
 	        }
 	    };
 
@@ -82952,7 +83015,7 @@
 
 	        if (btn_view) {
 	            ViewPopupUI.disableButton($(btn_view));
-	            ViewPopupUI.cleanup();
+	            // ViewPopupUI.cleanup();
 	        }
 
 	        getContract();
@@ -83000,7 +83063,6 @@
 	        update();
 	        ViewPopupUI.repositionConfirmation();
 	        ViewPopupUI.moveIn();
-
 	        if (State.get('is_mb_trading')) {
 	            State.call('ViewPopup.onDisplayed');
 	        }
@@ -83392,10 +83454,10 @@
 
 	    var closeContainer = function closeContainer() {
 	        if ($container) {
+	            $('.selectedButton').removeClass('selectedButton');
 	            $container.animate({ top: -$(window).height() - $container.height() }, 500, function () {
 	                $container.hide().remove();
 	                $('.popup_page_overlay').hide().remove();
-	                $('.selectedButton').removeClass('selectedButton');
 	                init();
 	            });
 	        }
@@ -84822,7 +84884,7 @@
 	    };
 
 	    var inContextTranslation = function inContextTranslation() {
-	        if (/^https:\/\/www\.binary\.com\/translations\//i.test(window.location.href) && /ach/i.test(Language.get())) {
+	        if (/^https:\/\/staging\.binary\.com\/translations\//i.test(window.location.href) && /ach/i.test(Language.get())) {
 	            window._jipt = [];
 	            window._jipt.push(['project', 'binary-static']);
 	            $('body').append($('<script/>', {

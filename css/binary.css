@@ -830,11 +830,19 @@ table td {
   }
 }
 .table-container #statement-table tr.selectedButton, .table-container #profit-table tr.selectedButton {
-  background-color: #fffebd;
+  background-color: #fef1cf;
 }
 .table-container #statement-table tr.hoverable:hover, .table-container #profit-table tr.hoverable:hover {
-  background-color: #fffebd;
+  background-color: #fef1cf;
   cursor: pointer;
+}
+.table-container #statement-table th.ascending, .table-container #profit-table th.ascending {
+  background-color: #2e8836;
+  color: #fff;
+}
+.table-container #statement-table th.descending, .table-container #profit-table th.descending {
+  background-color: #c03;
+  color: #fff;
 }
 .table-container #statement-table th.sortable:hover, .table-container #profit-table th.sortable:hover {
   cursor: pointer;
