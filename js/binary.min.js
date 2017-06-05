@@ -83057,7 +83057,6 @@
 	        var k = void 0,
 	            i = void 0,
 	            j = void 0;
-	        // rowArr = [];
 	        var sortTable = tableExist();
 	        var rows = sortTable.getElementsByTagName('TR');
 	        if (typeArray[2] !== current_sort[2]) {
@@ -83068,12 +83067,9 @@
 	        }
 	        sorted = true;
 
-	        // rowArr = Array.prototype.slice.call(rows);
-
 	        function replaceRegex(x) {
 	            if (typeArray[1] === 'number') {
 	                x = parseFloat(x.innerText.replace(/[.,]/g, ''));
-
 	                if (isNaN(x)) {
 	                    x = 0;
 	                }
@@ -83088,11 +83084,9 @@
 	        function sorting(arr, left, right) {
 	            var pivot = void 0,
 	                pindex = void 0;
-
 	            if (left < right) {
 	                pivot = right;
 	                pindex = partition(arr, pivot, left, right);
-
 	                sorting(arr, left, pindex - 1);
 	                sorting(arr, pindex + 1, right);
 	            }
@@ -83113,11 +83107,9 @@
 	        }
 
 	        function swap(arr, x, y) {
-	            for (k = 0; k < arr[x].children.length; k++) {
-	                var temp = arr[x].children[k].outerHTML;
-	                arr[x].children[k].outerHTML = arr[y].children[k].outerHTML;
-	                arr[y].children[k].outerHTML = temp;
-	            }
+	            var temp = arr[x].outerHTML;
+	            arr[x].outerHTML = arr[y].outerHTML;
+	            arr[y].outerHTML = temp;
 	        }
 
 	        function reverseRow() {
