@@ -82939,7 +82939,6 @@
 	            }
 	        }
 	        showLocalTimeOnHover('td.date');
-	        liveSearchbox(true);
 	    };
 
 	    var loadStatementChunkWhenScroll = function loadStatementChunkWhenScroll() {
@@ -82996,7 +82995,6 @@
 	        });
 	        getNextBatchStatement();
 	        loadStatementChunkWhenScroll();
-	        liveSearchbox(true);
 	    };
 
 	    var attachDatePicker = function attachDatePicker() {
@@ -83088,6 +83086,7 @@
 	                pindex = void 0;
 	            if (left < right) {
 	                pivot = right;
+
 	                pindex = partition(arr, pivot, left, right);
 	                sorting(arr, left, pindex - 1);
 	                sorting(arr, pindex + 1, right);
@@ -83142,7 +83141,7 @@
 	    var onLoad = function onLoad() {
 	        initPage();
 	        attachDatePicker();
-	        liveSearchbox();
+	        liveSearchbox(false);
 	        ViewPopup.viewButtonOnClick('#statement-container');
 	    };
 
