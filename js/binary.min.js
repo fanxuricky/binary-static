@@ -53657,7 +53657,10 @@
 
 	        $container.empty().append($tabs).append($contents.children());
 
-	        $container.tabs('destroy').tabs();
+	        if ($container.is(':ui-tabs')) {
+	            $container.tabs('destroy');
+	        }
+	        $container.tabs();
 
 	        if (is_framed) {
 	            $container.find('ul').hide();
@@ -54057,7 +54060,10 @@
 
 	        $container.empty().append($ul).append($contents.children());
 
-	        $container.tabs('destroy').tabs();
+	        if ($container.is(':ui-tabs')) {
+	            $container.tabs('destroy');
+	        }
+	        $container.tabs();
 
 	        if (is_framed) {
 	            $container.find('ul').hide();
@@ -82847,9 +82853,8 @@
 	        current_batch = void 0,
 	        transactions_received = void 0,
 	        transactions_consumed = void 0,
-	        sorted = void 0,
 	        sort_direction = null,
-	        current_sort = [];
+	        current_sortType = [];
 
 	    var tableExist = function tableExist() {
 	        return document.getElementById('statement-table');
@@ -82907,22 +82912,22 @@
 	            $('.act, .credit').addClass('nowrap');
 	            $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
 	            $('.date').click(function () {
-	                sortAnything([0, 'date', '.date']);
+	                sortButton([0, 'date', '.date']);
 	            });
 	            $('.ref').click(function () {
-	                sortAnything([1, 'number', '.ref']);
+	                sortButton([1, 'number', '.ref']);
 	            });
 	            $('.payout').click(function () {
-	                sortAnything([2, 'number', '.payout']);
+	                sortButton([2, 'number', '.payout']);
 	            });
 	            $('.act').click(function () {
-	                sortAnything([3, 'alphabet', '.act']);
+	                sortButton([3, 'alphabet', '.act']);
 	            });
 	            $('.credit').click(function () {
-	                sortAnything([5, 'number', '.credit']);
+	                sortButton([5, 'number', '.credit']);
 	            });
 	            $('.bal').click(function () {
-	                sortAnything([6, 'number', '.bal']);
+	                sortButton([6, 'number', '.bal']);
 	            });
 	            StatementUI.updateStatementTable(getNextChunkStatement());
 
@@ -82958,10 +82963,7 @@
 
 	            if (!finishedConsumed()) {
 	                StatementUI.updateStatementTable(getNextChunkStatement());
-	                if (sorted) {
-	                    sort_direction = null;
-	                    sortAnything(current_sort);
-	                }
+	                sortAction(current_sortType);
 	                liveSearchbox(true);
 	            }
 	        });
@@ -82981,7 +82983,7 @@
 	    };
 
 	    var initPage = function initPage() {
-	        batch_size = 200;
+	        batch_size = 30;
 	        chunk_size = batch_size / 2;
 	        no_more_data = false;
 	        pending = false; // serve as a lock to prevent ws request is sequential
@@ -82995,6 +82997,7 @@
 	        });
 	        getNextBatchStatement();
 	        loadStatementChunkWhenScroll();
+	        liveSearchbox(true);
 	    };
 
 	    var attachDatePicker = function attachDatePicker() {
@@ -83033,9 +83036,7 @@
 	                }
 	            });
 	            // show a message if there is no result
-	            if (!no_more_data || !finishedConsumed()) {
-	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'no-result-box' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('Scroll down to search more.') }))));
-	            } else if (count <= 0) {
+	            if (count <= 0 && no_more_data) {
 	                $('#statement-table').find('tbody').append($('<tr/>', { class: 'no-result-box' }).append($('<td/>', { colspan: 7 }).append($('<p/>', { class: 'notice-msg center-text', text: localize('No search result found.') }))));
 	            }
 	        };
@@ -83053,19 +83054,11 @@
 	        }
 	    };
 
-	    var sortAnything = function sortAnything(typeArray) {
+	    var sortAction = function sortAction(typeArray) {
 	        // n(number of column), sortType, m(header)
-	        var i = void 0,
-	            j = void 0;
+	        var i = void 0;
 	        var sortTable = tableExist();
 	        var rows = sortTable.getElementsByTagName('TR');
-	        if (typeArray[2] !== current_sort[2]) {
-	            $('.ascending').removeClass('ascending');
-	            $('.descending').removeClass('descending');
-	            current_sort = typeArray;
-	            sort_direction = null;
-	        }
-	        sorted = true;
 
 	        function replaceRegex(x) {
 	            if (typeArray[1] === 'number') {
@@ -83086,7 +83079,6 @@
 	                pindex = void 0;
 	            if (left < right) {
 	                pivot = right;
-
 	                pindex = partition(arr, pivot, left, right);
 	                sorting(arr, left, pindex - 1);
 	                sorting(arr, pindex + 1, right);
@@ -83098,9 +83090,16 @@
 	            var pivotValue = replaceRegex(arr[pivot].children[typeArray[0]]);
 	            var pindex = left;
 	            for (i = left; i < right; i++) {
-	                if (replaceRegex(arr[i].children[typeArray[0]]) < pivotValue) {
-	                    swap(arr, i, pindex);
-	                    pindex++;
+	                if (sort_direction === 'ascending') {
+	                    if (replaceRegex(arr[i].children[typeArray[0]]) < pivotValue) {
+	                        swap(arr, i, pindex);
+	                        pindex++;
+	                    }
+	                } else if (sort_direction === 'descending') {
+	                    if (replaceRegex(arr[i].children[typeArray[0]]) > pivotValue) {
+	                        swap(arr, i, pindex);
+	                        pindex++;
+	                    }
 	                }
 	            }
 	            swap(arr, right, pindex);
@@ -83113,28 +83112,27 @@
 	            arr[y].outerHTML = temp;
 	        }
 
-	        function reverseRow() {
-	            for (j = 1; j < rows.length / 2; j++) {
-	                var temp = rows[j].outerHTML;
-	                rows[j].outerHTML = rows[rows.length - j].outerHTML;
-	                rows[rows.length - j].outerHTML = temp;
-	            }
+	        sorting(rows, 1, rows.length - 1);
+	    };
+
+	    var sortButton = function sortButton(typeArray) {
+	        if (typeArray[2] !== current_sortType[2]) {
+	            $('.ascending').removeClass('ascending');
+	            $('.descending').removeClass('descending');
+	            current_sortType = typeArray;
+	            sort_direction = null;
 	        }
 
-	        if (sort_direction === null) {
+	        if (sort_direction === null || sort_direction === 'descending') {
+	            $(typeArray[2]).removeClass('descending');
 	            $(typeArray[2]).addClass('ascending');
-	            sorting(rows, 1, rows.length - 1);
 	            sort_direction = 'ascending';
+	            sortAction(current_sortType);
 	        } else if (sort_direction === 'ascending') {
 	            $(typeArray[2]).removeClass('ascending');
 	            $(typeArray[2]).addClass('descending');
-	            reverseRow();
 	            sort_direction = 'descending';
-	        } else if (sort_direction === 'descending') {
-	            $(typeArray[2]).removeClass('descending');
-	            $(typeArray[2]).addClass('ascending');
-	            reverseRow();
-	            sort_direction = 'ascending';
+	            sortAction(current_sortType);
 	        }
 	    };
 
