@@ -27,9 +27,8 @@ const StatementInit = (() => {
         current_batch,
         transactions_received,
         transactions_consumed,
-        sorted,
         sort_direction = null,
-        current_sort = [];
+        current_sortType = [];
 
     const tableExist = () => (document.getElementById('statement-table'));
 
@@ -82,12 +81,12 @@ const StatementInit = (() => {
             StatementUI.createEmptyStatementTable().appendTo('#statement-container');
             $('.act, .credit').addClass('nowrap');
             $('.act, .credit, .bal, .payout, .date, .ref').addClass('sortable');
-            $('.date').click(function() { sortAnything([0, 'date', '.date']); });
-            $('.ref').click(function() { sortAnything([1, 'number', '.ref']); });
-            $('.payout').click(function() { sortAnything([2, 'number', '.payout']); });
-            $('.act').click(function() { sortAnything([3, 'alphabet', '.act']); });
-            $('.credit').click(function() { sortAnything([5, 'number', '.credit']); });
-            $('.bal').click(function() { sortAnything([6, 'number', '.bal']); });
+            $('.date').click(function() { sortButton([0, 'date', '.date']); });
+            $('.ref').click(function() { sortButton([1, 'number', '.ref']); });
+            $('.payout').click(function() { sortButton([2, 'number', '.payout']); });
+            $('.act').click(function() { sortButton([3, 'alphabet', '.act']); });
+            $('.credit').click(function() { sortButton([5, 'number', '.credit']); });
+            $('.bal').click(function() { sortButton([6, 'number', '.bal']); });
             StatementUI.updateStatementTable(getNextChunkStatement());
 
             // Show a message when the table is empty
@@ -126,10 +125,7 @@ const StatementInit = (() => {
 
             if (!finishedConsumed()) {
                 StatementUI.updateStatementTable(getNextChunkStatement());
-                if (sorted) {
-                    sort_direction = null;
-                    sortAnything(current_sort);
-                }
+                sortAction(current_sortType);
                 liveSearchbox(true);
             }
         });
@@ -163,6 +159,7 @@ const StatementInit = (() => {
         });
         getNextBatchStatement();
         loadStatementChunkWhenScroll();
+        liveSearchbox(true);
     };
 
     const attachDatePicker = () => {
@@ -200,12 +197,7 @@ const StatementInit = (() => {
                 }
             });
             // show a message if there is no result
-            if (!no_more_data || !finishedConsumed()) {
-                $('#statement-table').find('tbody')
-                    .append($('<tr/>', { class: 'no-result-box' })
-                        .append($('<td/>', { colspan: 7 })
-                            .append($('<p/>', { class: 'notice-msg center-text', text: localize('Scroll down to search more.') }))));
-            } else if (count <= 0) {
+            if (count <= 0 && no_more_data) {
                 $('#statement-table').find('tbody')
                     .append($('<tr/>', { class: 'no-result-box' })
                         .append($('<td/>', { colspan: 7 })
@@ -226,22 +218,17 @@ const StatementInit = (() => {
         }
     };
 
-    const sortAnything = (typeArray) => { // n(number of column), sortType, m(header)
+    const sortAction = (typeArray) => { // n(number of column), sortType, m(header)
         let i,
-            j;
+            y,
+            z;
         const sortTable = tableExist();
-        const rows = sortTable.getElementsByTagName('TR');
-        if (typeArray[2] !== current_sort[2]) {
-            $('.ascending').removeClass('ascending');
-            $('.descending').removeClass('descending');
-            current_sort = typeArray;
-            sort_direction = null;
-        }
-        sorted = true;
+        let rows = Array.prototype.slice.call(sortTable.getElementsByTagName('TR'));
+        rows.shift();
 
         function replaceRegex(x) {
             if (typeArray[1] === 'number') {
-                x = parseFloat(x.innerText.replace(/[.,]/g, ''));
+                x = parseFloat(x.innerText.replace(/,/g, ''));
                 if (isNaN(x)) {
                     x = 0;
                 }
@@ -253,60 +240,69 @@ const StatementInit = (() => {
             return x;
         }
 
-        function sorting(arr, left, right) {
-            let pivot,
-                pindex;
-            if (left < right) {
-                pivot = right;
+        function mergeSort(arr) {
+            const len = arr.length;
+            if (len < 2) return arr;
+            const mid = Math.floor(len / 2),
+                left = arr.slice(0, mid),
+                right = arr.slice(mid);
 
-                pindex = partition(arr, pivot, left, right);
-                sorting(arr, left, pindex - 1);
-                sorting(arr, pindex + 1, right);
-            }
-            return arr;
+            return merge(mergeSort(left), mergeSort(right));
         }
 
-        function partition(arr, pivot, left, right) {
-            const pivotValue = replaceRegex(arr[pivot].children[typeArray[0]]);
-            let pindex = left;
-            for (i = left; i < right; i++) {
-                if (replaceRegex(arr[i].children[typeArray[0]]) < pivotValue) {
-                    swap(arr, i, pindex);
-                    pindex++;
+        function merge(left, right) {
+            const result = [],
+                lLen = left.length,
+                rLen = right.length;
+            let l = 0,
+                r = 0;
+            while (l < lLen && r < rLen) {
+                y = replaceRegex(left[l].children[typeArray[0]]);
+                z = replaceRegex(right[r].children[typeArray[0]]);
+                if (sort_direction === 'ascending') {
+                    if (y < z) {
+                        result.push(left[l++]);
+                    } else {
+                        result.push(right[r++]);
+                    }
+                } else if (sort_direction === 'descending') {
+                    if (y > z) {
+                        result.push(left[l++]);
+                    } else {
+                        result.push(right[r++]);
+                    }
                 }
             }
-            swap(arr, right, pindex);
-            return pindex;
+            return result.concat(left.slice(l)).concat(right.slice(r));
         }
 
-        function swap(arr, x, y) {
-            const temp = arr[x].outerHTML;
-            arr[x].outerHTML = arr[y].outerHTML;
-            arr[y].outerHTML = temp;
-        }
+        if (sort_direction !== null) {
+            rows = mergeSort(rows);
 
-        function reverseRow() {
-            for (j = 1; j < rows.length / 2; j++) {
-                const temp = rows[j].outerHTML;
-                rows[j].outerHTML = rows[rows.length - j].outerHTML;
-                rows[rows.length - j].outerHTML = temp;
+            for (i = 0; i <= rows.length - 1; i++) {
+                $('table tbody tr')[i].outerHTML = rows[i].outerHTML;
             }
         }
+    };
 
-        if (sort_direction === null) {
+    const sortButton = (typeArray) => {
+        if (typeArray[2] !== current_sortType[2]) {
+            $('.ascending').removeClass('ascending');
+            $('.descending').removeClass('descending');
+            current_sortType = typeArray;
+            sort_direction = null;
+        }
+
+        if (sort_direction === null || sort_direction === 'descending') {
+            $(typeArray[2]).removeClass('descending');
             $(typeArray[2]).addClass('ascending');
-            sorting(rows, 1, (rows.length - 1));
             sort_direction = 'ascending';
+            sortAction(current_sortType);
         } else if (sort_direction === 'ascending') {
             $(typeArray[2]).removeClass('ascending');
             $(typeArray[2]).addClass('descending');
-            reverseRow();
             sort_direction = 'descending';
-        } else if (sort_direction === 'descending') {
-            $(typeArray[2]).removeClass('descending');
-            $(typeArray[2]).addClass('ascending');
-            reverseRow();
-            sort_direction = 'ascending';
+            sortAction(current_sortType);
         }
     };
 
