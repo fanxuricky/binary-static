@@ -82983,7 +82983,7 @@
 	    };
 
 	    var initPage = function initPage() {
-	        batch_size = 30;
+	        batch_size = 200;
 	        chunk_size = batch_size / 2;
 	        no_more_data = false;
 	        pending = false; // serve as a lock to prevent ws request is sequential
@@ -83056,13 +83056,16 @@
 
 	    var sortAction = function sortAction(typeArray) {
 	        // n(number of column), sortType, m(header)
-	        var i = void 0;
+	        var i = void 0,
+	            y = void 0,
+	            z = void 0;
 	        var sortTable = tableExist();
-	        var rows = sortTable.getElementsByTagName('TR');
+	        var rows = Array.prototype.slice.call(sortTable.getElementsByTagName('TR'));
+	        rows.shift();
 
 	        function replaceRegex(x) {
 	            if (typeArray[1] === 'number') {
-	                x = parseFloat(x.innerText.replace(/[.,]/g, ''));
+	                x = parseFloat(x.innerText.replace(/,/g, ''));
 	                if (isNaN(x)) {
 	                    x = 0;
 	                }
@@ -83074,45 +83077,49 @@
 	            return x;
 	        }
 
-	        function sorting(arr, left, right) {
-	            var pivot = void 0,
-	                pindex = void 0;
-	            if (left < right) {
-	                pivot = right;
-	                pindex = partition(arr, pivot, left, right);
-	                sorting(arr, left, pindex - 1);
-	                sorting(arr, pindex + 1, right);
-	            }
-	            return arr;
+	        function mergeSort(arr) {
+	            var len = arr.length;
+	            if (len < 2) return arr;
+	            var mid = Math.floor(len / 2),
+	                left = arr.slice(0, mid),
+	                right = arr.slice(mid);
+
+	            return merge(mergeSort(left), mergeSort(right));
 	        }
 
-	        function partition(arr, pivot, left, right) {
-	            var pivotValue = replaceRegex(arr[pivot].children[typeArray[0]]);
-	            var pindex = left;
-	            for (i = left; i < right; i++) {
+	        function merge(left, right) {
+	            var result = [],
+	                lLen = left.length,
+	                rLen = right.length;
+	            var l = 0,
+	                r = 0;
+	            while (l < lLen && r < rLen) {
+	                y = replaceRegex(left[l].children[typeArray[0]]);
+	                z = replaceRegex(right[r].children[typeArray[0]]);
 	                if (sort_direction === 'ascending') {
-	                    if (replaceRegex(arr[i].children[typeArray[0]]) < pivotValue) {
-	                        swap(arr, i, pindex);
-	                        pindex++;
+	                    if (y < z) {
+	                        result.push(left[l++]);
+	                    } else {
+	                        result.push(right[r++]);
 	                    }
 	                } else if (sort_direction === 'descending') {
-	                    if (replaceRegex(arr[i].children[typeArray[0]]) > pivotValue) {
-	                        swap(arr, i, pindex);
-	                        pindex++;
+	                    if (y > z) {
+	                        result.push(left[l++]);
+	                    } else {
+	                        result.push(right[r++]);
 	                    }
 	                }
 	            }
-	            swap(arr, right, pindex);
-	            return pindex;
+	            return result.concat(left.slice(l)).concat(right.slice(r));
 	        }
 
-	        function swap(arr, x, y) {
-	            var temp = arr[x].outerHTML;
-	            arr[x].outerHTML = arr[y].outerHTML;
-	            arr[y].outerHTML = temp;
-	        }
+	        if (sort_direction !== null) {
+	            rows = mergeSort(rows);
 
-	        sorting(rows, 1, rows.length - 1);
+	            for (i = 0; i <= rows.length - 1; i++) {
+	                $('table tbody tr')[i].outerHTML = rows[i].outerHTML;
+	            }
+	        }
 	    };
 
 	    var sortButton = function sortButton(typeArray) {
